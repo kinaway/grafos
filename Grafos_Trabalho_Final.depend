@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1467059804 source:c:\users\ufjf\desktop\projeto_stenio\grafos_trabalho_final\main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<time.h>
+	<stdlib.h>
+	"grafos.h"
+
+1467069713 source:c:\users\ufjf\desktop\projeto_stenio\grafos_trabalho_final\src\grafos.cpp
+	"grafos.h"
+
+1467066300 c:\users\ufjf\desktop\projeto_stenio\grafos_trabalho_final\include\grafos.h
+	<iostream>
+	<list>
+	<algorithm>
+
+1492548409 source:c:\users\ufjf\desktop\grafos_trabalho_final\main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<time.h>
+	<stdlib.h>
+	"grafos.h"
+
+1492547431 c:\users\ufjf\desktop\grafos_trabalho_final\include\grafos.h
+	<iostream>
+	<list>
+	<algorithm>
+
+1492548217 source:c:\users\ufjf\desktop\grafos_trabalho_final\src\grafos.cpp
+	"grafos.h"
+
