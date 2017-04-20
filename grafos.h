@@ -47,7 +47,12 @@ public:
     void getSubgrafoInduzido(list<int> vertices);
     void getComplementar();
     void getComponentes();
+    bool verificaEuriliano();
     grafo grafoTrasposto();
+    void getArticulacoes();
+    void getPontes();
+    void getRaioDiametroCentroPeriferia();
+    void getAGM();
 
     ~grafo();
 

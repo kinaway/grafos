@@ -43,7 +43,6 @@ void criarVertice(grafo *Teste2)
 
     clear();
     return;
-
 }
 void vereficarIdxiste(grafo *Teste2)
 {
@@ -100,7 +99,6 @@ void deletarVertice(grafo *Teste2)
 
 void  deletarAresta(grafo *Teste2)
 {
-
     clear();
     int id1,id2,peso;
     bool verifica;
@@ -132,7 +130,6 @@ void  deletarAresta(grafo *Teste2)
 
 void   criarAresta(grafo *Teste2)
 {
-
     clear();
     int id1,id2,peso;
     bool verifica;
@@ -163,7 +160,6 @@ void   criarAresta(grafo *Teste2)
 
 void obterGrauVertice(grafo *Teste2)
 {
-
     clear();
     int id;
     bool verifica;
@@ -180,13 +176,11 @@ void obterGrauVertice(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-
     cout << "Pressione Enter para voltar ao menu"<<endl;
     getInputString();
 
     clear();
     return;
-
 }
 
 void obterGrauGrafo(grafo *Teste2) {
@@ -196,6 +190,7 @@ void obterGrauGrafo(grafo *Teste2) {
 
     cout << "Pressione Enter para voltar ao menu"<<endl;
     getInputString();
+
     clear();
 }
 
@@ -247,7 +242,6 @@ void isNulo(grafo *Teste2) {
 
     cout << "Pressione Enter para voltar ao menu"<<endl;
     getInputString();
-
 }
 
 void calcularCaminho(grafo *Teste2) {
@@ -332,6 +326,49 @@ void getComponentes(grafo *Teste2) {
     getInputString();
 }
 
+void isEuriliano(grafo *Teste2) {
+    if(Teste2->verificaEuriliano()){
+        cout << "O Grafo eh Euriliano.";
+    } else {
+        cout << "O Grafo nao eh Euriliano.";
+    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+}
+
+void getArticulacoes(grafo *Teste2) {
+    cout << "Os nós de articulação são:" << endl;
+    Teste2->getArticulacoes(); //
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+}
+
+void getPontes(grafo *Teste2) {
+    cout << "As arestas pontes são:" << endl;
+    Teste2->getPontes(); //
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+}
+
+void getRaioDiametroCentroPeriferia(grafo *Teste2){
+    cout << "O raio, diâmetro, centro e periferia são:" << endl;
+    Teste2->getRaioDiametroCentroPeriferia(); //
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+}
+
+void getAGM(grafo *Teste2){
+    cout << "A AGM ou floresta mínima é:" << endl;
+    Teste2->getAGM(); //
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+}
+
 void menu()
 {
     cout << endl << endl << "\t\t\t ---MENU PRINCIPAL---" << endl << endl;
@@ -354,6 +391,11 @@ void menu()
     cout << "\t *16)" << " " << "Calcular subgrafo induzido"<< endl;
     cout << "\t *17)" << " " << "Imprimir o grafo complementar"<< endl;
     cout << "\t *18)" << " " << "Imprimir componentes fortemente conexas"<< endl;
+    cout << "\t *19)" << " " << "Verificar se o Grafo é Euliriano"<< endl;
+    cout << "\t *20)" << " " << "Apresentar nós de articulação"<< endl;
+    cout << "\t *21)" << " " << "Apresentar arestas pontes"<< endl;
+    cout << "\t *22)" << " " << "Apresentar o raio, diâmetro, centro e periferia do grafo"<< endl;
+    cout << "\t *23)" << " " << "Apresentar o AGM ou florestas de custo mínimo"<< endl;
     cout << "\t 0)"  << " " << "Sair"<<endl;
 }
 
@@ -467,6 +509,21 @@ int main()
                 break;
             case 18:
                 getComponentes(&Teste1);
+                break;
+            case 19:
+                isEuriliano(&Teste1);
+                break;
+            case 20:
+                getArticulacoes(&Teste1);
+                break;
+            case 21:
+                getPontes(&Teste1);
+                break;
+            case 22:
+                getRaioDiametroCentroPeriferia(&Teste1);
+                break;
+            case 23:
+                getAGM(&Teste1);
                 break;
             case 0:
                 escolhas = 0;
