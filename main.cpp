@@ -16,7 +16,7 @@ void criarVertice(grafo *Teste2)
     system("cls");
     int voltar = 0,sair = 0;
     while(sair == 0){
-        
+
         Teste2->criarVertice();
         cout << "Vertice criada"<<endl;
         cout << "Deseja criar outra vertice ?"<< endl;
@@ -30,9 +30,9 @@ void criarVertice(grafo *Teste2)
             case 2: sair = 1;
                 break;
         }
-        
+
     }
-    
+
     /*cout <<"1)"<<" "<< "Voltar menu principal"<<endl;
      cin >> voltar;
      if(voltar != 0)
@@ -43,14 +43,14 @@ void criarVertice(grafo *Teste2)
      */
     system("cls");
     return;
-    
+
 }
 void vereficarIdxiste(grafo *Teste2)
 {
     system("cls");
     int voltar = 0,id,sair = 1;
     bool verifica;
-    
+
     while(sair!=0){
         cout << "Digite um id"<<endl;
         cin >> id;
@@ -86,9 +86,9 @@ void vereficarIdxiste(grafo *Teste2)
             }
         }
     }
-    
-    
-    
+
+
+
     cout <<"1)"<<" "<< "Voltar menu principal"<<endl;
     cin >> voltar;
     if(voltar != 0)
@@ -97,7 +97,7 @@ void vereficarIdxiste(grafo *Teste2)
         return;
     }
     return;
-    
+
 }
 
 void deletarVertice(grafo *Teste2)
@@ -105,7 +105,7 @@ void deletarVertice(grafo *Teste2)
     system("cls");
     int voltar = 0,id,sair = 1;
     bool verifica;
-    
+
     while(sair!=0){
         cout << "Digite um id"<<endl;
         cin >> id;
@@ -142,27 +142,27 @@ void deletarVertice(grafo *Teste2)
             }
         }
     }
-    
-    
-    
+
+
+
     if(sair == 0)
     {
         system("cls");
         return;
     }
     return;
-    
-    
+
+
 }
 
 
 void  deletarAresta(grafo *Teste2)
 {
-    
+
     system("cls");
     int voltar = 0,id1,id2,peso,sair = 1;
     bool verifica;
-    
+
     while(sair!=0){
         cout << "Digite primeiro id onde uma arestasera sera deletada"<<endl;
         cin >> id1;
@@ -203,25 +203,25 @@ void  deletarAresta(grafo *Teste2)
             }
         }
     }
-    
-    
-    
+
+
+
     if(sair == 0)
     {
         system("cls");
         return;
     }
     return;
-    
+
 }
 
 void   criarAresta(grafo *Teste2)
 {
-    
+
     system("cls");
     int voltar = 0,id1,id2,peso,sair = 1;
     bool verifica;
-    
+
     while(sair!=0){
         cout << "Digite primeiro id onde uma aresta sera criada"<<endl;
         cin >> id1;
@@ -262,9 +262,9 @@ void   criarAresta(grafo *Teste2)
             }
         }
     }
-    
-    
-    
+
+
+
     if(sair == 0)
     {
         system("cls");
@@ -275,11 +275,11 @@ void   criarAresta(grafo *Teste2)
 
 void obterGrauVertice(grafo *Teste2)
 {
-    
+
     system("cls");
     int voltar = 0,id,sair = 1;
     bool verifica;
-    
+
     while(sair!=0){
         cout << "Digite um id"<<endl;
         cin >> id;
@@ -316,26 +316,26 @@ void obterGrauVertice(grafo *Teste2)
             }
         }
     }
-    
-    
-    
+
+
+
     if(sair == 0)
     {
         system("cls");
         return;
     }
     return;
-    
-    
-    
-    
+
+
+
+
 }
 
 void obterGrauGrafo(grafo *Teste2) {
     system("cls");
     int grau = Teste2->obterGrauGrafo();
     cout << "Grau do grafo: "<<grau<<endl;
-    
+
     int sair = 1;
     while(sair!=0){
         cout << "Deseja sair?:"<<endl;
@@ -362,7 +362,7 @@ void verificarKRegular(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh "<<k<<" regular.";
     }
-    
+
     int sair = 1;
     while(sair != 0){
         cout << "Deseja sair?:"<<endl;
@@ -404,7 +404,7 @@ void isTrivial(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh trivial.";
     }
-    
+
     int sair = 1;
     while(sair != 0){
         cout << "Deseja sair?:"<<endl;
@@ -427,7 +427,7 @@ void isNulo(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh nulo.";
     }
-    
+
     int sair = 1;
     while(sair != 0){
         cout << "Deseja sair?:"<<endl;
@@ -452,7 +452,7 @@ void calcularCaminho(grafo *Teste2) {
     int algoritmo;
     cin >> algoritmo;
     Teste2->calcularCaminho(algoritmo);
-    
+
     int sair = 1;
     while(sair != 0){
         cout << "Deseja sair?:"<<endl;
@@ -474,8 +474,10 @@ void calcularFechoDireto(grafo *Teste2) {
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     cin >> no1;
+    int no2;
+    cin >> no1;
     Teste2->fechoTransitivoDireto(no1, no2);
-    
+
     int sair = 1;
     while(sair != 0){
         cout << "Deseja sair?:"<<endl;
@@ -498,7 +500,7 @@ void calcularFechoIndireto(grafo *Teste2) {
     int no1;
     cin >> no1;
     Teste2->fechoTransitivoIndireto(no1);
-    
+
     int sair = 1;
     while(sair != 0){
         cout << "Deseja sair?:"<<endl;
@@ -628,7 +630,7 @@ int main()
     ifstream txtFile;
     int i,vetor[3],c, direcionado,escolhas = 1;
     string nome;
-    
+
     cout << "Digitar o texto que se quer abrir: " << endl;
     cin >> nome;
     cout << endl << "O grafo eh direcionado?"  <<endl;
@@ -636,13 +638,13 @@ int main()
     cout << "0)" << " " << "Nao"<<endl;
     cin >> direcionado;
     cout << endl;
-    txtFile.open(nome);
-    
+    txtFile.open(nome.c_str());
+
     txtFile >> c;
-    
+
     grafo Teste1(c, direcionado);
     //cout << "vertices" << c;
-    
+
     while(!txtFile.eof())
     {
         i = 0;
@@ -658,18 +660,18 @@ int main()
                 if(direcionado == 0)
                     Teste1.criarAresta(vetor[1],vetor[0],vetor[2]);
                 //cout << vetor[j];
-                
+
             }
         }
     }
     txtFile.close();
-    
-    
-    
-    
+
+
+
+
     while(escolhas !=0){
-        
-        
+
+
         menu();
         cin >> escolhas;
         switch(escolhas)

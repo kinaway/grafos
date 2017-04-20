@@ -37,6 +37,8 @@ public:
     void fechoTransitivoDireto(int id1);
     int* auxbuscaProfundidadeTransitivo(int* vetor,int id1,int id2,int* j);
     void fechoTransitivoIndireto(int id1);
+    void fechoTransitivoDireto(int id1,int id2);
+    void fechoTransitivoIndireto(int id1,int id2, grafo grafos2);
     bool verificaTrivial();
     bool verificaNulo();
     void calcularCaminho(int algoritmo);

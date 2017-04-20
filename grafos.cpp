@@ -566,8 +566,40 @@ void grafo::fechoTransitivoIndireto(int id1,int id2, grafo grafos2)
 
 }
 
+bool grafo::verificaTrivial(){
+    return false;
+}
+
+bool grafo::verificaNulo(){
+    return false;
+}
+
+void grafo::calcularCaminho(int algoritmo){
+
+}
+
 int grafo::getTamanho(){
     return tamanho;
+}
+
+void grafo::fechoTransitivoIndireto(int id1){
+
+}
+
+void grafo::getSequenciaGraus(){
+
+}
+
+void grafo::getSubgrafoInduzido(list<int> vertices){
+
+}
+
+void grafo::getComplementar(){
+
+}
+
+void grafo::getComponentes(){
+
 }
 
 grafo::~grafo()
