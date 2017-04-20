@@ -5,212 +5,127 @@
 #include <list>
 #include <time.h>
 #include <stdlib.h>
+#include <sstream>
 #include "grafos.h"
 
 
 using namespace std;
 
+int getInputInt(){
+    int numero;
+    string input;
+    getline (std::cin, input);
+    stringstream(input) >> numero;
+    return numero;
+}
+
+string getInputString(){
+    string input;
+    getline (std::cin, input);
+    return input;
+}
+
+void clear(){
+    // system('cls') so funciona no windows
+    // maneira multiplataforma mais simples de limpar console
+    cout << string(50, '\n');
+}
+
 
 void criarVertice(grafo *Teste2)
 {
-    system("cls");
-    int sair = 0;
-    while(sair == 0){
+    clear();
 
-        Teste2->criarVertice();
-        cout << "Vertice criada"<<endl;
-        cout << "Deseja criar outra vertice ?"<< endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nгo"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
+    Teste2->criarVertice();
+    cout << "Vertice criado" <<endl;
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
 
-    }
-
-    /*cout <<"1)"<<" "<< "Voltar menu principal"<<endl;
-     cin >> voltar;
-     if(voltar != 0)
-     {
-     system("cls");
-     return;
-     }
-     */
-    system("cls");
+    clear();
     return;
 
 }
 void vereficarIdxiste(grafo *Teste2)
 {
-    system("cls");
-    int voltar = 0,id,sair = 1;
+    clear();
+
+    int id;
     bool verifica;
-
-    while(sair!=0){
-        cout << "Digite um id"<<endl;
-        cin >> id;
-        verifica = Teste2->verificaIdExiste(id);
-        if(verifica == true)
-        {
-            cout << "O id passado existe";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Nгo"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-        else
-        {
-            cout << "O id passado não existe";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Não"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-    }
-
-
-
-    cout <<"1)"<<" "<< "Voltar menu principal"<<endl;
-    cin >> voltar;
-    if(voltar != 0)
+    id = getInputInt();
+    verifica = Teste2->verificaIdExiste(id);
+    if(verifica == true)
     {
-        system("cls");
-        return;
+        cout << "O id passado existe" << endl;
     }
+    else
+    {
+        cout << "O id passado não existe" << endl;
+    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
     return;
 
 }
 
 void deletarVertice(grafo *Teste2)
 {
-    system("cls");
-    int id,sair = 1;
+    clear();
+    int id;
     bool verifica;
 
-    while(sair!=0){
-        cout << "Digite um id"<<endl;
-        cin >> id;
-        verifica = Teste2->verificaIdExiste(id);
-        if(verifica == true)
-        {
-            Teste2->deletarVertice(id);
-            cout << "O id passado foi deletado"<<endl;
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Nгo"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-        else
-        {
-            cout << "O id passado não existe ou ja foi deletado";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Não"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-    }
-
-
-
-    if(sair == 0)
+    cout << "Digite um id" <<endl;
+    id = getInputInt();
+    verifica = Teste2->verificaIdExiste(id);
+    if(verifica == true)
     {
-        system("cls");
-        return;
+        Teste2->deletarVertice(id);
+        cout << "O id passado foi deletado"<<endl;
     }
+    else
+    {
+        cout << "O id passado não existe ou ja foi deletado";
+    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
+
     return;
-
-
 }
 
 
 void  deletarAresta(grafo *Teste2)
 {
 
-    system("cls");
-    int id1,id2,peso,sair = 1;
+    clear();
+    int id1,id2,peso;
     bool verifica;
 
-    while(sair!=0){
-        cout << "Digite primeiro id onde uma arestasera sera deletada"<<endl;
-        cin >> id1;
-        cout << "Digite segundo id onde uma aresta sera deletada entre o primeiro e o segundo id digitados"<<endl;
-        cin >> id2;
-        cout << "Digite o peso do id que sera deletado"<<endl;
-        cin >> peso;
-        verifica = Teste2->verificaIdExiste(id1);
-        if(verifica == true)
-        {
-            Teste2->deletarAresta(id1,id2,peso);
-            cout << "O id passado foi deletado";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Nгo"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-        else
-        {
-            cout << "O id passado não existe ou ja foi deletado";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Não"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-    }
-
-
-
-    if(sair == 0)
+    cout << "Digite primeiro id onde uma arestasera sera deletada"<<endl;
+    id1 = getInputInt();
+    cout << "Digite segundo id onde uma aresta sera deletada entre o primeiro e o segundo id digitados"<<endl;
+    id2 = getInputInt();
+    cout << "Digite o peso do id que sera deletado"<<endl;
+    peso = getInputInt();
+    verifica = Teste2->verificaIdExiste(id1);
+    if(verifica == true)
     {
-        system("cls");
-        return;
+        Teste2->deletarAresta(id1,id2,peso);
+        cout << "O id passado foi deletado";
     }
+    else
+    {
+        cout << "O id passado não existe ou ja foi deletado";
+    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
     return;
 
 }
@@ -218,142 +133,74 @@ void  deletarAresta(grafo *Teste2)
 void   criarAresta(grafo *Teste2)
 {
 
-    system("cls");
-    int id1,id2,peso,sair = 1;
+    clear();
+    int id1,id2,peso;
     bool verifica;
 
-    while(sair!=0){
-        cout << "Digite primeiro id onde uma aresta sera criada"<<endl;
-        cin >> id1;
-        cout << "Digite segundo id onde uma aresta sera criada entre o primeiro e o segundo id digitados "<<endl;
-        cin >> id2;
-        cout << "Digite o pese desta aresta"<<endl;
-        cin >> peso;
-        verifica = Teste2->verificaIdExiste(id1);
-        if(verifica == true)
-        {
-            Teste2->criarAresta(id1,id2,peso);
-            cout << "A aresta foi criada";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Nгo"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-        else
-        {
-            cout << "O id passado não existe ou ja foi deletado";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Não"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-    }
-
-
-
-    if(sair == 0)
+    cout << "Digite primeiro id onde uma aresta sera criada"<<endl;
+    id1 = getInputInt();
+    cout << "Digite segundo id onde uma aresta sera criada entre o primeiro e o segundo id digitados "<<endl;
+    id2 = getInputInt();
+    cout << "Digite o pese desta aresta"<<endl;
+    peso = getInputInt();
+    verifica = Teste2->verificaIdExiste(id1);
+    if(verifica == true)
     {
-        system("cls");
-        return;
+        Teste2->criarAresta(id1,id2,peso);
+        cout << "A aresta foi criada";
     }
+    else
+    {
+        cout << "O id passado não existe ou ja foi deletado";
+    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
     return;
 }
 
 void obterGrauVertice(grafo *Teste2)
 {
 
-    system("cls");
-    int id,sair = 1;
+    clear();
+    int id;
     bool verifica;
 
-    while(sair!=0){
-        cout << "Digite um id"<<endl;
-        cin >> id;
-        verifica = Teste2->verificaIdExiste(id);
-        if(verifica == true)
-        {
-            int grau = Teste2->obterGrau(id);
-            cout << "Grau do vertice"<<" "<<grau;
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Nгo"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-        else
-        {
-            cout << "O id passado não existe ou ja foi deletado";
-            cout << "Deseja sair:"<<endl;
-            cout << "1)" << " " << "Sim"<<endl;
-            cout <<"2)" << " " << "Não"<<endl;
-            cin >> sair;
-            switch(sair)
-            {
-                case 1: sair = 0;
-                    break;
-                case 2: sair = 1;
-                    break;
-            }
-        }
-    }
-
-
-
-    if(sair == 0)
+    cout << "Digite um id"<<endl;
+    id = getInputInt();
+    verifica = Teste2->verificaIdExiste(id);
+    if(verifica == true)
     {
-        system("cls");
-        return;
+        int grau = Teste2->obterGrau(id);
+        cout << "Grau do vertice"<<" "<<grau;
     }
+    else
+    {
+        cout << "O id passado não existe ou ja foi deletado";
+    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
     return;
-
-
-
 
 }
 
 void obterGrauGrafo(grafo *Teste2) {
-    system("cls");
+    clear();
     int grau = Teste2->obterGrauGrafo();
     cout << "Grau do grafo: "<<grau<<endl;
 
-    int sair = 1;
-    while(sair!=0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+    clear();
 }
 
 void verificarKRegular(grafo *Teste2) {
-    system("cls");
+    clear();
     cout << "Digite o K: "<<endl;
     int k;
     cin >> k;
@@ -363,39 +210,21 @@ void verificarKRegular(grafo *Teste2) {
         cout << "O Grafo nao eh "<<k<<" regular.";
     }
 
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
 }
 
 
 void informarGrau(grafo *Teste2) {
+    clear();
     cout << "A ordem do Grafo eh "<< Teste2->getTamanho() -1 <<endl;
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
 }
 
 void isTrivial(grafo *Teste2) {
@@ -405,20 +234,8 @@ void isTrivial(grafo *Teste2) {
         cout << "O Grafo nao eh trivial.";
     }
 
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
 }
 
 void isNulo(grafo *Teste2) {
@@ -428,24 +245,13 @@ void isNulo(grafo *Teste2) {
         cout << "O Grafo nao eh nulo.";
     }
 
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
 }
 
 void calcularCaminho(grafo *Teste2) {
-    system("cls");
+    clear();
     cout << "Qual algoritmo usar?:"<<endl;
     cout << "1)" << " " << "Dijkstra"<<endl;
     cout <<"2)" << " " << "Floyd"<<endl;
@@ -453,24 +259,12 @@ void calcularCaminho(grafo *Teste2) {
     cin >> algoritmo;
     Teste2->calcularCaminho(algoritmo);
 
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
 }
 
 void calcularFechoDireto(grafo *Teste2) {
-    system("cls");
+    clear();
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     cin >> no1;
@@ -478,65 +272,36 @@ void calcularFechoDireto(grafo *Teste2) {
     cin >> no2;
     Teste2->fechoTransitivoDireto(no1, no2);
 
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+    clear();
 }
 
 void calcularFechoIndireto(grafo *Teste2) {
-    system("cls");
+    clear();
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     cin >> no1;
     Teste2->fechoTransitivoIndireto(no1);
 
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+    clear();
 }
 
 void imprimirSequenciaGraus(grafo *Teste2) {
+    clear();
     cout << "A sequencia de Graus eh:" << endl;
     Teste2->getSequenciaGraus(); //Imprime a sequencia de graus do grafo
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
 }
 
 void getSubgrafoInduzido(grafo *Teste2) {
+    clear();
     cout << "Digite os vertices. -1 para parar." << endl;
     int c = 0;
     list<int> vertices;
@@ -545,57 +310,26 @@ void getSubgrafoInduzido(grafo *Teste2) {
         vertices.push_back(c);
     }
     Teste2->getSubgrafoInduzido(vertices); //Imprime o subgrafo induzido
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+
+    clear();
 }
 
 void getGrafoComplementar(grafo *Teste2) {
     cout << "O grafo complementar eh:" << endl;
     Teste2->getComplementar(); //Imprime o grafo complementar do grafo lido
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
 }
 void getComponentes(grafo *Teste2) {
     cout << "As componentes são:" << endl;
     Teste2->getComponentes(); //
-    int sair = 1;
-    while(sair != 0){
-        cout << "Deseja sair?:"<<endl;
-        cout << "1)" << " " << "Sim"<<endl;
-        cout <<"2)" << " " << "Nao"<<endl;
-        cin >> sair;
-        switch(sair)
-        {
-            case 1: sair = 0;
-                break;
-            case 2: sair = 1;
-                break;
-        }
-    }
+
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
 }
 
 void menu()
@@ -625,18 +359,22 @@ void menu()
 
 
 
+
 int main()
 {
     ifstream txtFile;
+    string input;
     int i,vetor[3],c, direcionado,escolhas = 1;
     string nome;
 
     cout << "Digitar o texto que se quer abrir: " << endl;
-    cin >> nome;
+    //cin >> nome;
+    nome = getInputString();
     cout << endl << "O grafo eh direcionado?"  <<endl;
     cout << "1)" << " " << "Sim"<<endl;
     cout << "0)" << " " << "Nao"<<endl;
-    cin >> direcionado;
+    //cin >> direcionado;
+    direcionado = getInputInt();
     cout << endl;
     txtFile.open(nome.c_str());
 
@@ -673,7 +411,7 @@ int main()
 
 
         menu();
-        cin >> escolhas;
+        escolhas = getInputInt();
         switch(escolhas)
         {
             case 1:
