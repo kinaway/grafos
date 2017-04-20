@@ -31,12 +31,14 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++98" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="grafos.cpp" />
+		<Unit filename="grafos.h" />
 		<Unit filename="include/grafos.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/grafos.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

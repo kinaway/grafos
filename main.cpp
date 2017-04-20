@@ -14,7 +14,7 @@ using namespace std;
 void criarVertice(grafo *Teste2)
 {
     system("cls");
-    int voltar = 0,sair = 0;
+    int sair = 0;
     while(sair == 0){
 
         Teste2->criarVertice();
@@ -103,7 +103,7 @@ void vereficarIdxiste(grafo *Teste2)
 void deletarVertice(grafo *Teste2)
 {
     system("cls");
-    int voltar = 0,id,sair = 1;
+    int id,sair = 1;
     bool verifica;
 
     while(sair!=0){
@@ -160,7 +160,7 @@ void  deletarAresta(grafo *Teste2)
 {
 
     system("cls");
-    int voltar = 0,id1,id2,peso,sair = 1;
+    int id1,id2,peso,sair = 1;
     bool verifica;
 
     while(sair!=0){
@@ -219,7 +219,7 @@ void   criarAresta(grafo *Teste2)
 {
 
     system("cls");
-    int voltar = 0,id1,id2,peso,sair = 1;
+    int id1,id2,peso,sair = 1;
     bool verifica;
 
     while(sair!=0){
@@ -277,7 +277,7 @@ void obterGrauVertice(grafo *Teste2)
 {
 
     system("cls");
-    int voltar = 0,id,sair = 1;
+    int id,sair = 1;
     bool verifica;
 
     while(sair!=0){
@@ -475,7 +475,7 @@ void calcularFechoDireto(grafo *Teste2) {
     int no1;
     cin >> no1;
     int no2;
-    cin >> no1;
+    cin >> no2;
     Teste2->fechoTransitivoDireto(no1, no2);
 
     int sair = 1;
