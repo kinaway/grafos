@@ -41,7 +41,7 @@ public:
     void fechoTransitivoIndireto(int id1,int id2, grafo grafos2);
     bool verificaTrivial();
     bool verificaNulo();
-    void calcularCaminho(int algoritmo);
+    void calcularCaminho(int no1, int no2, int algoritmo);
     int getTamanho();
     void getSequenciaGraus();
     void getSubgrafoInduzido(list<int> vertices);
@@ -61,8 +61,9 @@ private:
     bool direcionado;
     list<pair<int, int> > *adj;
     int *vetor;
-
-
+    
+    void calculaCaminhoDijkstra(int no1, int no2);
+    void calculaCaminhoFloyd(int no1, int no2);
 
 };
 

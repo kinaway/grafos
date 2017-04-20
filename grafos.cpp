@@ -1,5 +1,5 @@
 #include "grafos.h"
-
+#include <limits>
 //FunÁ„o cria um grafo passando a quantida de vertices que se deseja
 grafo::grafo(int tam, int direcionado)
 {
@@ -574,8 +574,104 @@ bool grafo::verificaNulo(){
     return false;
 }
 
-void grafo::calcularCaminho(int algoritmo){
+
+void grafo::calculaCaminhoDijkstra(int no1, int no2){
+    bool incluidos[tamanho]; //Lista de nós já incluídos no caminho mínimo até no1.
+    long int dist[tamanho]; //distância provisória de todos até no1
+    list<int> caminho[tamanho]; //uma lista para cada nó indicando o caminho até ele.
+    for(int i = 0; i< tamanho; i++){ //inicializa arrays
+        dist[i] = numeric_limits<int>::max(); //infinito para todos valores
+        incluidos[i] = false;
+    }
+    dist[no1] = 0;
+    incluidos[no1] = true; //no1 já tem menor caminho encontrado
+    for(list<pair<int, int> >::iterator it = adj[no1].begin(); it != adj[no1].end(); it++){ //atualiza valores dos adj de no1
+        dist[it->first] = it->second;
+    }
+        
+    int no_aux = -1, min_aux = 0;
+    while(no_aux != no2) { //para quando no2 for incluído
+        min_aux = numeric_limits<int>::max();
+        for(int i=0; i<tamanho; i++){ //escolhe menor nó para entrar
+            if(!incluidos[i] && dist[i] < min_aux){ //nó não incluido e com menor valor de distancia
+                min_aux = dist[i];
+                no_aux = i;
+            }
+        }
+        if(min_aux == numeric_limits<int>::max()) {
+            break; //caminho não encontrado.
+        }
+        incluidos[no_aux] = true; //inclui no_aux;
+        for(list<pair<int, int> >::iterator it = adj[no_aux].begin(); it != adj[no_aux].end(); it++){ //atualiza valores dos adj de no_aux
+            if(!incluidos[it->first] && dist[it->first] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
+                dist[it->first] = dist[no_aux] + it->second;
+                caminho[it->first] = caminho[no_aux];
+                caminho[it->first].push_back(no_aux); //novo caminho é caminho até no_aux mais no_aux;
+            }
+        }
+    }
+    if(min_aux != numeric_limits<int>::max()) { //caminho encontrado
+        cout << "Valor do caminho calculado: " << dist[no2] << endl;
+        cout << no1 << "->";
+        for(list<int>::iterator it = caminho[no2].begin(); it != caminho[no2].end(); it++){
+            cout << *it << "->";
+        }
+        cout << no2 << endl;
+    } else {
+        cout << "Caminho entre " << no1 << " e " << no2 << " não encontrado!" << endl;
+    }
+}
+
+void grafo::calculaCaminhoFloyd(int no1, int no2){
+    long int dist[tamanho][tamanho]; //matriz contendo as distâncias de i a j;
+    list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
+    for(int i=0;i<tamanho;i++){
+        caminho[i] = new list<int>[tamanho];
+        for(int j=0;j<tamanho;j++){
+            if(i==j){
+                dist[i][j] = 0;
+            } else {
+                dist[i][j] = numeric_limits<int>::max();//dist começa com infinito.
+            }
+        }
+        for(list<pair<int, int> >::iterator it = adj[i].begin(); it!=adj[i].end(); it++){
+            //atualiza todos adj de i;
+            dist[i][it->first] = it->second;
+        }
+    }
     
+    for(int k=0;k<tamanho;k++){
+        for(int i=0;i<tamanho;i++){
+            for(int j=0;j<tamanho;j++){
+                if(dist[i][j] > dist[i][k] + dist[k][j]){
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                    caminho[i][j] = caminho[i][k];
+                    caminho[i][j].push_back(k); //caminho de ij passa a ser caminho de i a k mais k mais caminho de k a j;
+                    caminho[i][j].insert(caminho[i][j].end(), caminho[k][j].begin(), caminho[k][j].end());
+                }
+            }
+        }
+    }
+    if(dist[no1][no2] == numeric_limits<int>::max()){
+        cout << "Caminho não encontrado!";
+    } else {
+        cout << "Valor do caminho calculado: " << dist[no1][no2] << endl;
+        cout << no1 << "->";
+        for(list<int>::iterator it = caminho[no1][no2].begin(); it != caminho[no1][no2].end(); it++){
+            cout << *it << "->";
+        }
+        cout << no2 << endl;
+    }
+}
+void grafo::calcularCaminho(int no1, int no2, int algoritmo){
+    //algoritmo define se define o caminho por Floyd(2) ou por Dijkstra(1)
+    if(algoritmo == 1) {
+        calculaCaminhoDijkstra(no1, no2);
+    } else if(algoritmo == 2){
+        calculaCaminhoFloyd(no1, no2);
+    } else {
+        cout << "Algoritmo escolhido inválido." << endl;
+    }
 }
 
 int grafo::getTamanho(){
