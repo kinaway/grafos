@@ -167,7 +167,7 @@ void obterGrauGrafo(grafo *Teste2) {
 void verificarKRegular(grafo *Teste2) {
     cout << "Digite o K: "<<endl;
     int k;
-    cin >> k;
+    k = getInputInt();
     if(Teste2->verificaRegular(k)){
         cout << "O Grafo eh "<<k<<" regular.";
     } else {
@@ -210,13 +210,13 @@ void calcularCaminho(grafo *Teste2) {
     cout << "1)" << " " << "Dijkstra"<<endl;
     cout <<"2)" << " " << "Floyd"<<endl;
     int algoritmo;
-    cin >> algoritmo;
+    algoritmo = getInputInt();
 
     int no1, no2;
     cout << "Qual o primeiro nó?:"<<endl;
-    cin >> no1;
+    no1 = getInputInt();
     cout << "Qual o segundo nó?:"<<endl;
-    cin >> no2;
+    no2 = getInputInt();
     Teste2->calcularCaminho(no1, no2, algoritmo);
 
     voltarMenu();
@@ -225,9 +225,9 @@ void calcularCaminho(grafo *Teste2) {
 void calcularFechoDireto(grafo *Teste2) {
     cout << "Informe o numero do no1:"<<endl;
     int no1;
-    cin >> no1;
+    no1 = getInputInt();
     int no2;
-    cin >> no2;
+    no2 = getInputInt();
     Teste2->fechoTransitivoDireto(no1, no2);
 
     voltarMenu();
@@ -236,7 +236,7 @@ void calcularFechoDireto(grafo *Teste2) {
 void calcularFechoIndireto(grafo *Teste2) {
     cout << "Informe o numero do no1:"<<endl;
     int no1;
-    cin >> no1;
+    no1 = getInputInt();
     Teste2->fechoTransitivoIndireto(no1);
 
     voltarMenu();
