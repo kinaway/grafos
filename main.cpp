@@ -331,7 +331,7 @@ void menu()
     cout << "\t 12)" << " " << "Calcular caminho minimo"<< endl;
     cout << "\t *13)" << " " << "Calcular fecho trasitivo direto de um no"<< endl;
     cout << "\t *14)" << " " << "Calcular fecho trasitivo indireto de um no"<< endl;
-    cout << "\t *15)" << " " << "Imprimir sequencia de graus"<< endl;
+    cout << "\t 15)" << " " << "Imprimir sequencia de graus"<< endl;
     cout << "\t *16)" << " " << "Calcular subgrafo induzido"<< endl;
     cout << "\t *17)" << " " << "Imprimir o grafo complementar"<< endl;
     cout << "\t *18)" << " " << "Imprimir componentes fortemente conexas"<< endl;

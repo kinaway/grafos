@@ -65,7 +65,7 @@
 	<list>
 	<algorithm>
 
-1492797814 source:c:\users\darkc_000\desktop\grafos-master\grafos.cpp
+1492798825 source:c:\users\darkc_000\desktop\grafos-master\grafos.cpp
 	"grafos.h"
 	<limits>
 
@@ -74,7 +74,7 @@
 	<list>
 	<algorithm>
 
-1492797828 source:c:\users\darkc_000\desktop\grafos-master\main.cpp
+1492797884 source:c:\users\darkc_000\desktop\grafos-master\main.cpp
 	<iostream>
 	<fstream>
 	<iomanip>

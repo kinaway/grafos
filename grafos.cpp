@@ -718,6 +718,19 @@ void grafo::fechoTransitivoIndireto(int id1){
 
 void grafo::getSequenciaGraus(){
 
+    int grau;
+    for(int i=1;i<=tamanho;i++)
+    {
+     grau = obterGrau(i);
+     cout << "Vertice " << i <<": " << grau << " grau(s)"<< endl;
+   }
+
+
+
+
+
+
+
 }
 
 void grafo::getSubgrafoInduzido(list<int> vertices){
