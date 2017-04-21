@@ -65,3 +65,23 @@
 	<list>
 	<algorithm>
 
+1492797814 source:c:\users\darkc_000\desktop\grafos-master\grafos.cpp
+	"grafos.h"
+	<limits>
+
+1492755148 c:\users\darkc_000\desktop\grafos-master\grafos.h
+	<iostream>
+	<list>
+	<algorithm>
+
+1492797828 source:c:\users\darkc_000\desktop\grafos-master\main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	"grafos.h"
+

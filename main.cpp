@@ -326,8 +326,8 @@ void menu()
     cout << "\t 7)" << " " << "Obter grau do grafo"<< endl;
     cout << "\t 8)" << " " << "Verificar se o grafo eh kregular"<< endl;
     cout << "\t 9)" << " " << "Consultar ordem do grafo"<< endl;
-    cout << "\t *10)" << " " << "Consultar se o grafo eh trivial"<< endl;
-    cout << "\t *11)" << " " << "Consultar se o grafo eh nulo"<< endl;
+    cout << "\t 10)" << " " << "Consultar se o grafo eh trivial"<< endl;
+    cout << "\t 11)" << " " << "Consultar se o grafo eh nulo"<< endl;
     cout << "\t 12)" << " " << "Calcular caminho minimo"<< endl;
     cout << "\t *13)" << " " << "Calcular fecho trasitivo direto de um no"<< endl;
     cout << "\t *14)" << " " << "Calcular fecho trasitivo indireto de um no"<< endl;
