@@ -31,25 +31,25 @@ void clear(){
     cout << string(50, '\n');
 }
 
+void voltarMenu(){
+    cout << "Pressione Enter para voltar ao menu"<<endl;
+    getInputString();
+    clear();
+}
+
 
 void criarVertice(grafo *Teste2)
 {
-    clear();
-    
     Teste2->criarVertice();
     cout << "Vertice criado" <<endl;
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
-    return;
+
+    voltarMenu();
 }
 void vereficarIdxiste(grafo *Teste2)
 {
-    clear();
-    
     int id;
     bool verifica;
+    cout << "Digite o id do vertice que deseja verificar" << endl;
     id = getInputInt();
     verifica = Teste2->verificaIdExiste(id);
     if(verifica == true)
@@ -60,21 +60,15 @@ void vereficarIdxiste(grafo *Teste2)
     {
         cout << "O id passado não existe" << endl;
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
-    return;
-    
+
+    voltarMenu();
 }
 
 void deletarVertice(grafo *Teste2)
 {
-    clear();
     int id;
     bool verifica;
-    
+
     cout << "Digite um id" <<endl;
     id = getInputInt();
     verifica = Teste2->verificaIdExiste(id);
@@ -87,22 +81,16 @@ void deletarVertice(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
-    
-    return;
+
+    voltarMenu();
 }
 
 
 void  deletarAresta(grafo *Teste2)
 {
-    clear();
     int id1,id2,peso;
     bool verifica;
-    
+
     cout << "Digite primeiro id onde uma arestasera sera deletada"<<endl;
     id1 = getInputInt();
     cout << "Digite segundo id onde uma aresta sera deletada entre o primeiro e o segundo id digitados"<<endl;
@@ -119,21 +107,15 @@ void  deletarAresta(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
-    return;
-    
+
+    voltarMenu();
 }
 
 void   criarAresta(grafo *Teste2)
 {
-    clear();
     int id1,id2,peso;
     bool verifica;
-    
+
     cout << "Digite primeiro id onde uma aresta sera criada"<<endl;
     id1 = getInputInt();
     cout << "Digite segundo id onde uma aresta sera criada entre o primeiro e o segundo id digitados "<<endl;
@@ -150,20 +132,15 @@ void   criarAresta(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
-    return;
+
+    voltarMenu();
 }
 
 void obterGrauVertice(grafo *Teste2)
 {
-    clear();
     int id;
     bool verifica;
-    
+
     cout << "Digite um id"<<endl;
     id = getInputInt();
     verifica = Teste2->verificaIdExiste(id);
@@ -176,26 +153,18 @@ void obterGrauVertice(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
-    return;
+
+    voltarMenu();
 }
 
 void obterGrauGrafo(grafo *Teste2) {
-    clear();
     int grau = Teste2->obterGrauGrafo();
     cout << "Grau do grafo: "<<grau<<endl;
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
+
+    voltarMenu();
 }
 
 void verificarKRegular(grafo *Teste2) {
-    clear();
     cout << "Digite o K: "<<endl;
     int k;
     cin >> k;
@@ -204,22 +173,15 @@ void verificarKRegular(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh "<<k<<" regular.";
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
+
+    voltarMenu();
 }
 
 
 void informarGrau(grafo *Teste2) {
-    clear();
     cout << "A ordem do Grafo eh "<< Teste2->getTamanho() -1 <<endl;
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
+
+    voltarMenu();
 }
 
 void isTrivial(grafo *Teste2) {
@@ -228,7 +190,7 @@ void isTrivial(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh trivial.";
     }
-    
+
     cout << "Pressione Enter para voltar ao menu"<<endl;
     getInputString();
 }
@@ -239,97 +201,78 @@ void isNulo(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh nulo.";
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void calcularCaminho(grafo *Teste2) {
-    clear();
     cout << "Qual algoritmo usar?:"<<endl;
     cout << "1)" << " " << "Dijkstra"<<endl;
     cout <<"2)" << " " << "Floyd"<<endl;
     int algoritmo;
     cin >> algoritmo;
-    
+
     int no1, no2;
     cout << "Qual o primeiro nó?:"<<endl;
     cin >> no1;
     cout << "Qual o segundo nó?:"<<endl;
     cin >> no2;
     Teste2->calcularCaminho(no1, no2, algoritmo);
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();getInputString();
+
+    voltarMenu();
 }
 
 void calcularFechoDireto(grafo *Teste2) {
-    clear();
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     cin >> no1;
     int no2;
     cin >> no2;
     Teste2->fechoTransitivoDireto(no1, no2);
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    clear();
+
+    voltarMenu();
 }
 
 void calcularFechoIndireto(grafo *Teste2) {
-    clear();
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     cin >> no1;
     Teste2->fechoTransitivoIndireto(no1);
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    clear();
+
+    voltarMenu();
 }
 
 void imprimirSequenciaGraus(grafo *Teste2) {
-    clear();
     cout << "A sequencia de Graus eh:" << endl;
     Teste2->getSequenciaGraus(); //Imprime a sequencia de graus do grafo
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
+
+    voltarMenu();
 }
 
 void getSubgrafoInduzido(grafo *Teste2) {
-    clear();
     cout << "Digite os vertices. -1 para parar." << endl;
     int c = 0;
     list<int> vertices;
     while(c!=-1){
-        cin >> c;
+        c = getInputInt();
         vertices.push_back(c);
     }
     Teste2->getSubgrafoInduzido(vertices); //Imprime o subgrafo induzido
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
-    
-    clear();
+
+    voltarMenu();
 }
 
 void getGrafoComplementar(grafo *Teste2) {
     cout << "O grafo complementar eh:" << endl;
     Teste2->getComplementar(); //Imprime o grafo complementar do grafo lido
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 void getComponentes(grafo *Teste2) {
     cout << "As componentes são:" << endl;
     Teste2->getComponentes(); //
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void isEuriliano(grafo *Teste2) {
@@ -338,41 +281,36 @@ void isEuriliano(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh Euriliano.";
     }
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void getArticulacoes(grafo *Teste2) {
     cout << "Os nós de articulação são:" << endl;
     Teste2->getArticulacoes(); //
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void getPontes(grafo *Teste2) {
     cout << "As arestas pontes são:" << endl;
     Teste2->getPontes(); //
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void getRaioDiametroCentroPeriferia(grafo *Teste2){
     cout << "O raio, diâmetro, centro e periferia são:" << endl;
     Teste2->getRaioDiametroCentroPeriferia(); //
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void getAGM(grafo *Teste2){
     cout << "A AGM ou floresta mínima é:" << endl;
     Teste2->getAGM(); //
-    
-    cout << "Pressione Enter para voltar ao menu"<<endl;
-    getInputString();
+
+    voltarMenu();
 }
 
 void menu()
@@ -414,23 +352,21 @@ int main()
     string input;
     int i,vetor[3],c, direcionado,escolhas = 1;
     string nome;
-    
+
     cout << "Digitar o texto que se quer abrir: " << endl;
-    //cin >> nome;
     nome = getInputString();
     cout << endl << "O grafo eh direcionado?"  <<endl;
     cout << "1)" << " " << "Sim"<<endl;
     cout << "0)" << " " << "Nao"<<endl;
-    //cin >> direcionado;
     direcionado = getInputInt();
     cout << endl;
     txtFile.open(nome.c_str());
-    
+
     txtFile >> c;
-    
+
     grafo Teste1(c, direcionado);
     //cout << "vertices" << c;
-    
+
     while(!txtFile.eof())
     {
         i = 0;
@@ -446,20 +382,19 @@ int main()
                 if(direcionado == 0)
                     Teste1.criarAresta(vetor[1],vetor[0],vetor[2]);
                 //cout << vetor[j];
-                
+
             }
         }
     }
     txtFile.close();
-    
-    
-    
-    
+
+
     while(escolhas !=0){
-        
-        
+
+
         menu();
         escolhas = getInputInt();
+        clear();
         switch(escolhas)
         {
             case 1:
@@ -528,7 +463,7 @@ int main()
             case 22:
                 getRaioDiametroCentroPeriferia(&Teste1);
                 break;
-                
+
             case 23:
                 getAGM(&Teste1);
                 break;

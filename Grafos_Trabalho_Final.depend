@@ -37,7 +37,7 @@
 1492548217 source:c:\users\ufjf\desktop\grafos_trabalho_final\src\grafos.cpp
 	"grafos.h"
 
-1492706153 source:/home/hauck/grafos/grafos/main.cpp
+1492769060 source:/home/hauck/grafos/grafos/main.cpp
 	<iostream>
 	<fstream>
 	<iomanip>
@@ -45,6 +45,7 @@
 	<list>
 	<time.h>
 	<stdlib.h>
+	<sstream>
 	"grafos.h"
 
 1492562956 /home/hauck/grafos/grafos/include/grafos.h
@@ -55,10 +56,11 @@
 1492562956 source:/home/hauck/grafos/grafos/src/grafos.cpp
 	"grafos.h"
 
-1492704693 source:/home/hauck/grafos/grafos/grafos.cpp
+1492730200 source:/home/hauck/grafos/grafos/grafos.cpp
 	"grafos.h"
+	<limits>
 
-1492703973 /home/hauck/grafos/grafos/grafos.h
+1492730200 /home/hauck/grafos/grafos/grafos.h
 	<iostream>
 	<list>
 	<algorithm>
