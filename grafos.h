@@ -6,8 +6,9 @@
 
 
 
-
 using namespace std;
+typedef list<pair<int, list<pair<int, int> > > >  lista_adjacencia;
+
 class grafo
 {
 public:
@@ -16,12 +17,11 @@ public:
     void mapaVerticedeletar(int id);
     void mapaVerticecriar();
     bool verificaIdExiste(int id);
-    void criarVertice();
+    void criarVertice(int id);
     void deletarVertice(int id);
     void deletarAresta(int id,int id2,int peso);
     int obterGrau(int id);
     int obterGrauGrafo();
-    bool verificarVizinhanca(int id1,int id2);
     void listarAdjacentes(int id1);
     bool verificaRegular(int regular);
     bool verificarCompleto();
@@ -48,22 +48,21 @@ public:
     void getComplementar();
     void getComponentes();
     bool verificaEuriliano();
-    grafo grafoTrasposto();
+    grafo grafoTransposto();
     void getArticulacoes();
     void getPontes();
     void getRaioDiametroCentroPeriferia();
     void getAGM();
-
+    void salvarArquivo(ofstream& arquivo);
     ~grafo();
 
 private:
-    int tamanho;
     bool direcionado;
-    list<pair<int, int> > *adj;
-    int *vetor;
-    
+    lista_adjacencia *lista_vertices; //lista com um pair contendo :id do vertice, lista de adjacência dele contendo: id do nó para quem tem ligação, valor da aresta;
+
     void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
+    list<pair<int, int> >* getAdj(int no);
 
 };
 
