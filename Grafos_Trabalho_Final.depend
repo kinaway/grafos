@@ -85,7 +85,7 @@
 	<sstream>
 	"grafos.h"
 
-1492897669 source:/home/hauck/grafos/grafos2/grafos/main.cpp
+1492901428 source:/home/hauck/grafos/grafos2/grafos/main.cpp
 	<iostream>
 	<fstream>
 	<iomanip>
@@ -96,12 +96,12 @@
 	<sstream>
 	"grafos.h"
 
-1492897669 /home/hauck/grafos/grafos2/grafos/grafos.h
+1492903913 /home/hauck/grafos/grafos2/grafos/grafos.h
 	<iostream>
 	<list>
 	<algorithm>
 
-1492901311 source:/home/hauck/grafos/grafos2/grafos/grafos.cpp
+1492904010 source:/home/hauck/grafos/grafos2/grafos/grafos.cpp
 	"grafos.h"
 	<limits>
 	<fstream>

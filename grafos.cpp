@@ -48,6 +48,31 @@ void grafo::criarAresta(int vet1, int vet2,int peso)
         cout<<"O primeiro id passado nao existe ou foi deletado favor escolher outro: " << vet1;
 }
 
+// Função criar arestas
+grafo grafo::copiarGrafo(){
+
+    grafo copia(lista_vertices->size(), direcionado);
+
+    // cria vértices
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        if(!copia.verificaIdExiste(it->first)){
+            copia.criarVertice(it->first);
+        }
+    }
+
+    // criar adjacencias
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        int vet1 = it->first;
+        for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2!=it->second.end(); it2++){//percorre adjs de it->first
+            int vet2 = it2->first;
+            int peso = it2->second;
+            copia.criarAresta(vet1, vet2, peso);
+        }
+    }
+
+    return copia;
+}
+
 // FunÁ„o adiciona um vertice no grafo
 void grafo::criarVertice(int id)
 {
@@ -111,11 +136,9 @@ bool grafo::verificaRegular(int regular)
 
 bool grafo::verificaVerticeArticulacao(int id)
 {
-    imprimirGrafo();
     list<pair<int,pair<int,int> > > lista;
     int comp1 = numeroComponeteconexo();
-    cout << "AAA" << endl;
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++) //percorre toda lista
+    /*for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++) //percorre toda lista
     {
         for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++){//it->second é lista de adj do nó
             int id1 = it2->first;
@@ -127,17 +150,16 @@ bool grafo::verificaVerticeArticulacao(int id)
             }
 
         }
-    }
+    }*/
 
-    cout << "CCC" << endl;
+    grafo copia = copiarGrafo();
 
-    deletarVertice(id);
-    imprimirGrafo();
-    cout << "BBB" << endl;
-    int temp2 = numeroComponeteconexo();
+    copia.deletarVertice(id);
+    //int temp2 = G.numeroComponeteconexo();
+    /*criarVertice(id);
     for(list<pair<int, pair<int, int> > >::iterator it = lista.begin(); it != lista.end(); it++){
         criarAresta(it->first,it->second.first, it->second.second);
-    }
+    }*/
     int comp2 = numeroComponeteconexo();
     if(comp2>comp1)
     {
@@ -669,10 +691,12 @@ bool grafo::verificaEuriliano(){
 
 void grafo::getArticulacoes(){
 
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        if(verificaVerticeArticulacao(it->first))
+    for(lista_adjacencia::reverse_iterator it = lista_vertices->rbegin(); it != lista_vertices->rend(); it++){
+
+        if(verificaVerticeArticulacao(it->first)){
             cout << it->first << endl;
-        return;
+
+        }
     }
 
 }

@@ -20,6 +20,7 @@ public:
     void criarVertice(int id);
     void deletarVertice(int id);
     void deletarAresta(int id,int id2,int peso);
+
     int obterGrau(int id);
     int obterGrauGrafo();
     void listarAdjacentes(int id1);
@@ -55,6 +56,8 @@ public:
     void getAGM();
     void salvarArquivo(ofstream& arquivo);
     void imprimirGrafo();
+    grafo copiarGrafo();
+
     ~grafo();
 
 private:
