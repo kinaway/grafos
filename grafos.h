@@ -54,6 +54,7 @@ public:
     void getRaioDiametroCentroPeriferia();
     void getAGM();
     void salvarArquivo(ofstream& arquivo);
+    void imprimirGrafo();
     ~grafo();
 
 private:

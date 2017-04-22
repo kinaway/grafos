@@ -624,6 +624,31 @@ void grafo::getSubgrafoInduzido(list<int> vertices){
 }
 
 void grafo::getComplementar(){
+    grafo *grafo_aux = new grafo(lista_vertices->size(), direcionado);
+    list<pair<int, int> >* adj;
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        if(!grafo_aux->verificaIdExiste(it->first)){
+            grafo_aux->criarVertice(it->first);
+        }
+        for(lista_adjacencia::iterator it2 = lista_vertices->begin(); it2 != lista_vertices->end(); it2++){ //cria um grafo completo com todos vertices do grafo.
+            if(!grafo_aux->verificaIdExiste(it2->first)){
+                grafo_aux->criarVertice(it2->first);
+            }
+            if(it->first != it2->first){
+                grafo_aux->criarAresta(it->first, it2->first, 0); //uma aresta para todo par de vertice.
+            }
+        }
+        
+        //percorre arestas que saem de it->first e exclui elas do grafo completo grafo_aux
+        adj = getAdj(it->first);
+        for(list<pair<int, int> >::iterator it2 = adj->begin(); it2 != adj->end(); it2++){
+            grafo_aux->deletarAresta(it->first, it2->first, 0); //exclui as arestas
+        }
+    }
+    //sobra grafo complementar.
+    
+    //imprime grafo no arquivo
+    grafo_aux->imprimirGrafo();
     
 }
 
@@ -649,6 +674,18 @@ void grafo::getRaioDiametroCentroPeriferia(){
 
 void grafo::getAGM(){
     
+}
+
+void grafo::imprimirGrafo() {
+    cout << lista_vertices->size();
+    list<pair<int,int> >* adj;
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        adj = getAdj(it->first);
+        for(list<pair<int, int> >::iterator it2 = adj->begin(); it2 != adj->end(); it2++){
+            cout << endl;
+            cout <<it->first << " " << it2->first << " " << it2->second;
+        }
+    }
 }
 
 void grafo::salvarArquivo(ofstream& arquivo) {
