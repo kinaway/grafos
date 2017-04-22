@@ -8,7 +8,7 @@
 	<stdlib.h>
 	"grafos.h"
 
-1492548217 
+1492798825 
 
 1467069713 source:c:\users\ufjf\desktop\projeto_stenio\grafos_trabalho_final\src\grafos.cpp
 	"grafos.h"
@@ -18,7 +18,7 @@
 	<list>
 	<algorithm>
 
-1492547431 >
+1492755148 >
 
 1492548409 source:c:\users\ufjf\desktop\grafos_trabalho_final\main.cpp
 	<iostream>
@@ -84,4 +84,25 @@
 	<stdlib.h>
 	<sstream>
 	"grafos.h"
+
+1492897669 source:/home/hauck/grafos/grafos2/grafos/main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	"grafos.h"
+
+1492897669 /home/hauck/grafos/grafos2/grafos/grafos.h
+	<iostream>
+	<list>
+	<algorithm>
+
+1492901311 source:/home/hauck/grafos/grafos2/grafos/grafos.cpp
+	"grafos.h"
+	<limits>
+	<fstream>
 

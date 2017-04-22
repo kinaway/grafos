@@ -4,7 +4,7 @@
 //FunÁ„o cria um grafo passando a quantida de vertices que se deseja
 grafo::grafo(int tam, int direcionado)
 {
-    
+
     lista_vertices = new lista_adjacencia();// … criado um vetor de lista;
     this->direcionado = direcionado;
 }
@@ -92,7 +92,7 @@ void grafo::listarAdjacentes(int id1)
 //Verifica se o grafo È k regular
 bool grafo::verificaRegular(int regular)
 {
-    
+
     if(regular >= lista_vertices->size())
     {
         for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++) //percorre toda lista
@@ -111,24 +111,29 @@ bool grafo::verificaRegular(int regular)
 
 bool grafo::verificaVerticeArticulacao(int id)
 {
-    
+    imprimirGrafo();
     list<pair<int,pair<int,int> > > lista;
     int comp1 = numeroComponeteconexo();
+    cout << "AAA" << endl;
     for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++) //percorre toda lista
     {
         for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++){//it->second é lista de adj do nó
             int id1 = it2->first;
             if(id == it->first || id == id1 )
             {
-                
+
                 lista.push_back(make_pair(it->first,make_pair(it2->first, it2->second)));
-                
+
             }
-            
+
         }
     }
-    
+
+    cout << "CCC" << endl;
+
     deletarVertice(id);
+    imprimirGrafo();
+    cout << "BBB" << endl;
     int temp2 = numeroComponeteconexo();
     for(list<pair<int, pair<int, int> > >::iterator it = lista.begin(); it != lista.end(); it++){
         criarAresta(it->first,it->second.first, it->second.second);
@@ -140,12 +145,12 @@ bool grafo::verificaVerticeArticulacao(int id)
     }
     else
         return false;
-    
+
 }
 //Verifica se o grafo È completo
 bool grafo::verificarCompleto()
 {
-    
+
     return verificaRegular(lista_vertices->size()-1);//Passa o quantidade de vertices como parametro para a funÁ„o
 }
 
@@ -154,49 +159,49 @@ int* grafo::buscaProfundidade(int id)
 {
     if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
     {
-        
+
         int *vetor = new int[lista_vertices->size()] ;// Um ponteiro de int È criado
-        
+
         for(int i=1; i < lista_vertices->size(); i++)
         {
             vetor[i] = 0;//O vetor È inicializado com todos os seus parametros sendo igual a 0
         }
-        
+
         int j = 1 ;
-        
+
         auxbuscaProfundidade(vetor,id,j);//A funÁ„o auxbuscaProfundidade È chamada passando como parametro um vetor e duas variaveis, sendo que os trÍs parametros s„o inteiros
-        
+
         return vetor;
     }
     else
         cout<<"O  id passado nao existe favor escolher outro";
-    
+
     return 0;
 }
 //FunÁao que realiza a busca em profundida
 void grafo::auxbuscaProfundidade(int* vetor,int id,int j)
 {
-    
+
     if(vetor[id] == 0)
     {
         vetor[id] = j;//Coloca um valor diferente de zero indicando que o vertice igual ao id ja foi consultado;
         list<pair<int, int> >*  adj = getAdj(id);
         for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++)//Percorre a lista referente ao id1 pegando cada parametro da lista e colocando-o na variavel pair a
         {
-            
+
             auxbuscaProfundidade(vetor,it->first,j);//A funcao se chama, fazendo um metodo recursivo,atualizando os parametros da funcao
-            
+
         }
     }
 }
 
 bool grafo::verificaArestaPonte(int id1, int id2)
 {
-    
+
     pair<int, int> *b;
     list<pair<int, int> >* adj = getAdj(id1);
     for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
-        
+
         if (it->first == id2)
         {
             //b = it ;
@@ -204,7 +209,7 @@ bool grafo::verificaArestaPonte(int id1, int id2)
     }
     adj = getAdj(id2);
     for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
-        
+
         if ( it->first== id2)
         {
             // b = &it;
@@ -216,13 +221,13 @@ bool grafo::verificaArestaPonte(int id1, int id2)
 bool grafo::verificaConexo()
 {
     int* vetor = buscaProfundidade(1);//Variavel vetor ira receber o vetor retornado pela funÁ„o buscaProfundidade;
-    
+
     for(int i=1; i<lista_vertices->size(); i++)
     {
         if(vetor[i]==0)//Percorre todo o vetor em busca de algum espaÁo igual a 0
             return false;
     }
-    
+
     return true;
 }
 
@@ -230,14 +235,14 @@ bool grafo::verificaConexo()
 int grafo::numeroComponeteconexo()
 {
     int *vetor = buscaProfundidade(1);//Variavel vetor ira receber o vetor retornado pela funÁ„o buscaProfundidade;
-    
+
     int j = 2;
-    
+
     for(int i=1; i<lista_vertices->size(); i++)
     {
         if(vetor[i] == 0)//Percorre todo o vetor em busca de algum espaÁo igual a 0
         {
-            
+
             auxbuscaProfundidade(vetor,i,j);////A funÁ„o auxbuscaProfundidade È chamada comeÁando sua busca apartir do vertice que n„o foi visitado.
             j++;
         }
@@ -253,19 +258,19 @@ void grafo::auxVerificaBipartido(int *vetor2,int id,int *j,int id2,bool *verific
         {
             *j=1;
         }
-        
+
         else//j e atualizado com 2 caso seu valor seja 1;
         {
             *j=2;
         }
-        
+
         vetor2[id] = *j;
         list<pair<int, int> >* adj = getAdj(id);
         for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){//Percorre a lista referente ao id1 pegando cada parametro da lista e colocando-o na variavel pair a
             //{
-            
+
             auxVerificaBipartido(vetor2,it->first,j,id,verifica);//A funÁ„o se chama, fazendo um metodo recursivo,atualizando os paramtros da funÁ„o
-            
+
         }
     }
     else//Caso a posiÁao consultada do vetor2 nao seja igual a 0
@@ -281,29 +286,29 @@ void grafo::auxVerificaBipartido(int *vetor2,int id,int *j,int id2,bool *verific
 // Vetifica se a funÁ„o È bipartida
 bool grafo::verificaBipartido(int id)
 {
-    
+
     if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
     {
         bool verifica = true;
         int *vetorBipartido = new int[lista_vertices->size()] ;
-        
+
         for(int i=1; i < lista_vertices->size(); i++)
         {
             vetorBipartido[i] = 0;//Inicializa todos os valores do vetor com 0;
         }
-        
-        
+
+
         int j = 2;
-        
+
         int id2 = 0;
-        
+
         auxVerificaBipartido(vetorBipartido,id,&j,id2,&verifica);//Chama a funÁ„o que ira auxiliar a funÁ„o verificaBipartido, usando busca em profundidade
-        
+
         return verifica;
     }
     else
         cout<<"O  id passado nao existe  ou foi deletado favor escolher outro";
-    
+
     return false;
 }
 
@@ -312,14 +317,16 @@ void grafo::deletarVertice(int id)
 {
     if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
     {
-        for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){ //percorre toda lista
+        for(lista_adjacencia::reverse_iterator it = lista_vertices->rbegin(); it != lista_vertices->rend(); it++){ //percorre toda lista
             if(it->first == id){ // deleta lista adj de id.
-                lista_vertices->erase(it);
+                lista_vertices->erase(--it.base());
+                it++;
             } else {
                 //deleta todas arestas até id
-                for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2!=it->second.end(); it2++){//percorre adjs de it->first
+                for(list<pair<int, int> >::reverse_iterator it2 = it->second.rbegin(); it2!=it->second.rend(); it2++){//percorre adjs de it->first
                     if(it2->first == id){
-                        it->second.erase(it2);
+                        it->second.erase(--it2.base());
+                        it2++;
                     }
                 }
             }
@@ -355,7 +362,7 @@ void grafo::deletarAresta(int id,int id2, int peso)
 //Retorna um grafo transposto
 grafo grafo::grafoTransposto()
 {
-    
+
     grafo grafoTransposto(0, this->direcionado);//cria um novo grafo
     for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
         grafoTransposto.criarVertice(it->first);
@@ -384,12 +391,12 @@ int* grafo::auxbuscaProfundidadeTransitivo(int* vetor3,int id1,int id2,int* j)
             {
                 *j = *j + 1;//altera j caso id seja encontrado
             }
-            
+
             auxbuscaProfundidadeTransitivo(vetor3,it->first,id2,j);//A funÁ„o se chama, fazendo um metodo recursivo,atualizando os paramtros da funÁ„o
-            
+
         }
     }
-    
+
     return 0;
 }
 //Verifica o conjunto vertices que sao transitivos direto
@@ -400,22 +407,22 @@ void grafo::fechoTransitivoDireto(int id1,int id2)
         if(verificaIdExiste(id2)) //Verifica se o id passado existe no grafo
         {
             int *vetor3 = new int[lista_vertices->size()] ;// Um vetor È criado
-            
+
             for(int i=0; i < lista_vertices->size(); i++)
             {
                 vetor3[i] = 0;//O vetor È inicializado com todos os seus parametros sendo igual a 0
             }
-            
+
             int j = 1 ;
-            
+
             auxbuscaProfundidadeTransitivo(vetor3,id1,id2,&j);//A funÁ„o auxbuscaProfundidade È chamada passando como parametro um vetor e duas variaveis, sendo que os trÍs parametros s„o inteiros
-            
+
             if(j != 1) //verifica se o j foi alterado, ou seja, se existe um ou mais caminhos entre o id1 e id2
             {
                 for(int m=1; m<lista_vertices->size(); m++)
                 {
-                    
-                    
+
+
                     if(m >= 1 && m<j)//verifica se o vetor possui um numero entre os intervalos de j, que È incrementado quando encontra o id passado na busca em profundidade
                     {
                         if(m != id1 && m != id2 )
@@ -423,35 +430,35 @@ void grafo::fechoTransitivoDireto(int id1,int id2)
                             cout << "Vertice" <<  m << endl;
                         }
                     }
-                    
-                    
+
+
                 }
                 j=0;
             }
             else
                 cout<<"Nao existe nenhum caminho, onde se possa sair de id1 e chager em id2";
-            
+
         }
         else
             cout<<"O  id passado nao existe favor escolher outro";
-        
+
     }
     else
         cout<<"O  id passado nao existe favor escolher outro";
-    
+
 }
 
 // Verifica o conjunto vertices que sao transitivos indiretos
 void grafo::fechoTransitivoIndireto(int id1,int id2, grafo grafos2)
 {
-    
+
     grafos2 = grafos2.grafoTransposto();//cria uma grafo Transposto
     grafos2.fechoTransitivoDireto(id2,id1);//Chama a funÁao que verifica o conjunto vertices que sao transitivos diretos
-    
+
 }
 
 bool grafo::verificaTrivial(){
-    
+
     if(lista_vertices->size() > 2)
     {
         return false;
@@ -466,19 +473,19 @@ bool grafo::verificaTrivial(){
         {
             return true;
         }
-        
-        
-        
+
+
+
     }
-    
-    
-    
-    
+
+
+
+
     return false;
 }
 
 bool grafo::verificaNulo(){
-    
+
     if(lista_vertices->size() > 1)
     {
         return false;
@@ -504,7 +511,7 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
     for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no1
         dist[it->first] = it->second;
     }
-    
+
     int no_aux = -1, min_aux = 0;
     while(no_aux != no2) { //para quando no2 for incluído
         min_aux = numeric_limits<int>::max();
@@ -559,7 +566,7 @@ void grafo::calculaCaminhoFloyd(int no1, int no2){
             dist[i][it->first] = it->second;
         }
     }
-    
+
     for(int k=0;k<tamanho;k++){
         for(int i=0;i<tamanho;i++){
             for(int j=0;j<tamanho;j++){
@@ -599,28 +606,28 @@ int grafo::getTamanho(){
 }
 
 void grafo::fechoTransitivoIndireto(int id1){
-    
+
 }
 
 void grafo::getSequenciaGraus(){
-    
+
     int grau;
     for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++)
     {
         grau = obterGrau(it->first);
         cout << "Vertice " << it->first <<": " << grau << " grau(s)"<< endl;
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 }
 
 void grafo::getSubgrafoInduzido(list<int> vertices){
-    
+
 }
 
 void grafo::getComplementar(){
@@ -638,7 +645,7 @@ void grafo::getComplementar(){
                 grafo_aux->criarAresta(it->first, it2->first, 0); //uma aresta para todo par de vertice.
             }
         }
-        
+
         //percorre arestas que saem de it->first e exclui elas do grafo completo grafo_aux
         adj = getAdj(it->first);
         for(list<pair<int, int> >::iterator it2 = adj->begin(); it2 != adj->end(); it2++){
@@ -646,14 +653,14 @@ void grafo::getComplementar(){
         }
     }
     //sobra grafo complementar.
-    
+
     //imprime grafo no arquivo
     grafo_aux->imprimirGrafo();
-    
+
 }
 
 void grafo::getComponentes(){
-    
+
 }
 
 bool grafo::verificaEuriliano(){
@@ -661,19 +668,25 @@ bool grafo::verificaEuriliano(){
 }
 
 void grafo::getArticulacoes(){
-    
+
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        if(verificaVerticeArticulacao(it->first))
+            cout << it->first << endl;
+        return;
+    }
+
 }
 
 void grafo::getPontes(){
-    
+
 }
 
 void grafo::getRaioDiametroCentroPeriferia(){
-    
+
 }
 
 void grafo::getAGM(){
-    
+
 }
 
 void grafo::imprimirGrafo() {
