@@ -259,6 +259,7 @@ void getSubgrafoInduzido(grafo *Teste2) {
             break;
         vertices.push_back(c);
     }
+    cout << "Subgrafo induzido: "
     Teste2->getSubgrafoInduzido(vertices); //Imprime o subgrafo induzido
 
     voltarMenu();

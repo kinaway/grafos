@@ -30,7 +30,7 @@ public:
     bool verificaConexo();
     int*  buscaProfundidade(int id);
     void auxbuscaProfundidade(int* vetor, int id,int i);
-    bool verificaArestaPonte(int id1, int id2);
+    bool verificaArestaPonte(int id1, int id2, int peso);
     bool verificaBipartido(int id);
     void auxVerificaBipartido(int* vetor,int id,int *j,int id2,bool *verifica);
     bool verificaVerticeArticulacao(int id);
@@ -56,6 +56,8 @@ public:
     void getAGM();
     void salvarArquivo(ofstream& arquivo);
     void imprimirGrafo();
+    int numeroArestas();
+    bool possuiCiclo();
     grafo copiarGrafo();
 
     ~grafo();
@@ -67,6 +69,8 @@ private:
     void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
     int getComponentesConexas();
+    bool buscaProfundidadeCiclo();
+    bool auxbuscaProfundidadeCiclo(list<int> visitados, int id, int pai);
     list<pair<int, int> >* getAdj(int no);
 
 };
