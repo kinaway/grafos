@@ -22,6 +22,7 @@ public:
     void deletarAresta(int id,int id2,int peso);
 
     int obterGrau(int id);
+    void imprimirGrau(int id);
     int obterGrauGrafo();
     void listarAdjacentes(int id1);
     bool verificaRegular(int regular);

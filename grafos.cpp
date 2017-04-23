@@ -89,6 +89,30 @@ int grafo::obterGrau(int id)
     return getAdj(id)->size(); //retorna tamanho da lista de adj de no. id verificado se existe anteriormente.
 }
 
+void grafo::imprimirGrau(int id)
+{
+    if(direcionado == false){
+        cout << "Vertice: " << id << ", Grau: " << obterGrau(id) << endl;
+    }
+    else{
+        cout << "Grau de saída: " << obterGrau(id) << endl;
+
+        int grau_entrada = 0;
+        for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+            int id1 = it->first;
+            if(id1 != id){
+                for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2!=it->second.end(); it2++){
+                    int id2 = it2->first;
+                    if(id2 == id)
+                        grau_entrada += 1;
+                }
+            }
+        }
+
+        cout << "Grau de entrada: " << grau_entrada << endl;
+    }
+}
+
 //Obtem o grau total do grafo
 int grafo::obterGrauGrafo()
 {

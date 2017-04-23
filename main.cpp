@@ -142,15 +142,12 @@ void   criarAresta(grafo *Teste2)
 void obterGrauVertice(grafo *Teste2)
 {
     int id;
-    bool verifica;
 
     cout << "Digite um id"<<endl;
     id = getInputInt();
-    verifica = Teste2->verificaIdExiste(id);
-    if(verifica == true)
+    if(Teste2->verificaIdExiste(id))
     {
-        int grau = Teste2->obterGrau(id);
-        cout << "Grau do vertice"<<" "<<grau;
+        Teste2->imprimirGrau(id);
     }
     else
     {
@@ -336,7 +333,7 @@ void menu()
     cout << "\t 3)" << " " << "Deletar vertice"<< endl;
     cout << "\t 4)" << " " << "Deletar aresta"<< endl;
     cout << "\t 5)" << " " << "Criar aresta"<< endl;
-    cout << "\t *6)" << " " << "Obter grau de um vertice"<< endl;
+    cout << "\t 6)" << " " << "Obter grau de um vertice"<< endl;
     cout << "\t 7)" << " " << "Obter grau do grafo"<< endl;
     cout << "\t 8)" << " " << "Verificar se o grafo eh kregular"<< endl;
     cout << "\t 9)" << " " << "Consultar ordem do grafo"<< endl;
