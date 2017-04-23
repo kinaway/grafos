@@ -348,7 +348,7 @@ void menu()
     cout << "\t 17)" << " " << "Imprimir o grafo complementar"<< endl;
     cout << "\t *18)" << " " << "Imprimir componentes fortemente conexas"<< endl;
     cout << "\t *19)" << " " << "Verificar se o Grafo é Euliriano"<< endl;
-    cout << "\t *20)" << " " << "Apresentar nós de articulação"<< endl;
+    cout << "\t 20)" << " " << "Apresentar nós de articulação"<< endl;
     cout << "\t *21)" << " " << "Apresentar arestas pontes"<< endl;
     cout << "\t *22)" << " " << "Apresentar o raio, diâmetro, centro e periferia do grafo"<< endl;
     cout << "\t *23)" << " " << "Apresentar o AGM ou florestas de custo mínimo"<< endl;
