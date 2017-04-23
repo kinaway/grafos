@@ -615,15 +615,15 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
         dist[i] = numeric_limits<int>::max(); //infinito para todos valores
         incluidos[i] = false;
     }
-    dist[no1] = 0;
-    incluidos[no1] = true; //no1 já tem menor caminho encontrado
+    dist[no1-1] = 0;
+    incluidos[no1-1] = true; //no1 já tem menor caminho encontrado
     list<pair<int, int> >* adj = getAdj(no1);
     for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no1
-        dist[it->first] = it->second;
+        dist[it->first-1] = it->second;
     }
     
     int no_aux = -1, min_aux = 0;
-    while(no_aux != no2) { //para quando no2 for incluído
+    while(no_aux != no2-1) { //para quando no2 for incluído
         min_aux = numeric_limits<int>::max();
         for(int i=0; i<lista_vertices->size(); i++){ //escolhe menor nó para entrar
             if(!incluidos[i] && dist[i] < min_aux){ //nó não incluido e com menor valor de distancia
@@ -635,19 +635,19 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
             break; //caminho não encontrado.
         }
         incluidos[no_aux] = true; //inclui no_aux;
-        adj = getAdj(no_aux);
+        adj = getAdj(no_aux+1);
         for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no_aux
-            if(!incluidos[it->first] && dist[it->first] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
-                dist[it->first] = dist[no_aux] + it->second;
-                caminho[it->first] = caminho[no_aux];
-                caminho[it->first].push_back(no_aux); //novo caminho é caminho até no_aux mais no_aux;
+            if(!incluidos[it->first-1] && dist[it->first-1] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
+                dist[it->first-1] = dist[no_aux] + it->second;
+                caminho[it->first-1] = caminho[no_aux];
+                caminho[it->first-1].push_back(no_aux); //novo caminho é caminho até no_aux mais no_aux;
             }
         }
     }
     if(min_aux != numeric_limits<int>::max()) { //caminho encontrado
-        cout << "Valor do caminho calculado: " << dist[no2] << endl;
+        cout << "Valor do caminho calculado: " << dist[no2-1] << endl;
         cout << no1 << "->";
-        for(list<int>::iterator it = caminho[no2].begin(); it != caminho[no2].end(); it++){
+        for(list<int>::iterator it = caminho[no2-1].begin(); it != caminho[no2-1].end(); it++){
             cout << *it << "->";
         }
         cout << no2 << endl;
@@ -656,12 +656,13 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
     }
 }
 
-void grafo::calculaCaminhoFloyd(int no1, int no2){
+long int** grafo::calculaCaminhoFloyd(int no1, int no2){
     int tamanho = lista_vertices->size();
-    long int dist[tamanho][tamanho]; //matriz contendo as distâncias de i a j;
+    long int **dist = new long int*[tamanho]; //matriz contendo as distâncias de i a j;
     list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
     list<pair<int, int> >* adj;
     for(int i=0;i<tamanho;i++){
+        dist[i] = new long int[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
         caminho[i] = new list<int>[tamanho];
         for(int j=0;j<tamanho;j++){
             if(i==j){
@@ -670,10 +671,10 @@ void grafo::calculaCaminhoFloyd(int no1, int no2){
                 dist[i][j] = numeric_limits<int>::max();//dist começa com infinito.
             }
         }
-        adj = getAdj(i);
+        adj = getAdj(i+1);
         for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
             //atualiza todos adj de i;
-            dist[i][it->first] = it->second;
+            dist[i][it->first-1] = it->second;
         }
     }
     
@@ -689,16 +690,17 @@ void grafo::calculaCaminhoFloyd(int no1, int no2){
             }
         }
     }
-    if(dist[no1][no2] == numeric_limits<int>::max()){
+    if(dist[no1-1][no2-1] == numeric_limits<int>::max()){
         cout << "Caminho não encontrado!";
     } else {
-        cout << "Valor do caminho calculado: " << dist[no1][no2] << endl;
+        cout << "Valor do caminho calculado: " << dist[no1-1][no2-1] << endl;
         cout << no1 << "->";
-        for(list<int>::iterator it = caminho[no1][no2].begin(); it != caminho[no1][no2].end(); it++){
+        for(list<int>::iterator it = caminho[no1-1][no2-1].begin(); it != caminho[no1-1][no2-1].end(); it++){
             cout << *it << "->";
         }
         cout << no2 << endl;
     }
+    return dist;
 }
 void grafo::calcularCaminho(int no1, int no2, int algoritmo){
     //algoritmo define se define o caminho por Floyd(2) ou por Dijkstra(1)
@@ -760,7 +762,41 @@ void grafo::getSubgrafoInduzido(list<int> vertices){
     cout << endl;
 }
 
+
 void grafo::getComponentesFortementeConexas(){
+    list<list<int> >* lista_componentes = new list<list<int> >(); //lista contendo as componentes conexas
+    grafo copia = copiarGrafo(); //usa uma copia para excluir nós já inseridos numa componente conexa.
+    long int **dist = calculaCaminhoFloyd(2, 4); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
+    int vertice_aux;
+    cout << string(80, '\n'); //'limpa' console.
+    for(lista_adjacencia::iterator it = copia.lista_vertices->begin(); it != copia.lista_vertices->end(); it++){
+        if(it->first != -1){ //-1 define vertice que já entrou
+            lista_componentes->push_back(list<int>());
+            vertice_aux = it->first;
+            cout << it->first << ": " << endl;
+            for(lista_adjacencia::iterator it2 = copia.lista_vertices->begin(); it2 != copia.lista_vertices->end(); it2++){ //busca para todos vertices.
+                if(it2->first != -1){
+                    cout<<it2->first<<endl;
+                    if(dist[vertice_aux-1][it2->first-1] < numeric_limits<int>::max() && dist[it2->first-1][vertice_aux-1] < numeric_limits<int>::max()){
+                        //existe caminho de ida e volta entre os dois vertices
+                        lista_componentes->back().push_back(it2->first);//inclui na componente o vertice.
+                        it2->first = -1;
+                    }
+                }
+            }
+        }
+    }
+    
+    //imprime as componentes
+    int componente_index = 1;
+    for(list<list<int> >::iterator it = lista_componentes->begin(); it != lista_componentes->end(); it++){
+        cout << "Componente " << componente_index << ":" << endl;
+        for(list<int>::iterator it2 = it->begin(); it2 != it->end(); it2++){
+            cout << *it2 << endl;
+        }
+        componente_index++;
+        cout << endl << endl;
+    }
     
 }
 
