@@ -30,7 +30,6 @@ public:
     int*  buscaProfundidade(int id);
     void auxbuscaProfundidade(int* vetor, int id,int i);
     bool verificaArestaPonte(int id1, int id2);
-    int numeroComponeteconexo();
     bool verificaBipartido(int id);
     void auxVerificaBipartido(int* vetor,int id,int *j,int id2,bool *verifica);
     bool verificaVerticeArticulacao(int id);
@@ -47,7 +46,7 @@ public:
     void getSequenciaGraus();
     void getSubgrafoInduzido(list<int> vertices);
     void getComplementar();
-    void getComponentes();
+    void getComponentesFortementeConexas();
     bool verificaEuriliano();
     grafo grafoTransposto();
     void getArticulacoes();
@@ -66,6 +65,7 @@ private:
 
     void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
+    int getComponentesConexas();
     list<pair<int, int> >* getAdj(int no);
 
 };

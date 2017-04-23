@@ -271,9 +271,9 @@ void getGrafoComplementar(grafo *Teste2) {
 
     voltarMenu();
 }
-void getComponentes(grafo *Teste2) {
+void getComponentesFortementeConexas(grafo *Teste2) {
     cout << "As componentes são:" << endl;
-    Teste2->getComponentes(); //
+    Teste2->getComponentesFortementeConexas(); //
 
     voltarMenu();
 }
@@ -349,7 +349,7 @@ void menu()
     cout << "\t *18)" << " " << "Imprimir componentes fortemente conexas"<< endl;
     cout << "\t *19)" << " " << "Verificar se o Grafo é Euliriano"<< endl;
     cout << "\t 20)" << " " << "Apresentar nós de articulação"<< endl;
-    cout << "\t *21)" << " " << "Apresentar arestas pontes"<< endl;
+    cout << "\t 21)" << " " << "Apresentar arestas pontes"<< endl;
     cout << "\t *22)" << " " << "Apresentar o raio, diâmetro, centro e periferia do grafo"<< endl;
     cout << "\t *23)" << " " << "Apresentar o AGM ou florestas de custo mínimo"<< endl;
     cout << "\t 0)"  << " " << "Salvar em arquivo e Sair"<<endl;
@@ -465,7 +465,7 @@ int main(int argc, char *argv[])
                 getGrafoComplementar(&Teste1);
                 break;
             case 18:
-                getComponentes(&Teste1);
+                getComponentesFortementeConexas(&Teste1);
                 break;
             case 19:
                 isEuriliano(&Teste1);

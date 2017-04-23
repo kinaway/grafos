@@ -145,7 +145,7 @@ bool grafo::verificaVerticeArticulacao(int id)
     cout << endl;*/
 
     list<pair<int,pair<int,int> > > lista;
-    int comp1 = numeroComponeteconexo();
+    int comp1 = getComponentesConexas();
     //cout << "Componentes conexas do grafo 1: "<< comp1 << endl;
 
     grafo copia = copiarGrafo();
@@ -153,7 +153,7 @@ bool grafo::verificaVerticeArticulacao(int id)
     /*cout << "Grafo 2: " << endl;
     copia.imprimirGrafo();
     cout << endl;*/
-    int comp2 = copia.numeroComponeteconexo();
+    int comp2 = copia.getComponentesConexas();
     //cout << "Componente conexas do grafo 2: "<< comp2 << endl;
     if(comp2!=comp1)
     {
@@ -260,7 +260,7 @@ bool grafo::verificaConexo()
 }
 
 //Verifica a quantidade de numeros conexos
-int grafo::numeroComponeteconexo()
+int grafo::getComponentesConexas()
 {
     if(lista_vertices->size() == 0)
         return 0;
@@ -713,6 +713,10 @@ void grafo::getSubgrafoInduzido(list<int> vertices){
 
 }
 
+void grafo::getComponentesFortementeConexas(){
+
+}
+
 void grafo::getComplementar(){
     grafo *grafo_aux = new grafo(lista_vertices->size(), direcionado);
     list<pair<int, int> >* adj;
@@ -742,10 +746,6 @@ void grafo::getComplementar(){
 
 }
 
-void grafo::getComponentes(){
-
-}
-
 bool grafo::verificaEuriliano(){
     return false;
 }
@@ -762,7 +762,32 @@ void grafo::getArticulacoes(){
 }
 
 void grafo::getPontes(){
+    int componentes = getComponentesConexas();
+   // cout << "Componentes do grafo inicial: "<< componentes << endl;
 
+    if(direcionado == false)
+    {
+        for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+            int id1 = it->first;
+            //cout << "ID1: " << id1 << endl;
+            for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++){
+                grafo copia = copiarGrafo();
+                int id2 = it2->first;
+                int peso = it2->second;
+                //cout << "ID2: " << id2 << ", Peso: " << peso << endl;
+                copia.deletarAresta(id1, id2, peso);
+                if(direcionado == false)
+                    copia.deletarAresta(id2, id1, peso);
+                int componentes2 = copia.getComponentesConexas();
+                //cout << "Numero de componentes apos remoçao: " << componentes2 << endl;
+                if(componentes != componentes2)
+                    cout << id1 << "-" << id2 << " " << peso << endl;
+            }
+        }
+    }
+    else{
+        cout << "Para o cálculo de pontes, o grafo deve ser não-orientado" << endl;
+    }
 }
 
 void grafo::getRaioDiametroCentroPeriferia(){
