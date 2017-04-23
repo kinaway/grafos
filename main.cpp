@@ -256,8 +256,10 @@ void getSubgrafoInduzido(grafo *Teste2) {
     cout << "Digite os vertices. -1 para parar." << endl;
     int c = 0;
     list<int> vertices;
-    while(c!=-1){
+    while(true){
         c = getInputInt();
+        if(c == -1)
+            break;
         vertices.push_back(c);
     }
     Teste2->getSubgrafoInduzido(vertices); //Imprime o subgrafo induzido
@@ -344,7 +346,7 @@ void menu()
     cout << "\t *13)" << " " << "Calcular fecho trasitivo direto de um no"<< endl;
     cout << "\t *14)" << " " << "Calcular fecho trasitivo indireto de um no"<< endl;
     cout << "\t 15)" << " " << "Imprimir sequencia de graus"<< endl;
-    cout << "\t *16)" << " " << "Calcular subgrafo induzido"<< endl;
+    cout << "\t 16)" << " " << "Calcular subgrafo induzido"<< endl;
     cout << "\t 17)" << " " << "Imprimir o grafo complementar"<< endl;
     cout << "\t *18)" << " " << "Imprimir componentes fortemente conexas"<< endl;
     cout << "\t *19)" << " " << "Verificar se o Grafo é Euliriano"<< endl;

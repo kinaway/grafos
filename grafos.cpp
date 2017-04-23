@@ -710,7 +710,33 @@ void grafo::getSequenciaGraus(){
 }
 
 void grafo::getSubgrafoInduzido(list<int> vertices){
+    grafo g(0, direcionado);
 
+    for(list<int>::iterator it = vertices.begin(); it != vertices.end(); it++){
+        //cout << "Vertice: " << *it << endl;
+        g.criarVertice(*it);
+    }
+
+    for(list<int>::iterator it = vertices.begin(); it != vertices.end(); it++){
+        for(lista_adjacencia::iterator no = lista_vertices->begin(); no != lista_vertices->end(); no++){
+            if(no->first == *it){
+                int id1 = no->first;
+                //cout << "Verificando arestas do vertice "<< id1 << endl;
+                for(list<pair<int, int> >::iterator adj = no->second.begin(); adj != no->second.end(); adj++){
+                    int id2 = adj->first;
+                    int peso = adj->second;
+                    //cout << "Aresta: " << id2 << ", peso " << peso << endl;
+                    if(g.verificaIdExiste(id2)){
+                        g.criarAresta(id1, id2, peso);
+                    }
+                }
+            }
+        }
+    }
+
+    cout << "Grafo induzido: " << endl;
+    g.imprimirGrafo();
+    cout << endl;
 }
 
 void grafo::getComponentesFortementeConexas(){
