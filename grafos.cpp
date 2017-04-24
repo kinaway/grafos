@@ -773,10 +773,8 @@ void grafo::getComponentesFortementeConexas(){
         if(it->first != -1){ //-1 define vertice que já entrou
             lista_componentes->push_back(list<int>());
             vertice_aux = it->first;
-            cout << it->first << ": " << endl;
             for(lista_adjacencia::iterator it2 = copia.lista_vertices->begin(); it2 != copia.lista_vertices->end(); it2++){ //busca para todos vertices.
                 if(it2->first != -1){
-                    cout<<it2->first<<endl;
                     if(dist[vertice_aux-1][it2->first-1] < numeric_limits<int>::max() && dist[it2->first-1][vertice_aux-1] < numeric_limits<int>::max()){
                         //existe caminho de ida e volta entre os dois vertices
                         lista_componentes->back().push_back(it2->first);//inclui na componente o vertice.
