@@ -5,7 +5,7 @@
 grafo::grafo(int tam, int direcionado)
 {
     
-    lista_vertices = new lista_adjacencia();// … criado um vetor de lista;
+    lista_vertices = new lista_adjacencia();// … criado uma lista de vertices;
     for(int i = 0; i < tam; i++){
         criarVertice(i+1);
     }
@@ -640,7 +640,7 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
             if(!incluidos[it->first-1] && dist[it->first-1] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
                 dist[it->first-1] = dist[no_aux] + it->second;
                 caminho[it->first-1] = caminho[no_aux];
-                caminho[it->first-1].push_back(no_aux); //novo caminho é caminho até no_aux mais no_aux;
+                caminho[it->first-1].push_back(no_aux+1); //novo caminho é caminho até no_aux mais no_aux;
             }
         }
     }
@@ -684,7 +684,7 @@ long int** grafo::calculaCaminhoFloyd(int no1, int no2){
                 if(dist[i][j] > dist[i][k] + dist[k][j]){
                     dist[i][j] = dist[i][k] + dist[k][j];
                     caminho[i][j] = caminho[i][k];
-                    caminho[i][j].push_back(k); //caminho de ij passa a ser caminho de i a k mais k mais caminho de k a j;
+                    caminho[i][j].push_back(k+1); //caminho de ij passa a ser caminho de i a k mais k mais caminho de k a j;
                     caminho[i][j].insert(caminho[i][j].end(), caminho[k][j].begin(), caminho[k][j].end());
                 }
             }
