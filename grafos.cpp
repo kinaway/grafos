@@ -1,6 +1,7 @@
 #include "grafos.h"
 #include <limits>
 #include <fstream>
+#include <queue>
 //FunÁ„o cria um grafo passando a quantida de vertices que se deseja
 grafo::grafo(int tam, int direcionado)
 {
@@ -115,15 +116,6 @@ void grafo::deletarAresta(int id,int id2, int peso)
         cout<<"O  primeiro id passado nao existe ou foi deletado favor escolher outro";
 }
 
-//Função que retorna a lista de adjacência do nó no
-list<pair<int, int> >* grafo::getAdj(int no){
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        if(it->first == no)
-            return &(it->second);
-    }
-    return NULL;
-}
-
 // FunÁ„o cria uma aresta passando os vertices que se deseja "ligar" e o peso desta "ligaÁ„o"
 void grafo::criarAresta(int vet1, int vet2,int peso)
 {
@@ -141,40 +133,6 @@ void grafo::criarAresta(int vet1, int vet2,int peso)
     else
         cout<<"O primeiro id passado nao existe ou foi deletado favor escolher outro: " << vet1;
 }
-
-// Função criar arestas
-grafo grafo::copiarGrafo(){
-
-    grafo copia(lista_vertices->size(), direcionado);
-
-    // cria vértices
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        if(!copia.verificaIdExiste(it->first)){
-            copia.criarVertice(it->first);
-        }
-    }
-
-    // criar adjacencias
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        int vet1 = it->first;
-        for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2!=it->second.end(); it2++){//percorre adjs de it->first
-            int vet2 = it2->first;
-            int peso = it2->second;
-            copia.criarAresta(vet1, vet2, peso);
-        }
-    }
-
-    return copia;
-}
-
-
-
-// FunÁ„o obtem o grau de um vertice;
-int grafo::obterGrau(int id)
-{
-    return getAdj(id)->size(); //retorna tamanho da lista de adj de no. id verificado se existe anteriormente.
-}
-
 
 // Imprime o grau de um nó, verificando se o grafo é orientado ou não
 void grafo::imprimirGrau(int id)
@@ -199,6 +157,12 @@ void grafo::imprimirGrau(int id)
 
         cout << "Grau de entrada: " << grau_entrada << endl;
     }
+}
+
+// FunÁ„o obtem o grau de um vertice;
+int grafo::obterGrau(int id)
+{
+    return getAdj(id)->size(); //retorna tamanho da lista de adj de no. id verificado se existe anteriormente.
 }
 
 //Obtem o grau total do grafo
@@ -489,11 +453,6 @@ grafo grafo::grafoTransposto()
     return grafoTransposto;//retorna o grafo criado;
 }
 
-
-
-
-
-
 int* grafo::auxbuscaProfundidadeTransitivo(int* vetor3,int id1,int id2,int* j)
 {
     if(vetor3[id1] == 0)
@@ -514,61 +473,22 @@ int* grafo::auxbuscaProfundidadeTransitivo(int* vetor3,int id1,int id2,int* j)
 
     return 0;
 }
-//Verifica o conjunto vertices que sao transitivos direto
-void grafo::fechoTransitivoDireto(int id1,int id2)
-{
-    if(verificaIdExiste(id1)) //Verifica se o id passado existe no grafo
-    {
-        if(verificaIdExiste(id2)) //Verifica se o id passado existe no grafo
-        {
-            int *vetor3 = new int[lista_vertices->size()] ;// Um vetor È criado
-
-            for(int i=0; i < (int)lista_vertices->size(); i++)
-            {
-                vetor3[i] = 0;//O vetor È inicializado com todos os seus parametros sendo igual a 0
-            }
-
-            int j = 1 ;
-
-            auxbuscaProfundidadeTransitivo(vetor3,id1,id2,&j);//A funÁ„o auxbuscaProfundidade È chamada passando como parametro um vetor e duas variaveis, sendo que os trÍs parametros s„o inteiros
-
-            if(j != 1) //verifica se o j foi alterado, ou seja, se existe um ou mais caminhos entre o id1 e id2
-            {
-                for(int m=1; m<(int)lista_vertices->size(); m++)
-                {
-
-
-                    if(m >= 1 && m<j)//verifica se o vetor possui um numero entre os intervalos de j, que È incrementado quando encontra o id passado na busca em profundidade
-                    {
-                        if(m != id1 && m != id2 )
-                        {
-                            cout << "Vertice" <<  m << endl;
-                        }
-                    }
-
-
-                }
-                j=0;
-            }
-            else
-                cout<<"Nao existe nenhum caminho, onde se possa sair de id1 e chager em id2";
-
-        }
-        else
-            cout<<"O  id passado nao existe favor escolher outro";
-
-    }
-    else
-        cout<<"O  id passado nao existe favor escolher outro";
-
-}
 
 // Verifica o conjunto vertices que sao transitivos indiretos
-void grafo::fechoTransitivoIndireto(int id1,int id2, grafo grafos2)
-{
+void grafo::fechoTransitivoIndireto(int id1){
+    long int ** matrizFloyd;
+    matrizFloyd = retornaMatrizFloyd();
+    cout << " O conjunto de nós é: {";
+    for(int i=0;i< (int)lista_vertices->size();i++)
+    {
+        //cout << i << ' --> '<< matrizFloyd[i][id1-1] << endl;
+        if(matrizFloyd[i][id1-1] != numeric_limits<int>::max())
+        {
+            cout << i+1 << " ";
+        }
 
-    grafos2 = grafos2.grafoTransposto();//cria uma grafo Transposto
-    grafos2.fechoTransitivoDireto(id2,id1);//Chama a funÁao que verifica o conjunto vertices que sao transitivos diretos
+    }
+    cout << "}"<< endl;
 
 }
 
@@ -722,8 +642,21 @@ int grafo::getTamanho(){
     return lista_vertices->size();
 }
 
-void grafo::fechoTransitivoIndireto(int id1){
-
+void grafo::fechoTransitivoDireto(int id)
+{
+    int tam = lista_vertices->size();
+    int* arrayDijkstra;
+    arrayDijkstra = retornaVetorDijkstra(id);
+    cout<<"O conjunto de vértices é : {";
+    for(int i =0;i<tam ; i++)
+    {
+        //cout<< arrayDijkstra[i] << " ";
+        if(arrayDijkstra[i] != numeric_limits<int>::max())//se nao for infinito
+        {
+            cout<< i+1 << " ";
+        }
+    }
+    cout<<"}"<<endl;
 }
 
 void grafo::getSequenciaGraus(){
@@ -833,7 +766,24 @@ void grafo::getComplementar(){
 }
 
 bool grafo::verificaEuleriano(){
-    return false;
+    bool grauPar = true;//bool que guarda se todos os nós tem grau par
+    int noGrau;
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++)
+    {
+        noGrau = obterGrau(it->first);
+        if(noGrau % 2 != 0)//caso haja algum nó de grau ímpar
+        {
+            grauPar = false;
+        }
+    }
+    if(grauPar && verificaConexo())//se o grafo possui todos os vertices de grau par e é conexo
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void grafo::getArticulacoes(){
@@ -867,6 +817,65 @@ void grafo::getPontes(){
 }
 
 void grafo::getRaioDiametroCentroPeriferia(){
+    queue<int> centro;
+    queue<int> periferia;
+    int tam = lista_vertices->size();
+    int diametro = 0;//maior valor da matriz
+    int raio = numeric_limits<int>::max();//menor valor da matriz
+    long int **matFloyd;
+    matFloyd = retornaMatrizFloyd();
+    for(int i=0;i< tam ;i++)//procura o maior caminho mais curto (diametro) do grafo
+    {
+        for(int j=0;j< tam ;j++)
+        {
+
+            if(raio > matFloyd[i][j] && matFloyd[i][j] != 0)
+            {
+                raio = matFloyd[i][j];
+            }
+
+            if(diametro < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
+            {
+                diametro = matFloyd[i][j];
+            }
+        }
+    }
+
+
+    for(int l=0;l<tam;l++)
+    {
+        for(int c=0;c<tam;c++)
+        {
+            if(matFloyd[l][c] == raio)
+            {
+                centro.push(l+1);
+                centro.push(c+1);
+            }
+             if(matFloyd[l][c] == diametro)
+            {
+                periferia.push(l+1);
+                periferia.push(c+1);
+            }
+        }
+    }
+
+    cout << "Raio :"<<raio<<endl;
+    cout <<"Diâmetro :"<<diametro<<endl;
+    cout << "Centro :{";
+    for(int i = 0;i< (int)centro.size();i ++)
+    {
+        cout << centro.front()<<" ";
+        centro.pop();
+    }
+    cout<<"}"<<endl;
+
+    cout << "Periferia :{";
+    for(int i = 0;i< (int)periferia.size();i ++)
+    {
+        cout << periferia.front()<<" ";
+        periferia.pop();
+    }
+    cout<<"}"<<endl;
 
 }
 
@@ -959,6 +968,7 @@ void grafo::salvarArquivo(ofstream& arquivo) {
             arquivo << it->first << " " << it2->first << " " << it2->second;
         }
     }
+
 }
 
 // Função auxiliar para calcular numero de arestas
@@ -1022,7 +1032,39 @@ bool grafo::auxbuscaProfundidadeCiclo(list<int> visitados,int id, int pai)
     return ciclo;
 }
 
+//Função que retorna a lista de adjacência do nó no
+list<pair<int, int> >* grafo::getAdj(int no){
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        if(it->first == no)
+            return &(it->second);
+    }
+    return NULL;
+}
 
+// Função criar arestas
+grafo grafo::copiarGrafo(){
+
+    grafo copia(lista_vertices->size(), direcionado);
+
+    // cria vértices
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        if(!copia.verificaIdExiste(it->first)){
+            copia.criarVertice(it->first);
+        }
+    }
+
+    // criar adjacencias
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        int vet1 = it->first;
+        for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2!=it->second.end(); it2++){//percorre adjs de it->first
+            int vet2 = it2->first;
+            int peso = it2->second;
+            copia.criarAresta(vet1, vet2, peso);
+        }
+    }
+
+    return copia;
+}
 
 bool grafo::possuiCiclo(){
     if(direcionado == false){
@@ -1031,6 +1073,90 @@ bool grafo::possuiCiclo(){
     else{
         return false;
     }
+}
+
+int* grafo::retornaVetorDijkstra(int no1)
+{
+    int tamanho = lista_vertices->size();
+    bool incluidos[lista_vertices->size()]; //Lista de nós já incluídos no caminho mínimo até no1.
+    //int *dist[lista_vertices->size()]; //distância provisória de todos até no1
+    int *dist = new  int[tamanho];
+    list<int> caminho[lista_vertices->size()]; //uma lista para cada nó indicando o caminho até ele.
+    for(int i = 0; i< (int)lista_vertices->size(); i++){ //inicializa arrays
+        dist[i] = numeric_limits<int>::max(); //infinito para todos valores
+        incluidos[i] = false;
+    }
+    dist[no1-1] = 0;
+    incluidos[no1-1] = true; //no1 já tem menor caminho encontrado
+    list<pair<int, int> >* adj = getAdj(no1);
+    for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no1
+        dist[it->first-1] = it->second;
+    }
+
+    int no_aux = -1, min_aux = 0;
+    //while(no_aux != NULL) {
+    for(int g = 0 ;g <tamanho ;g++)
+    {
+        min_aux = numeric_limits<int>::max();
+        for(int i=0; i<(int)lista_vertices->size(); i++){ //escolhe menor nó para entrar
+            if(!incluidos[i] && dist[i] < min_aux){ //nó não incluido e com menor valor de distancia
+                min_aux = dist[i];
+                no_aux = i;
+            }
+        }
+        incluidos[no_aux] = true; //inclui no_aux;
+        adj = getAdj(no_aux+1);
+        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no_aux
+            if(!incluidos[it->first-1] && dist[it->first-1] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
+                dist[it->first-1] = dist[no_aux] + it->second;
+                caminho[it->first-1] = caminho[no_aux];
+                caminho[it->first-1].push_back(no_aux+1); //novo caminho é caminho até no_aux mais no_aux;
+            }
+        }
+    }
+
+    return dist;
+
+}
+
+long int** grafo::retornaMatrizFloyd()
+{
+    int tamanho = lista_vertices->size();
+    long int **dist = new long int*[tamanho]; //matriz contendo as distâncias de i a j;
+    list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
+    list<pair<int, int> >* adj;
+    for(int i=0;i<tamanho;i++){
+        dist[i] = new long int[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
+        caminho[i] = new list<int>[tamanho];
+        for(int j=0;j<tamanho;j++){
+            if(i==j){
+                dist[i][j] = 0;
+            } else {
+                dist[i][j] = numeric_limits<int>::max();//dist começa com infinito.
+            }
+        }
+        adj = getAdj(i+1);
+        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
+            //atualiza todos adj de i;
+            dist[i][it->first-1] = it->second;
+        }
+    }
+
+    for(int k=0;k<tamanho;k++){
+        for(int i=0;i<tamanho;i++){
+            for(int j=0;j<tamanho;j++){
+                if(dist[i][j] > dist[i][k] + dist[k][j]){
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                    caminho[i][j] = caminho[i][k];
+                    caminho[i][j].push_back(k+1); //caminho de ij passa a ser caminho de i a k mais k mais caminho de k a j;
+                    caminho[i][j].insert(caminho[i][j].end(), caminho[k][j].begin(), caminho[k][j].end());
+                }
+            }
+        }
+    }
+
+    return dist;
+
 }
 
 grafo::~grafo()

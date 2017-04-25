@@ -226,10 +226,9 @@ void calcularFechoDireto(grafo *Teste2) {
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     no1 = getInputInt();
-    int no2;
-    no2 = getInputInt();
-    Teste2->fechoTransitivoDireto(no1, no2);
-
+//    int no2;
+//    no2 = getInputInt();
+    Teste2->fechoTransitivoDireto(no1);
     voltarMenu();
 }
 
