@@ -42,10 +42,10 @@ void criarVertice(grafo *Teste2)
 {
     cout << "Digite o id do vertice que deseja criar" << endl;
     int id = getInputInt();
-    
+
     Teste2->criarVertice(id);
     cout << "Vertice "<< id <<" criado" <<endl;
-    
+
     voltarMenu();
 }
 void vereficarIdxiste(grafo *Teste2)
@@ -63,7 +63,7 @@ void vereficarIdxiste(grafo *Teste2)
     {
         cout << "O id passado não existe" << endl;
     }
-    
+
     voltarMenu();
 }
 
@@ -71,7 +71,7 @@ void deletarVertice(grafo *Teste2)
 {
     int id;
     bool verifica;
-    
+
     cout << "Digite um id" <<endl;
     id = getInputInt();
     verifica = Teste2->verificaIdExiste(id);
@@ -84,7 +84,7 @@ void deletarVertice(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
+
     voltarMenu();
 }
 
@@ -93,7 +93,7 @@ void  deletarAresta(grafo *Teste2)
 {
     int id1,id2,peso;
     bool verifica;
-    
+
     cout << "Digite primeiro id onde uma arestasera sera deletada"<<endl;
     id1 = getInputInt();
     cout << "Digite segundo id onde uma aresta sera deletada entre o primeiro e o segundo id digitados"<<endl;
@@ -110,7 +110,7 @@ void  deletarAresta(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
+
     voltarMenu();
 }
 
@@ -118,7 +118,7 @@ void   criarAresta(grafo *Teste2)
 {
     int id1,id2,peso;
     bool verifica;
-    
+
     cout << "Digite primeiro id onde uma aresta sera criada"<<endl;
     id1 = getInputInt();
     cout << "Digite segundo id onde uma aresta sera criada entre o primeiro e o segundo id digitados "<<endl;
@@ -135,14 +135,14 @@ void   criarAresta(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
+
     voltarMenu();
 }
 
 void obterGrauVertice(grafo *Teste2)
 {
     int id;
-    
+
     cout << "Digite um id"<<endl;
     id = getInputInt();
     if(Teste2->verificaIdExiste(id))
@@ -153,14 +153,14 @@ void obterGrauVertice(grafo *Teste2)
     {
         cout << "O id passado não existe ou ja foi deletado";
     }
-    
+
     voltarMenu();
 }
 
 void obterGrauGrafo(grafo *Teste2) {
     int grau = Teste2->obterGrauGrafo();
     cout << "Grau do grafo: "<<grau<<endl;
-    
+
     voltarMenu();
 }
 
@@ -173,14 +173,14 @@ void verificarKRegular(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh "<<k<<" regular.";
     }
-    
+
     voltarMenu();
 }
 
 
 void informarGrau(grafo *Teste2) {
     cout << "A ordem do Grafo eh "<< Teste2->getTamanho() <<endl;
-    
+
     voltarMenu();
 }
 
@@ -190,7 +190,7 @@ void isTrivial(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh trivial.";
     }
-    
+
     cout << "Pressione Enter para voltar ao menu"<<endl;
     getInputString();
 }
@@ -201,7 +201,7 @@ void isNulo(grafo *Teste2) {
     } else {
         cout << "O Grafo nao eh nulo.";
     }
-    
+
     voltarMenu();
 }
 
@@ -211,14 +211,14 @@ void calcularCaminho(grafo *Teste2) {
     cout <<"2)" << " " << "Floyd"<<endl;
     int algoritmo;
     algoritmo = getInputInt();
-    
+
     int no1, no2;
     cout << "Qual o primeiro nó?:"<<endl;
     no1 = getInputInt();
     cout << "Qual o segundo nó?:"<<endl;
     no2 = getInputInt();
     Teste2->calcularCaminho(no1, no2, algoritmo);
-    
+
     voltarMenu();
 }
 
@@ -229,7 +229,7 @@ void calcularFechoDireto(grafo *Teste2) {
     int no2;
     no2 = getInputInt();
     Teste2->fechoTransitivoDireto(no1, no2);
-    
+
     voltarMenu();
 }
 
@@ -238,14 +238,14 @@ void calcularFechoIndireto(grafo *Teste2) {
     int no1;
     no1 = getInputInt();
     Teste2->fechoTransitivoIndireto(no1);
-    
+
     voltarMenu();
 }
 
 void imprimirSequenciaGraus(grafo *Teste2) {
     cout << "A sequencia de Graus eh:" << endl;
     Teste2->getSequenciaGraus(); //Imprime a sequencia de graus do grafo
-    
+
     voltarMenu();
 }
 
@@ -261,58 +261,58 @@ void getSubgrafoInduzido(grafo *Teste2) {
     }
     cout << "Subgrafo induzido: ";
     Teste2->getSubgrafoInduzido(vertices); //Imprime o subgrafo induzido
-    
+
     voltarMenu();
 }
 
 void getGrafoComplementar(grafo *Teste2) {
     cout << "O grafo complementar eh:" << endl;
     Teste2->getComplementar(); //Imprime o grafo complementar do grafo lido
-    
+
     voltarMenu();
 }
 void getComponentesFortementeConexas(grafo *Teste2) {
     cout << "As componentes são:" << endl;
     Teste2->getComponentesFortementeConexas(); //
-    
+
     voltarMenu();
 }
 
-void isEuriliano(grafo *Teste2) {
-    if(Teste2->verificaEuriliano()){
+void isEuleriano(grafo *Teste2) {
+    if(Teste2->verificaEuleriano()){
         cout << "O Grafo eh Euriliano.";
     } else {
         cout << "O Grafo nao eh Euriliano.";
     }
-    
+
     voltarMenu();
 }
 
 void getArticulacoes(grafo *Teste2) {
     cout << "Os nós de articulação são:" << endl;
     Teste2->getArticulacoes(); //
-    
+
     voltarMenu();
 }
 
 void getPontes(grafo *Teste2) {
     cout << "As arestas pontes são:" << endl;
     Teste2->getPontes(); //
-    
+
     voltarMenu();
 }
 
 void getRaioDiametroCentroPeriferia(grafo *Teste2){
     cout << "O raio, diâmetro, centro e periferia são:" << endl;
     Teste2->getRaioDiametroCentroPeriferia(); //
-    
+
     voltarMenu();
 }
 
 void getAGM(grafo *Teste2){
     cout << "A AGM ou floresta mínima é:" << endl;
     Teste2->getAGM(); //
-    
+
     voltarMenu();
 }
 
@@ -347,7 +347,7 @@ void menu()
     cout << "\t 16)" << " " << "Calcular subgrafo induzido"<< endl;
     cout << "\t 17)" << " " << "Imprimir o grafo complementar"<< endl;
     cout << "\t 18)" << " " << "Imprimir componentes fortemente conexas"<< endl;
-    cout << "\t *19)" << " " << "Verificar se o Grafo é Euliriano"<< endl;
+    cout << "\t *19)" << " " << "Verificar se o Grafo é Euleriano"<< endl;
     cout << "\t 20)" << " " << "Apresentar nós de articulação"<< endl;
     cout << "\t 21)" << " " << "Apresentar arestas pontes"<< endl;
     cout << "\t *22)" << " " << "Apresentar o raio, diâmetro, centro e periferia do grafo"<< endl;
@@ -364,7 +364,7 @@ int main(int argc, char *argv[])
         cout << "Falta argumentos!" << endl << "Nome de arquivo de entrada e nome de arquivo de saida necessários.";
         exit(0);
     }
-    
+
     ifstream txtFile;
     string input;
     int i,vetor[3],c, direcionado,escolhas = 1;
@@ -376,11 +376,11 @@ int main(int argc, char *argv[])
     direcionado = getInputInt();
     cout << endl;
     txtFile.open(nome.c_str());
-    
+
     txtFile >> c;
-    
+
     grafo Teste1(c, direcionado);
-    
+
     while(!txtFile.eof())
     {
         i = 0;
@@ -403,11 +403,11 @@ int main(int argc, char *argv[])
         }
     }
     txtFile.close();
-    
-    
+
+
     while(escolhas !=0){
-        
-        
+
+
         menu();
         escolhas = getInputInt();
         clear();
@@ -468,7 +468,7 @@ int main(int argc, char *argv[])
                 getComponentesFortementeConexas(&Teste1);
                 break;
             case 19:
-                isEuriliano(&Teste1);
+                isEuleriano(&Teste1);
                 break;
             case 20:
                 getArticulacoes(&Teste1);
@@ -479,7 +479,7 @@ int main(int argc, char *argv[])
             case 22:
                 getRaioDiametroCentroPeriferia(&Teste1);
                 break;
-                
+
             case 23:
                 getAGM(&Teste1);
                 break;

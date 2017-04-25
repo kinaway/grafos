@@ -106,3 +106,24 @@
 	<limits>
 	<fstream>
 
+1493140626 source:c:\users\ufjf\documents\github\grafos\grafos\grafos.cpp
+	"grafos.h"
+	<limits>
+	<fstream>
+
+1493140626 c:\users\ufjf\documents\github\grafos\grafos\grafos.h
+	<iostream>
+	<list>
+	<algorithm>
+
+1493140626 source:c:\users\ufjf\documents\github\grafos\grafos\main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	"grafos.h"
+

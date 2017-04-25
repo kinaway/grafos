@@ -12,15 +12,12 @@ grafo::grafo(int tam, int direcionado)
     this->direcionado = direcionado;
 }
 
-//Função que retorna a lista de adjacência do nó no
-list<pair<int, int> >* grafo::getAdj(int no){
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        if(it->first == no)
-            return &(it->second);
-    }
-    return NULL;
+// FunÁ„o adiciona um vertice no grafo
+void grafo::criarVertice(int id)
+{
+    pair<int, list<pair<int, int> > > vertice = make_pair(id, list<pair<int, int> >());
+    lista_vertices->push_back(vertice);
 }
-
 
 //Verifica se o id passado existe no grafo
 bool grafo::verificaIdExiste(int id)
@@ -31,6 +28,100 @@ bool grafo::verificaIdExiste(int id)
         }
     }
     return false;
+}
+
+//Deleta um vertice selecionado
+void grafo::deletarVertice(int id)
+{
+    /*cout << "Iniciando deleção do vértice  "<< id << endl;
+     cout << "Grafo atual: " << endl;
+     imprimirGrafo();
+     cout << endl;*/
+
+    if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
+    {
+        lista_adjacencia::reverse_iterator it = lista_vertices->rbegin();
+        while(  it != lista_vertices->rend() )
+        {
+            if(it->first == id){ // deleta lista adj de id.
+                //cout << "Deletando adjacencia id->x" << endl;
+                ++it;
+                lista_vertices->erase(it.base());
+            }
+            else{
+                ++it;
+            }
+        }
+
+        it = lista_vertices->rbegin();
+        while(  it != lista_vertices->rend() )
+        {
+            list<pair<int, int> >::reverse_iterator it2 = it->second.rbegin();
+            while(  it2 != it->second.rend() )
+            {
+                //cout << it2->first << "," << it2->second << endl;
+                if(it2->first == id){
+                    //cout << "Deletando adjacencia x->id: " << it2->first << "->" << it2->second << endl;
+                    ++it2;
+                    it->second.erase(it2.base());
+                }
+                else{
+                    ++it2;
+                }
+
+            }
+            ++it;
+        }
+
+        /*cout << "Grafo final: " << endl;
+         imprimirGrafo();
+         cout << endl;*/
+
+    } else
+        cout<<"O  id passado nao existe ou ja foi deletado favor escolher outro"<<endl;
+}
+
+//FunÁ„o deleta uma aresta entre dois vertices
+void grafo::deletarAresta(int id,int id2, int peso)
+{
+    if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
+    {
+        if(verificaIdExiste(id2)) //Verifica se o id passado existe no grafo
+        {
+            list<pair<int, int> >* adj = getAdj(id);
+            for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){//Percorre a lista referente ao id1 pegando cada parametro da lista e colocando-o na variavel pair a
+                if(it->first == id2 && it->second == peso)//Verifica se o id e o peso da aresta que se deseja remover s„o iguais aos passados como parametro
+                {
+                    adj->remove(*it);//A aresta desejada È removida
+                    if(!direcionado){
+                        // Exclui a adjacência de no2->no caso seja não-direcionado
+                        adj = getAdj(id2);
+                        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
+                            if(it->first == id && it->second == peso){
+                                adj->remove(*it);
+                                return;
+                            }
+                        }
+                    }
+                    //se não for direcionado, só precisa remover 1 'aresta'
+                    return;
+                }
+            }
+        }
+        else
+            cout<<"O segundo id passado nao existe ou foi deletado favor escolher outro";
+    }
+    else
+        cout<<"O  primeiro id passado nao existe ou foi deletado favor escolher outro";
+}
+
+//Função que retorna a lista de adjacência do nó no
+list<pair<int, int> >* grafo::getAdj(int no){
+    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+        if(it->first == no)
+            return &(it->second);
+    }
+    return NULL;
 }
 
 // FunÁ„o cria uma aresta passando os vertices que se deseja "ligar" e o peso desta "ligaÁ„o"
@@ -76,12 +167,7 @@ grafo grafo::copiarGrafo(){
     return copia;
 }
 
-// FunÁ„o adiciona um vertice no grafo
-void grafo::criarVertice(int id)
-{
-    pair<int, list<pair<int, int> > > vertice = make_pair(id, list<pair<int, int> >());
-    lista_vertices->push_back(vertice);
-}
+
 
 // FunÁ„o obtem o grau de um vertice;
 int grafo::obterGrau(int id)
@@ -383,90 +469,9 @@ bool grafo::verificaBipartido(int id)
     return false;
 }
 
-//Deleta um vertice selecionado
-void grafo::deletarVertice(int id)
-{
-    /*cout << "Iniciando deleção do vértice  "<< id << endl;
-     cout << "Grafo atual: " << endl;
-     imprimirGrafo();
-     cout << endl;*/
 
-    if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
-    {
-        lista_adjacencia::reverse_iterator it = lista_vertices->rbegin();
-        while(  it != lista_vertices->rend() )
-        {
-            if(it->first == id){ // deleta lista adj de id.
-                //cout << "Deletando adjacencia id->x" << endl;
-                ++it;
-                lista_vertices->erase(it.base());
-            }
-            else{
-                ++it;
-            }
-        }
 
-        it = lista_vertices->rbegin();
-        while(  it != lista_vertices->rend() )
-        {
-            list<pair<int, int> >::reverse_iterator it2 = it->second.rbegin();
-            while(  it2 != it->second.rend() )
-            {
-                //cout << it2->first << "," << it2->second << endl;
-                if(it2->first == id){
-                    //cout << "Deletando adjacencia x->id: " << it2->first << "->" << it2->second << endl;
-                    ++it2;
-                    it->second.erase(it2.base());
-                }
-                else{
-                    ++it2;
-                }
 
-            }
-            ++it;
-        }
-
-        /*cout << "Grafo final: " << endl;
-         imprimirGrafo();
-         cout << endl;*/
-
-    } else
-        cout<<"O  id passado nao existe ou ja foi deletado favor escolher outro"<<endl;
-}
-
-//FunÁ„o deleta uma aresta entre dois vertices
-void grafo::deletarAresta(int id,int id2, int peso)
-{
-    if(verificaIdExiste(id)) //Verifica se o id passado existe no grafo
-    {
-        if(verificaIdExiste(id2)) //Verifica se o id passado existe no grafo
-        {
-            list<pair<int, int> >* adj = getAdj(id);
-            for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){//Percorre a lista referente ao id1 pegando cada parametro da lista e colocando-o na variavel pair a
-                if(it->first == id2 && it->second == peso)//Verifica se o id e o peso da aresta que se deseja remover s„o iguais aos passados como parametro
-                {
-                    adj->remove(*it);//A aresta desejada È removida
-                    if(!direcionado){
-                        // Exclui a adjacência de no2->no caso seja não-direcionado
-                        adj = getAdj(id2);
-                        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
-                            if(it->first == id && it->second == peso){
-                                adj->remove(*it);
-                                return;
-                            }
-                        }
-                    }
-                    //se não for direcionado, só precisa remover 1 'aresta'
-                    return;
-                }
-            }
-        }
-        else
-            cout<<"O segundo id passado nao existe ou foi deletado favor escolher outro";
-    }
-    else
-        cout<<"O  primeiro id passado nao existe ou foi deletado favor escolher outro";
-}
 
 
 //Retorna um grafo transposto
@@ -827,7 +832,7 @@ void grafo::getComplementar(){
 
 }
 
-bool grafo::verificaEuriliano(){
+bool grafo::verificaEuleriano(){
     return false;
 }
 
