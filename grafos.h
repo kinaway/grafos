@@ -67,7 +67,7 @@ private:
     lista_adjacencia *lista_vertices; //lista com um pair contendo :id do vertice, lista de adjacência dele contendo: id do nó para quem tem ligação, valor da aresta;
 
     void calculaCaminhoDijkstra(int no1, int no2);
-    void calculaCaminhoFloyd(int no1, int no2);
+    long int** calculaCaminhoFloyd(int no1, int no2);
     int getComponentesConexas();
     bool buscaProfundidadeCiclo();
     bool auxbuscaProfundidadeCiclo(list<int> visitados, int id, int pai);
