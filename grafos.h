@@ -37,6 +37,7 @@ public:
     void getRaioDiametroCentroPeriferia(); // 22
     void getAGM(); // 23
     void salvarArquivo(ofstream& arquivo);
+    grafo grafoTransposto();
 
     ~grafo();
 
@@ -46,9 +47,9 @@ private:
 
     int obterGrau(int id);
     void calculaCaminhoDijkstra(int no1, int no2);
-    long int** calculaCaminhoFloyd(int no1, int no2);
+    void calculaCaminhoFloyd(int no1, int no2);
     int* retornaVetorDijkstra(int no1);
-    long int** retornaMatrizFloyd();
+    double** retornaMatrizFloyd();
     int getComponentesConexas();
     bool buscaProfundidadeCiclo();
     bool auxbuscaProfundidadeCiclo(list<int> visitados, int id, int pai);
@@ -67,7 +68,7 @@ private:
     void buscaVertice(pair<int, int> *b,int *vetor,int id,int id2,int valor);
     int* auxbuscaProfundidadeTransitivo(int* vetor,int id1,int id2,int* j);
     void fechoTransitivoIndireto(int id1,int id2, grafo grafos2);
-    grafo grafoTransposto();
+
     void imprimirGrafo();
     int numeroArestas();
     bool possuiCiclo();

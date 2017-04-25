@@ -476,7 +476,7 @@ int* grafo::auxbuscaProfundidadeTransitivo(int* vetor3,int id1,int id2,int* j)
 
 // Verifica o conjunto vertices que sao transitivos indiretos
 void grafo::fechoTransitivoIndireto(int id1){
-    long int ** matrizFloyd;
+    double ** matrizFloyd;
     matrizFloyd = retornaMatrizFloyd();
     cout << " O conjunto de nós é: {";
     for(int i=0;i< (int)lista_vertices->size();i++)
@@ -534,7 +534,7 @@ bool grafo::verificaNulo(){
 
 void grafo::calculaCaminhoDijkstra(int no1, int no2){
     bool incluidos[lista_vertices->size()]; //Lista de nós já incluídos no caminho mínimo até no1.
-    long int dist[lista_vertices->size()]; //distância provisória de todos até no1
+    double dist[lista_vertices->size()]; //distância provisória de todos até no1
     list<int> caminho[lista_vertices->size()]; //uma lista para cada nó indicando o caminho até ele.
     for(int i = 0; i< (int)lista_vertices->size(); i++){ //inicializa arrays
         dist[i] = numeric_limits<int>::max(); //infinito para todos valores
@@ -581,13 +581,13 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
     }
 }
 
-long int** grafo::calculaCaminhoFloyd(int no1, int no2){
+void grafo::calculaCaminhoFloyd(int no1, int no2){
     int tamanho = lista_vertices->size();
-    long int **dist = new long int*[tamanho]; //matriz contendo as distâncias de i a j;
+    double **dist = new double*[tamanho]; //matriz contendo as distâncias de i a j;
     list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
     list<pair<int, int> >* adj;
     for(int i=0;i<tamanho;i++){
-        dist[i] = new long int[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
+        dist[i] = new double[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
         caminho[i] = new list<int>[tamanho];
         for(int j=0;j<tamanho;j++){
             if(i==j){
@@ -625,7 +625,6 @@ long int** grafo::calculaCaminhoFloyd(int no1, int no2){
         }
         cout << no2 << endl;
     }
-    return dist;
 }
 void grafo::calcularCaminho(int no1, int no2, int algoritmo){
     //algoritmo define se define o caminho por Floyd(2) ou por Dijkstra(1)
@@ -704,7 +703,7 @@ void grafo::getSubgrafoInduzido(list<int> vertices){
 void grafo::getComponentesFortementeConexas(){
     list<list<int> >* lista_componentes = new list<list<int> >(); //lista contendo as componentes conexas
     grafo copia = copiarGrafo(); //usa uma copia para excluir nós já inseridos numa componente conexa.
-    long int **dist = calculaCaminhoFloyd(2, 4); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
+    double **dist = retornaMatrizFloyd(); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
     int vertice_aux;
     cout << string(80, '\n'); //'limpa' console.
     for(lista_adjacencia::iterator it = copia.lista_vertices->begin(); it != copia.lista_vertices->end(); it++){
@@ -822,7 +821,7 @@ void grafo::getRaioDiametroCentroPeriferia(){
     int tam = lista_vertices->size();
     int diametro = 0;//maior valor da matriz
     int raio = numeric_limits<int>::max();//menor valor da matriz
-    long int **matFloyd;
+    double **matFloyd;
     matFloyd = retornaMatrizFloyd();
     for(int i=0;i< tam ;i++)//procura o maior caminho mais curto (diametro) do grafo
     {
@@ -1119,14 +1118,14 @@ int* grafo::retornaVetorDijkstra(int no1)
 
 }
 
-long int** grafo::retornaMatrizFloyd()
+double** grafo::retornaMatrizFloyd()
 {
     int tamanho = lista_vertices->size();
-    long int **dist = new long int*[tamanho]; //matriz contendo as distâncias de i a j;
+    double **dist = new double*[tamanho]; //matriz contendo as distâncias de i a j;
     list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
     list<pair<int, int> >* adj;
     for(int i=0;i<tamanho;i++){
-        dist[i] = new long int[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
+        dist[i] = new double[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
         caminho[i] = new list<int>[tamanho];
         for(int j=0;j<tamanho;j++){
             if(i==j){
