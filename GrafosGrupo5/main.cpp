@@ -214,23 +214,33 @@ void isNulo(Grafo *g) {
 }
 
 /*void calcularCaminho(Grafo *g) {
-    cout << "Qual algoritmo usar?:"<<endl;
-    cout << "1)" << " " << "Dijkstra"<<endl;
-    cout <<"2)" << " " << "Floyd"<<endl;
     int algoritmo;
+    int no1, no2;
     algoritmo = getInputInt();
 
-    int no1, no2;
+    cout << "Qual algoritmo usar?:"<<endl;
+    cout << "1 - Dijkstra"<<endl;
+    cout << "2 - Floyd"<<endl;
+
     cout << "Qual o primeiro nó?:"<<endl;
     no1 = getInputInt();
     cout << "Qual o segundo nó?:"<<endl;
     no2 = getInputInt();
-    g->calcularCaminho(no1, no2, algoritmo);
+
+    if(algoritmo == 1){
+        //g->calculaCaminhoDijkstra(no1, no2);
+    }
+    else if(algoritmo == 2){
+        //g->calculaCaminhoFloyd(no1, no2);
+    }
+    else{
+        cout << "Algoritmo escolhido inválido." << endl;
+    }
 
     voltarMenu();
-}
+}*/
 
-void calcularFechoDireto(Grafo *g) {
+/*void calcularFechoDireto(Grafo *g) {
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     no1 = getInputInt();
@@ -248,7 +258,7 @@ void calcularFechoIndireto(Grafo *g) {
 
     voltarMenu();
 }
-
+*/
 void imprimirSequenciaGraus(Grafo *g) {
     cout << "A sequencia de Graus é:" << endl;
     g->getSequenciaGraus(); //Imprime a sequencia de graus do grafo
@@ -271,7 +281,7 @@ void getSubgrafoInduzido(Grafo *g) {
 
     voltarMenu();
 }
-
+/*
 void getGrafoComplementar(Grafo *g) {
     cout << "O grafo complementar é:" << endl;
     g->getComplementar(); //Imprime o grafo complementar do grafo lido
@@ -294,21 +304,21 @@ void isEuleriano(Grafo *g) {
 
     voltarMenu();
 }
-
+*/
 void getArticulacoes(Grafo *g) {
     cout << "Os nós de articulação são:" << endl;
-    g->getArticulacoes(); //
+    g->getArticulacoes();
 
     voltarMenu();
 }
 
 void getPontes(Grafo *g) {
     cout << "As arestas pontes são:" << endl;
-    g->getPontes(); //
+    g->getPontes();
 
     voltarMenu();
 }
-
+/*
 void getRaioDiametroCentroPeriferia(Grafo *g){
     cout << "O raio, diâmetro, centro e periferia são:" << endl;
     g->getRaioDiametroCentroPeriferia(); //
@@ -382,12 +392,12 @@ int main(int argc, char *argv[])
     cout << "0 -" << " " << "Nao" << endl;
     direcionado = getInputInt();
     cout << endl;
+    clear();
     txtFile.open(nome.c_str());
 
     txtFile >> c;
 
     Grafo g(direcionado);
-
 
     while(!txtFile.eof())
     {
@@ -463,10 +473,10 @@ int main(int argc, char *argv[])
                 //calcularFechoIndireto(&g);
                 break;
             case 15:
-                //imprimirSequenciaGraus(&g);
+                imprimirSequenciaGraus(&g);
                 break;
             case 16:
-                //getSubgrafoInduzido(&g);
+                getSubgrafoInduzido(&g);
                 break;
             case 17:
                 //getGrafoComplementar(&g);
@@ -478,10 +488,10 @@ int main(int argc, char *argv[])
                 //isEuleriano(&g);
                 break;
             case 20:
-                //getArticulacoes(&g);
+                getArticulacoes(&g);
                 break;
             case 21:
-                //getPontes(&g);
+                getPontes(&g);
                 break;
             case 22:
                 //getRaioDiametroCentroPeriferia(&g);

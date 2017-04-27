@@ -29,21 +29,22 @@ public:
     int getOrdemGrafo(); // 9
     bool verificaTrivial(); // 10
     bool verificaNulo(); // 11
-    /*void calcularCaminho(int no1, int no2, int algoritmo); // 12
-    void fechoTransitivoDireto(int id1); // 13
-    void fechoTransitivoIndireto(int id1); // 14
+    //void calculaCaminhoDijkstra(int no1, int no2); // 12
+    //void calculaCaminhoFloyd(int no1, int no2);    // 12
+    //void fechoTransitivoDireto(int id1); // 13
+    //void fechoTransitivoIndireto(int id1); // 14
     void getSequenciaGraus(); // 15
     void getSubgrafoInduzido(list<int> vertices); // 16
-    void getComplementar(); // 17
-    void getComponentesFortementeConexas(); // 18
-    bool verificaEuleriano(); // 19
+    //void getComplementar(); // 17
+    //void getComponentesFortementeConexas(); // 18
+    //bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
     void getPontes(); // 21
-    void getRaioDiametroCentroPeriferia(); // 22
+    /*void getRaioDiametroCentroPeriferia(); // 22
     void getAGM(); // 23
     void salvarArquivo(ofstream& arquivo);
     grafo grafoTransposto();*/
-
+    int getComponentesConexas();
     void imprimirGrafo();
 
     ~Grafo();
@@ -53,11 +54,17 @@ private:
     listaVertices lista_vertices;
 
     Vertice* getVertice(int id);
+
+    int* buscaProfundidade();
+    void auxbuscaProfundidade(int* vetor, int id_vertice,int i);
+    bool verificaVerticeArticulacao(int id);
+    Grafo copiarGrafo();
+    bool verificaArestaPonte(int id1, int id2, int peso);
     /*void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
     int* retornaVetorDijkstra(int no1);
     double** retornaMatrizFloyd();
-    int getComponentesConexas();
+
     bool buscaProfundidadeCiclo();
     bool auxbuscaProfundidadeCiclo(list<int> visitados, int id, int pai);
     list<pair<int, int> >* getAdj(int no);
@@ -66,12 +73,12 @@ private:
     void listarAdjacentes(int id1);
     bool verificarCompleto();
     bool verificaConexo();
-    int*  buscaProfundidade(int id);
-    void auxbuscaProfundidade(int* vetor, int id,int i);
-    bool verificaArestaPonte(int id1, int id2, int peso);
+
+
+
     bool verificaBipartido(int id);
     void auxVerificaBipartido(int* vetor,int id,int *j,int id2,bool *verifica);
-    bool verificaVerticeArticulacao(int id);
+
     void buscaVertice(pair<int, int> *b,int *vetor,int id,int id2,int valor);
     int* auxbuscaProfundidadeTransitivo(int* vetor,int id1,int id2,int* j);
     void fechoTransitivoIndireto(int id1,int id2, grafo grafos2);
@@ -79,7 +86,7 @@ private:
 
     int numeroArestas();
     bool possuiCiclo();
-    Grafo copiarGrafo();*/
+    */
 
 
 };
