@@ -294,17 +294,17 @@ void getGrafoComplementar(Grafo *g) {
 
     voltarMenu();
 }
-
+*/
 void isEuleriano(Grafo *g) {
     if(g->verificaEuleriano()){
-        cout << "O Grafo é Euleriano.";
+        cout << "O Grafo é Euleriano." << endl;
     } else {
-        cout << "O Grafo nao é Euleriano.";
+        cout << "O Grafo nao é Euleriano." << endl;
     }
 
     voltarMenu();
 }
-*/
+
 void getArticulacoes(Grafo *g) {
     cout << "Os nós de articulação são:" << endl;
     g->getArticulacoes();
@@ -485,7 +485,7 @@ int main(int argc, char *argv[])
                 //getComponentesFortementeConexas(&g);
                 break;
             case 19:
-                //isEuleriano(&g);
+                isEuleriano(&g);
                 break;
             case 20:
                 getArticulacoes(&g);

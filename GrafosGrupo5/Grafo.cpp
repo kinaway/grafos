@@ -305,21 +305,21 @@ bool Grafo::verificaArestaPonte(int id1, int id2, int peso)
     int componentes2 = copia.getComponentesConexas();
     return componentes != componentes2;
 }
-/*
-//Verifica se o grafo È conexo
-bool grafo::verificaConexo()
-{
-    int* vetor = buscaProfundidade(1);//Variavel vetor ira receber o vetor retornado pela funÁ„o buscaProfundidade;
 
-    for(int i=1; i<(int)lista_vertices->size(); i++)
+//Verifica se o grafo È conexo
+bool Grafo::verificaConexo()
+{
+    int* vetor = buscaProfundidade();//Variavel vetor ira receber o vetor retornado pela funÁ„o buscaProfundidade;
+
+    for(int i=1; i<(int)lista_vertices.size(); i++)
     {
-        if(vetor[i]==0)//Percorre todo o vetor em busca de algum espaÁo igual a 0
+        if(vetor[i] != 1)//Percorre todo o vetor em busca de algum espaÁo igual a 0
             return false;
     }
 
     return true;
 }
-*/
+
 //Verifica a quantidade de numeros conexos
 int Grafo::getComponentesConexas()
 {
@@ -675,13 +675,13 @@ void Grafo::getComplementar(){
     cout << endl;
 
 }
-/*
-bool grafo::verificaEuleriano(){
+
+bool Grafo::verificaEuleriano(){
     bool grauPar = true;//bool que guarda se todos os nós tem grau par
     int noGrau;
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++)
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++)
     {
-        noGrau = obterGrau(it->first);
+        noGrau = v->lista_arestas.size();
         if(noGrau % 2 != 0)//caso haja algum nó de grau ímpar
         {
             grauPar = false;
@@ -696,7 +696,7 @@ bool grafo::verificaEuleriano(){
         return false;
     }
 }
-*/
+
 void Grafo::getArticulacoes(){
 
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){

@@ -37,7 +37,7 @@ public:
     void getSubgrafoInduzido(list<int> vertices); // 16
     void getComplementar(); // 17
     //void getComponentesFortementeConexas(); // 18
-    //bool verificaEuleriano(); // 19
+    bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
     void getPontes(); // 21
     //void getRaioDiametroCentroPeriferia(); // 22
@@ -61,6 +61,7 @@ private:
     Grafo copiarGrafo();
     bool verificaArestaPonte(int id1, int id2, int peso);
     bool possuiAresta(int id1, int id2);
+    bool verificaConexo();
     /*void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
     int* retornaVetorDijkstra(int no1);
@@ -73,7 +74,7 @@ private:
     void mapaVerticecriar();
     void listarAdjacentes(int id1);
     bool verificarCompleto();
-    bool verificaConexo();
+
 
 
 
