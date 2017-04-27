@@ -63,6 +63,7 @@ bool Grafo::deletarVertice(int id)
 }
 
 //Função para deletar uma aresta entre dois vertices
+// O parâmetro peso pode ser ignorado passando-se -1
 // retorna false em caso de falha
 bool Grafo::deletarAresta(int id,int id2, int peso)
 {
@@ -74,19 +75,23 @@ bool Grafo::deletarAresta(int id,int id2, int peso)
 
         // busca a aresta entre v e u e apaga
         for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
-            if(a->id == id2 && a->peso == peso){
-                a = --v->lista_arestas.erase(a);
-                found = true;
-                break;
+            if(a->id == id2){
+                if(a->peso == peso || peso == -1){
+                    a = --v->lista_arestas.erase(a);
+                    found = true;
+                    break;
+                }
             }
         }
 
         // se for não direcionado, apagamos a aresta entre u e v também
         if(direcionado == false && found == true){
             for(listaArestas::iterator a = u->lista_arestas.begin(); a != u->lista_arestas.end(); a++){
-                if(a->id == id && a->peso == peso){
-                    a = --u->lista_arestas.erase(a);
-                    break;
+                if(a->id == id){
+                    if(a->peso == peso || peso == -1){
+                        a = --u->lista_arestas.erase(a);
+                        break;
+                    }
                 }
             }
         }
@@ -642,36 +647,35 @@ void Grafo::getSubgrafoInduzido(list<int> vertices){
     }
 
 }
+*/
+void Grafo::getComplementar(){
+    Grafo g (direcionado);
 
-void grafo::getComplementar(){
-    grafo *grafo_aux = new grafo(lista_vertices->size(), direcionado);
-    list<pair<int, int> >* adj;
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        if(!grafo_aux->verificaIdExiste(it->first)){
-            grafo_aux->criarVertice(it->first);
-        }
-        for(lista_adjacencia::iterator it2 = lista_vertices->begin(); it2 != lista_vertices->end(); it2++){ //cria um grafo completo com todos vertices do grafo.
-            if(!grafo_aux->verificaIdExiste(it2->first)){
-                grafo_aux->criarVertice(it2->first);
-            }
-            if(it->first != it2->first){
-                grafo_aux->criarAresta(it->first, it2->first, 0); //uma aresta para todo par de vertice.
-            }
-        }
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        g.criarVertice(v->id);
+    }
 
-        //percorre arestas que saem de it->first e exclui elas do grafo completo grafo_aux
-        adj = getAdj(it->first);
-        for(list<pair<int, int> >::iterator it2 = adj->begin(); it2 != adj->end(); it2++){
-            grafo_aux->deletarAresta(it->first, it2->first, 0); //exclui as arestas
+     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        for(listaVertices::iterator v_2 = lista_vertices.begin(); v_2 != lista_vertices.end(); v_2++){
+            if(v->id != v_2->id){
+                g.criarAresta(v->id, v_2->id, 0);
+            }
         }
     }
-    //sobra grafo complementar.
 
-    //imprime grafo no arquivo
-    grafo_aux->imprimirGrafo();
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
+            if(g.possuiAresta(v->id, a->id)){
+                g.deletarAresta(v->id, a->id, 0);
+            }
+        }
+    }
+    cout << "Grafo complementar: " << endl;
+    g.imprimirGrafo();
+    cout << endl;
 
 }
-
+/*
 bool grafo::verificaEuleriano(){
     bool grauPar = true;//bool que guarda se todos os nós tem grau par
     int noGrau;
@@ -1057,6 +1061,19 @@ double** grafo::retornaMatrizFloyd()
     return dist;
 
 }*/
+
+bool Grafo::possuiAresta(int id1, int id2){
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        if(v->id == id1){
+            for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
+                if(a->id == id2){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 Vertice* Grafo::getVertice(int id){
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){

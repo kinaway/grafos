@@ -281,14 +281,14 @@ void getSubgrafoInduzido(Grafo *g) {
 
     voltarMenu();
 }
-/*
+
 void getGrafoComplementar(Grafo *g) {
     cout << "O grafo complementar é:" << endl;
     g->getComplementar(); //Imprime o grafo complementar do grafo lido
 
     voltarMenu();
 }
-void getComponentesFortementeConexas(Grafo *g) {
+/*void getComponentesFortementeConexas(Grafo *g) {
     cout << "As componentes são:" << endl;
     g->getComponentesFortementeConexas(); //
 
@@ -479,7 +479,7 @@ int main(int argc, char *argv[])
                 getSubgrafoInduzido(&g);
                 break;
             case 17:
-                //getGrafoComplementar(&g);
+                getGrafoComplementar(&g);
                 break;
             case 18:
                 //getComponentesFortementeConexas(&g);

@@ -35,7 +35,7 @@ public:
     //void fechoTransitivoIndireto(int id1); // 14
     void getSequenciaGraus(); // 15
     void getSubgrafoInduzido(list<int> vertices); // 16
-    //void getComplementar(); // 17
+    void getComplementar(); // 17
     //void getComponentesFortementeConexas(); // 18
     //bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
@@ -60,6 +60,7 @@ private:
     bool verificaVerticeArticulacao(int id);
     Grafo copiarGrafo();
     bool verificaArestaPonte(int id1, int id2, int peso);
+    bool possuiAresta(int id1, int id2);
     /*void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
     int* retornaVetorDijkstra(int no1);
