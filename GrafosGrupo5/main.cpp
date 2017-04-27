@@ -332,7 +332,7 @@ void getAGM(Grafo *g){
 
     voltarMenu();
 }
-
+*/
 void salvarArquivo(Grafo *g, char nome[]){
     ofstream arquivo(nome);
     if(arquivo.is_open()){
@@ -340,7 +340,7 @@ void salvarArquivo(Grafo *g, char nome[]){
     } else {
         cout << "arquivo de saida '"<<nome<<"' não encontrado!"<<endl;
     }
-}*/
+}
 
 void menu()
 {
@@ -500,7 +500,7 @@ int main(int argc, char *argv[])
                 //getAGM(&g);
                 break;
             case 0:
-                //salvarArquivo(&g, argv[2]);
+                salvarArquivo(&g, argv[2]);
                 break;
         }
     }

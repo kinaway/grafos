@@ -863,20 +863,19 @@ void Grafo::imprimirGrafo() {
         }
     }
 }
-/*
-void grafo::salvarArquivo(ofstream& arquivo) {
-    arquivo << lista_vertices->size();
-    list<pair<int,int> >* adj;
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        adj = getAdj(it->first);
-        for(list<pair<int, int> >::iterator it2 = adj->begin(); it2 != adj->end(); it2++){
+
+void Grafo::salvarArquivo(ofstream& arquivo) {
+    arquivo << lista_vertices.size();
+
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
             arquivo << endl;
-            arquivo << it->first << " " << it2->first << " " << it2->second;
+            arquivo << v->id << " " << a->id << " " << a->peso;
         }
     }
 
 }
-
+/*
 // Função auxiliar para calcular numero de arestas
 int grafo::numeroArestas(){
     int n = 0;

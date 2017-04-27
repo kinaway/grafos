@@ -40,10 +40,10 @@ public:
     //bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
     void getPontes(); // 21
-    /*void getRaioDiametroCentroPeriferia(); // 22
-    void getAGM(); // 23
+    //void getRaioDiametroCentroPeriferia(); // 22
+    //void getAGM(); // 23
     void salvarArquivo(ofstream& arquivo);
-    grafo grafoTransposto();*/
+    //grafo grafoTransposto();
     int getComponentesConexas();
     void imprimirGrafo();
 
