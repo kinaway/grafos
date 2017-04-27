@@ -88,7 +88,7 @@ bool Grafo::deletarAresta(int id,int id2, int peso)
         for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
             if(a->id == id2){
                 //cout << "Found id " << id2 << ", peso: " << a->peso << endl;
-                if(a->peso == peso){
+                if(a->peso == peso || peso == -1){
                     a = --v->lista_arestas.erase(a);
                     found = true;
                     //cout << "Deletado" << endl;
