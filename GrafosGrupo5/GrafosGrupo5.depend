@@ -42,13 +42,13 @@
 
 1493205412 /home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Aresta.h
 
-1493251223 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Grafo.cpp
+1493292835 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Grafo.cpp
 	"Grafo.h"
 	<limits>
 	<fstream>
 	<queue>
 
-1493251259 /home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Grafo.h
+1493292791 /home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Grafo.h
 	<iostream>
 	<list>
 	<algorithm>
@@ -61,4 +61,17 @@
 
 1493203415 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Vertice.cpp
 	"Vertice.h"
+
+1493292851 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
 

@@ -325,14 +325,14 @@ void getRaioDiametroCentroPeriferia(Grafo *g){
 
     voltarMenu();
 }
-
+*/
 void getAGM(Grafo *g){
     cout << "A AGM ou floresta mínima é:" << endl;
-    g->getAGM(); //
+    g->getAGM();
 
     voltarMenu();
 }
-*/
+
 void salvarArquivo(Grafo *g, char nome[]){
     ofstream arquivo(nome);
     if(arquivo.is_open()){
@@ -397,7 +397,7 @@ int main(int argc, char *argv[])
 
     txtFile >> c;
 
-    Grafo g(direcionado);
+    Grafo g(direcionado, c);
 
     while(!txtFile.eof())
     {
@@ -408,12 +408,12 @@ int main(int argc, char *argv[])
             i++;
             if(i == 3)
             {
-                if(!g.verificaIdExiste(vetor[0])){
+                /*if(!g.verificaIdExiste(vetor[0])){
                     g.criarVertice(vetor[0]);
                 }
                 if(!g.verificaIdExiste(vetor[1])){
                     g.criarVertice(vetor[1]);
-                }
+                }*/
                 g.criarAresta(vetor[0],vetor[1],vetor[2]);
                 if(direcionado == 0)
                     g.criarAresta(vetor[1],vetor[0],vetor[2]);
@@ -497,7 +497,7 @@ int main(int argc, char *argv[])
                 //getRaioDiametroCentroPeriferia(&g);
                 break;
             case 23:
-                //getAGM(&g);
+                getAGM(&g);
                 break;
             case 0:
                 salvarArquivo(&g, argv[2]);

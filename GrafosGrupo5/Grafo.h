@@ -14,6 +14,7 @@ class Grafo
 {
 public:
     Grafo (int direcionado);
+    Grafo (int direcionado, int tamanho);
     bool direcionado;
 
     bool criarVertice(int id);      // 1
@@ -41,7 +42,7 @@ public:
     void getArticulacoes(); // 20
     void getPontes(); // 21
     //void getRaioDiametroCentroPeriferia(); // 22
-    //void getAGM(); // 23
+    void getAGM(); // 23
     void salvarArquivo(ofstream& arquivo);
     //grafo grafoTransposto();
     int getComponentesConexas();
@@ -62,20 +63,19 @@ private:
     bool verificaArestaPonte(int id1, int id2, int peso);
     bool possuiAresta(int id1, int id2);
     bool verificaConexo();
+    int numeroArestas();
+    bool possuiCiclo(int id);
+    bool buscaCicloAux(list<int> visitados, int id, int pai);
     /*void calculaCaminhoDijkstra(int no1, int no2);
     void calculaCaminhoFloyd(int no1, int no2);
     int* retornaVetorDijkstra(int no1);
     double** retornaMatrizFloyd();
 
-    bool buscaProfundidadeCiclo();
-    bool auxbuscaProfundidadeCiclo(list<int> visitados, int id, int pai);
     list<pair<int, int> >* getAdj(int no);
     void mapaVerticedeletar(int id);
     void mapaVerticecriar();
     void listarAdjacentes(int id1);
     bool verificarCompleto();
-
-
 
 
     bool verificaBipartido(int id);
@@ -86,8 +86,6 @@ private:
     void fechoTransitivoIndireto(int id1,int id2, grafo grafos2);
 
 
-    int numeroArestas();
-    bool possuiCiclo();
     */
 
 

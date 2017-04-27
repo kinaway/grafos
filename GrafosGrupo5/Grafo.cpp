@@ -8,6 +8,15 @@ Grafo::Grafo(int direcionado)
     this->direcionado = direcionado;
 }
 
+//Construtor do grafo, orientação do grafo deve ser passada
+Grafo::Grafo(int direcionado, int tamanho)
+{
+    this->direcionado = direcionado;
+    for(int i = 1; i < tamanho+1; i++){
+        criarVertice(i);
+    }
+}
+
 // Função para adicionar um vértice id no grafo
 // retorna false em caso de falha
 bool Grafo::criarVertice(int id)
@@ -70,19 +79,25 @@ bool Grafo::deletarAresta(int id,int id2, int peso)
     Vertice* v = getVertice(id);
     Vertice* u = getVertice(id2);
     bool found = false;
+    //cout << "Deletando " << id << "-" << id2 << ", peso: " << peso << endl;
 
     if(v != NULL && u != NULL){
+        //cout << "Buscando arestas em " << id << endl;
 
         // busca a aresta entre v e u e apaga
         for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
             if(a->id == id2){
-                if(a->peso == peso || peso == -1){
+                //cout << "Found id " << id2 << ", peso: " << a->peso << endl;
+                if(a->peso == peso){
                     a = --v->lista_arestas.erase(a);
                     found = true;
+                    //cout << "Deletado" << endl;
                     break;
                 }
             }
         }
+
+        //cout << "Buscando arestas em " << id2 << endl;
 
         // se for não direcionado, apagamos a aresta entre u e v também
         if(direcionado == false && found == true){
@@ -96,6 +111,13 @@ bool Grafo::deletarAresta(int id,int id2, int peso)
             }
         }
     }
+
+    /*if(found){
+        cout << "Deletado" << endl;
+    }
+    else{
+         cout << "Não Deletado" << endl;
+    }*/
 
     return found;
 }
@@ -786,74 +808,59 @@ void Grafo::getPontes(){
     cout<<"}"<<endl;
 
 }
-
-void grafo::getAGM(){
+*/
+void Grafo::getAGM(){
 
     if(direcionado == true){
         cout << "O grafo deve ser não-direcionado para o cálculo da AGM" << endl;
         return;
     }
+    Grafo g(direcionado);
+    Grafo copia = copiarGrafo();
 
-    grafo g(0, false); // grafo AGM
-    grafo copia = copiarGrafo(); // copia do grafo original para calcular AGM
-
-    // Faz uma copia da lista de adjacencias para execucao do algoritmo de Kruskal
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        int id = it->first;
-        g.criarVertice(id); // cria os vertices da AGM
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        g.criarVertice(v->id);
     }
 
-    int componentes = getComponentesConexas();
-    if(componentes == 1){
-        // cout << "Possui somente 1 componente" << endl;
+    // Executando algoritmo de Kruskal
+    while(copia.numeroArestas() > 0){
+        int menor_peso = numeric_limits<int>::max();
+        int id1_escolhido = -1;
+        int id2_escolhido = -1;
 
-        // Executando algoritmo de Kruskal
-        while(copia.numeroArestas() > 0){
-            int menor_peso = numeric_limits<int>::max();
-            int id1_escolhido = -1;
-            int id2_escolhido = -1;
-            for(lista_adjacencia::iterator it = copia.lista_vertices->begin(); it != copia.lista_vertices->end(); it++){
-                int id1 = it->first;
-                //cout << "ID1: " << id1 << endl;
-                for(list<pair<int, int> >::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++){
-
-                    int id2 = it2->first;
-                    int peso = it2->second;
-                    //cout << "ID2: " << id2 << ", peso: " << peso <<endl;
-                    if(peso < menor_peso){
-                        id1_escolhido = id1;
-                        id2_escolhido = id2;
-                        menor_peso = peso;
-                    }
+        for(listaVertices::iterator v = copia.lista_vertices.begin(); v != copia.lista_vertices.end(); v++){
+            int id1 = v->id;
+            for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
+                int id2 = a->id;
+                int peso = a->peso;
+                if(peso < menor_peso){
+                    id1_escolhido = id1;
+                    id2_escolhido = id2;
+                    menor_peso = peso;
                 }
             }
-            // adiciona aresta de menor peso no grafo
-            //cout << "Menor aresta ID1: " << id1_escolhido << ", ID2: "<< id2_escolhido << ", Peso: "<< menor_peso << endl;
-            g.criarAresta(id1_escolhido, id2_escolhido, menor_peso);
-            g.criarAresta(id2_escolhido, id1_escolhido, menor_peso);
-
-            // caso a aresta gere ciclo, remova
-            if(g.possuiCiclo()){
-                // cout << "Gerou novo ciclo, excluindo aresta" << endl;
-                g.deletarAresta(id1_escolhido, id2_escolhido, menor_peso);
-                g.deletarAresta(id2_escolhido, id1_escolhido, menor_peso);
-            }else{
-                //cout << "Aresta não adicionou ciclo, mantendo..." << endl;
-            }
-
-            //remover aresta escolhida da copia de arestas
-            copia.deletarAresta(id1_escolhido, id2_escolhido, menor_peso);
-            copia.deletarAresta(id2_escolhido, id1_escolhido, menor_peso);
         }
-        g.imprimirGrafo();
-        cout << endl;
+
+        // adiciona aresta de menor peso no grafo
+        g.criarAresta(id1_escolhido, id2_escolhido, menor_peso);
+        g.criarAresta(id2_escolhido, id1_escolhido, menor_peso);
+
+        // caso a aresta gere ciclo, remova
+        if(g.possuiCiclo(id1_escolhido)){
+            g.deletarAresta(id1_escolhido, id2_escolhido, menor_peso);
+            g.deletarAresta(id2_escolhido, id1_escolhido, menor_peso);
+        }
+
+        //remover aresta escolhida da copia de arestas
+        copia.deletarAresta(id1_escolhido, id2_escolhido, menor_peso);
+        copia.deletarAresta(id2_escolhido, id1_escolhido, menor_peso);
 
     }
-    else{
-        cout << "AGM de grafos com mais de 1 componente ainda não implmementado" << endl;
-    }
+    g.imprimirGrafo();
+    cout << endl;
+
 }
-*/
+
 void Grafo::imprimirGrafo() {
     cout << lista_vertices.size();
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
@@ -875,12 +882,12 @@ void Grafo::salvarArquivo(ofstream& arquivo) {
     }
 
 }
-/*
+
 // Função auxiliar para calcular numero de arestas
-int grafo::numeroArestas(){
+int Grafo::numeroArestas(){
     int n = 0;
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        n += it->second.size();
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        n += v->lista_arestas.size();
     }
     if(direcionado == true)
         return n;
@@ -889,22 +896,62 @@ int grafo::numeroArestas(){
 }
 
 // Função auxiliar para detectar ciclos em um grafo
-bool grafo::buscaProfundidadeCiclo()
+bool Grafo::possuiCiclo(int id)
 {
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
+    //for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
         list<int> visitados;
-        bool ciclo = auxbuscaProfundidadeCiclo(visitados, it->first, -1);
+        visitados.push_back(id);
+        bool ciclo = buscaCicloAux(visitados, id, -1);
         if(ciclo == true)
             return ciclo;
-    }
+    //}
 
     return false;
 }
 
-bool grafo::auxbuscaProfundidadeCiclo(list<int> visitados,int id, int pai)
+bool Grafo::buscaCicloAux(list<int> visitados,int id, int pai)
 {
+    //cout << "Buca no id " << id << ", a partir do id "<< pai << endl;
+    list<int> visitados_2;
 
-    //cout << "Visitando ID " << id << " a partir do nó " << pai << endl;
+    for(list<int>::iterator it = visitados.begin(); it != visitados.end(); it++){
+        visitados_2.push_back(*it);
+    }
+    /*cout << "Visitados_2: " << endl;
+    for(list<int>::iterator it = visitados_2.begin(); it != visitados_2.end(); it++){
+        cout << *it << ", ";
+    }
+    cout << endl;*/
+
+    Vertice* v = getVertice(id);
+    bool ciclo = false;
+
+    for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
+        //cout << "Verificando aresta " << a->id << ", peso " << a->peso << endl;
+        if(a->id == pai){
+            //cout << "Nó pai, ignorando... " << endl;
+            continue;
+        }
+        bool found = (std::find(visitados_2.begin(), visitados_2.end(), a->id) != visitados_2.end());
+
+         if(!found){
+            //cout << "Não encontrado em visitados_2, adicionad..." << endl;
+            visitados_2.push_back(a->id);
+            ciclo = buscaCicloAux(visitados_2, a->id, id);
+            if(ciclo == true)
+                break;
+         }
+         else{
+            //cout << "Já presente em visitados_2..." << endl;
+            ciclo = true;
+            break;
+         }
+
+    }
+
+    return ciclo;
+
+    /*//cout << "Visitando ID " << id << " a partir do nó " << pai << endl;
     list<pair<int, int> >*  adj = getAdj(id);
     list<int> visitados_2;
     bool ciclo = false;
@@ -934,9 +981,9 @@ bool grafo::auxbuscaProfundidadeCiclo(list<int> visitados,int id, int pai)
         }
 
     }
-    return ciclo;
+    return ciclo;*/
 }
-
+/*
 //Função que retorna a lista de adjacência do nó no
 list<pair<int, int> >* grafo::getAdj(int no){
     for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
@@ -967,17 +1014,8 @@ Grafo Grafo::copiarGrafo(){
 
     return copia;
 }
-/*
-bool grafo::possuiCiclo(){
-    if(direcionado == false){
-        return buscaProfundidadeCiclo();
-    }
-    else{
-        return false;
-    }
-}
 
-int* grafo::retornaVetorDijkstra(int no1)
+/*int* grafo::retornaVetorDijkstra(int no1)
 {
     int tamanho = lista_vertices->size();
     bool incluidos[lista_vertices->size()]; //Lista de nós já incluídos no caminho mínimo até no1.
