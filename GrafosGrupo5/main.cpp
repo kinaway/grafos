@@ -213,14 +213,15 @@ void isNulo(Grafo *g) {
     voltarMenu();
 }
 
-/*void calcularCaminho(Grafo *g) {
+void calcularCaminho(Grafo *g) {
     int algoritmo;
     int no1, no2;
-    algoritmo = getInputInt();
+
 
     cout << "Qual algoritmo usar?:"<<endl;
     cout << "1 - Dijkstra"<<endl;
     cout << "2 - Floyd"<<endl;
+    algoritmo = getInputInt();
 
     cout << "Qual o primeiro nó?:"<<endl;
     no1 = getInputInt();
@@ -228,19 +229,19 @@ void isNulo(Grafo *g) {
     no2 = getInputInt();
 
     if(algoritmo == 1){
-        //g->calculaCaminhoDijkstra(no1, no2);
+        g->calculaCaminhoDijkstra(no1, no2);
     }
     else if(algoritmo == 2){
-        //g->calculaCaminhoFloyd(no1, no2);
+        g->calculaCaminhoFloyd(no1, no2);
     }
     else{
         cout << "Algoritmo escolhido inválido." << endl;
     }
 
     voltarMenu();
-}*/
+}
 
-/*void calcularFechoDireto(Grafo *g) {
+void calcularFechoDireto(Grafo *g) {
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     no1 = getInputInt();
@@ -258,7 +259,7 @@ void calcularFechoIndireto(Grafo *g) {
 
     voltarMenu();
 }
-*/
+
 void imprimirSequenciaGraus(Grafo *g) {
     cout << "A sequencia de Graus é:" << endl;
     g->getSequenciaGraus(); //Imprime a sequencia de graus do grafo
@@ -288,13 +289,13 @@ void getGrafoComplementar(Grafo *g) {
 
     voltarMenu();
 }
-/*void getComponentesFortementeConexas(Grafo *g) {
+void getComponentesFortementeConexas(Grafo *g) {
     cout << "As componentes são:" << endl;
     g->getComponentesFortementeConexas(); //
 
     voltarMenu();
 }
-*/
+
 void isEuleriano(Grafo *g) {
     if(g->verificaEuleriano()){
         cout << "O Grafo é Euleriano." << endl;
@@ -318,14 +319,14 @@ void getPontes(Grafo *g) {
 
     voltarMenu();
 }
-/*
+
 void getRaioDiametroCentroPeriferia(Grafo *g){
     cout << "O raio, diâmetro, centro e periferia são:" << endl;
     g->getRaioDiametroCentroPeriferia(); //
 
     voltarMenu();
 }
-*/
+
 void getAGM(Grafo *g){
     cout << "A AGM ou floresta mínima é:" << endl;
     g->getAGM();
@@ -394,7 +395,6 @@ int main(int argc, char *argv[])
     cout << endl;
     clear();
     txtFile.open(nome.c_str());
-
     txtFile >> c;
 
     Grafo g(direcionado, c);
@@ -464,13 +464,13 @@ int main(int argc, char *argv[])
                 isNulo(&g);
                 break;
             case 12:
-                //calcularCaminho(&g);
+                calcularCaminho(&g);
                 break;
             case 13:
-                //calcularFechoDireto(&g);
+                calcularFechoDireto(&g);
                 break;
             case 14:
-                //calcularFechoIndireto(&g);
+                calcularFechoIndireto(&g);
                 break;
             case 15:
                 imprimirSequenciaGraus(&g);
@@ -482,7 +482,7 @@ int main(int argc, char *argv[])
                 getGrafoComplementar(&g);
                 break;
             case 18:
-                //getComponentesFortementeConexas(&g);
+                getComponentesFortementeConexas(&g);
                 break;
             case 19:
                 isEuleriano(&g);
@@ -494,7 +494,7 @@ int main(int argc, char *argv[])
                 getPontes(&g);
                 break;
             case 22:
-                //getRaioDiametroCentroPeriferia(&g);
+                getRaioDiametroCentroPeriferia(&g);
                 break;
             case 23:
                 getAGM(&g);

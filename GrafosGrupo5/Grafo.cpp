@@ -375,8 +375,8 @@ void grafo::auxVerificaBipartido(int *vetor2,int id,int *j,int id2,bool *verific
         }
 
         vetor2[id] = *j;
-        list<pair<int, int> >* adj = getAdj(id);
-        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){//Percorre a lista referente ao id1 pegando cada parametro da lista e colocando-o na variavel pair a
+        listaArestas adj = getAdj(id);
+        for(listaArestas::iterator it = adj->begin(); it != adj->end(); it++){//Percorre a lista referente ao id1 pegando cada parametro da lista e colocando-o na variavel pair a
             //{
 
             auxVerificaBipartido(vetor2,it->first,j,id,verifica);//A funÁ„o se chama, fazendo um metodo recursivo,atualizando os paramtros da funÁ„o
@@ -462,13 +462,13 @@ int* grafo::auxbuscaProfundidadeTransitivo(int* vetor3,int id1,int id2,int* j)
 
     return 0;
 }
-
-// Verifica o conjunto vertices que sao transitivos indiretos
-void grafo::fechoTransitivoIndireto(int id1){
+*/
+ //Verifica o conjunto vertices que sao transitivos indiretos
+void Grafo::fechoTransitivoIndireto(int id1){
     double ** matrizFloyd;
     matrizFloyd = retornaMatrizFloyd();
     cout << " O conjunto de nós é: {";
-    for(int i=0;i< (int)lista_vertices->size();i++)
+    for(int i=0;i< (int)lista_vertices.size();i++)
     {
         //cout << i << ' --> '<< matrizFloyd[i][id1-1] << endl;
         if(matrizFloyd[i][id1-1] != numeric_limits<int>::max())
@@ -479,31 +479,36 @@ void grafo::fechoTransitivoIndireto(int id1){
     }
     cout << "}"<< endl;
 
+    for(int i = 0; i < lista_vertices.size(); i++){
+        delete matrizFloyd[i];
+    }
+    delete matrizFloyd;
+
 }
 
 
 
 
 
-void grafo::calculaCaminhoDijkstra(int no1, int no2){
-    bool incluidos[lista_vertices->size()]; //Lista de nós já incluídos no caminho mínimo até no1.
-    double dist[lista_vertices->size()]; //distância provisória de todos até no1
-    list<int> caminho[lista_vertices->size()]; //uma lista para cada nó indicando o caminho até ele.
-    for(int i = 0; i< (int)lista_vertices->size(); i++){ //inicializa arrays
+void Grafo::calculaCaminhoDijkstra(int no1, int no2){
+    bool incluidos[lista_vertices.size()]; //Lista de nós já incluídos no caminho mínimo até no1.
+    double dist[lista_vertices.size()]; //distância provisória de todos até no1
+    list<int> caminho[lista_vertices.size()]; //uma lista para cada nó indicando o caminho até ele.
+    for(int i = 0; i< (int)lista_vertices.size(); i++){ //inicializa arrays
         dist[i] = numeric_limits<int>::max(); //infinito para todos valores
         incluidos[i] = false;
     }
     dist[no1-1] = 0;
     incluidos[no1-1] = true; //no1 já tem menor caminho encontrado
-    list<pair<int, int> >* adj = getAdj(no1);
-    for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no1
-        dist[it->first-1] = it->second;
+    listaArestas adj = getAdj(no1);
+    for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){ //atualiza valores dos adj de no1
+        dist[it->id-1] = it->peso;
     }
 
     int no_aux = -1, min_aux = 0;
     while(no_aux != no2-1) { //para quando no2 for incluído
         min_aux = numeric_limits<int>::max();
-        for(int i=0; i<(int)lista_vertices->size(); i++){ //escolhe menor nó para entrar
+        for(int i=0; i<(int)lista_vertices.size(); i++){ //escolhe menor nó para entrar
             if(!incluidos[i] && dist[i] < min_aux){ //nó não incluido e com menor valor de distancia
                 min_aux = dist[i];
                 no_aux = i;
@@ -514,11 +519,11 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
         }
         incluidos[no_aux] = true; //inclui no_aux;
         adj = getAdj(no_aux+1);
-        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no_aux
-            if(!incluidos[it->first-1] && dist[it->first-1] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
-                dist[it->first-1] = dist[no_aux] + it->second;
-                caminho[it->first-1] = caminho[no_aux];
-                caminho[it->first-1].push_back(no_aux+1); //novo caminho é caminho até no_aux mais no_aux;
+        for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){ //atualiza valores dos adj de no_aux
+            if(!incluidos[it->id-1] && dist[it->id-1] > dist[no_aux] + it->peso){ //se adj ainda não foi incluído e tem distancia maior que a nova
+                dist[it->id-1] = dist[no_aux] + it->peso;
+                caminho[it->id-1] = caminho[no_aux];
+                caminho[it->id-1].push_back(no_aux+1); //novo caminho é caminho até no_aux mais no_aux;
             }
         }
     }
@@ -534,11 +539,11 @@ void grafo::calculaCaminhoDijkstra(int no1, int no2){
     }
 }
 
-void grafo::calculaCaminhoFloyd(int no1, int no2){
-    int tamanho = lista_vertices->size();
+void Grafo::calculaCaminhoFloyd(int no1, int no2){
+    int tamanho = lista_vertices.size();
     double **dist = new double*[tamanho]; //matriz contendo as distâncias de i a j;
     list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
-    list<pair<int, int> >* adj;
+    listaArestas adj;
     for(int i=0;i<tamanho;i++){
         dist[i] = new double[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
         caminho[i] = new list<int>[tamanho];
@@ -550,9 +555,9 @@ void grafo::calculaCaminhoFloyd(int no1, int no2){
             }
         }
         adj = getAdj(i+1);
-        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
+        for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){
             //atualiza todos adj de i;
-            dist[i][it->first-1] = it->second;
+            dist[i][it->id-1] = it->peso;
         }
     }
 
@@ -582,9 +587,9 @@ void grafo::calculaCaminhoFloyd(int no1, int no2){
 
 
 
-void grafo::fechoTransitivoDireto(int id)
+void Grafo::fechoTransitivoDireto(int id)
 {
-    int tam = lista_vertices->size();
+    int tam = lista_vertices.size();
     int* arrayDijkstra;
     arrayDijkstra = retornaVetorDijkstra(id);
     cout<<"O conjunto de vértices é : {";
@@ -597,8 +602,10 @@ void grafo::fechoTransitivoDireto(int id)
         }
     }
     cout<<"}"<<endl;
+
+    delete arrayDijkstra;
 }
-*/
+
 void Grafo::getSequenciaGraus(){
 
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++)
@@ -635,22 +642,22 @@ void Grafo::getSubgrafoInduzido(list<int> vertices){
 }
 
 
-/*void grafo::getComponentesFortementeConexas(){
-    list<list<int> >* lista_componentes = new list<list<int> >(); //lista contendo as componentes conexas
-    grafo copia = copiarGrafo(); //usa uma copia para excluir nós já inseridos numa componente conexa.
+void Grafo::getComponentesFortementeConexas(){
+    list<list<int> > lista_componentes = list<list<int> >(); //lista contendo as componentes conexas
+    Grafo copia = copiarGrafo(); //usa uma copia para excluir nós já inseridos numa componente conexa.
     double **dist = retornaMatrizFloyd(); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
     int vertice_aux;
     cout << string(80, '\n'); //'limpa' console.
-    for(lista_adjacencia::iterator it = copia.lista_vertices->begin(); it != copia.lista_vertices->end(); it++){
-        if(it->first != -1){ //-1 define vertice que já entrou
-            lista_componentes->push_back(list<int>());
-            vertice_aux = it->first;
-            for(lista_adjacencia::iterator it2 = copia.lista_vertices->begin(); it2 != copia.lista_vertices->end(); it2++){ //busca para todos vertices.
-                if(it2->first != -1){
-                    if(dist[vertice_aux-1][it2->first-1] < numeric_limits<int>::max() && dist[it2->first-1][vertice_aux-1] < numeric_limits<int>::max()){
+    for(listaVertices::iterator it = copia.lista_vertices.begin(); it != copia.lista_vertices.end(); it++){
+        if(it->id != -1){ //-1 define vertice que já entrou
+            lista_componentes.push_back(list<int>());
+            vertice_aux = it->id;
+            for(listaVertices::iterator it2 = copia.lista_vertices.begin(); it2 != copia.lista_vertices.end(); it2++){ //busca para todos vertices.
+                if(it2->id != -1){
+                    if(dist[vertice_aux-1][it2->id-1] < numeric_limits<int>::max() && dist[it2->id-1][vertice_aux-1] < numeric_limits<int>::max()){
                         //existe caminho de ida e volta entre os dois vertices
-                        lista_componentes->back().push_back(it2->first);//inclui na componente o vertice.
-                        it2->first = -1;
+                        lista_componentes.back().push_back(it2->id);//inclui na componente o vertice.
+                        it2->id = -1;
                     }
                 }
             }
@@ -659,7 +666,7 @@ void Grafo::getSubgrafoInduzido(list<int> vertices){
 
     //imprime as componentes
     int componente_index = 1;
-    for(list<list<int> >::iterator it = lista_componentes->begin(); it != lista_componentes->end(); it++){
+    for(list<list<int> >::iterator it = lista_componentes.begin(); it != lista_componentes.end(); it++){
         cout << "Componente " << componente_index << ":" << endl;
         for(list<int>::iterator it2 = it->begin(); it2 != it->end(); it2++){
             cout << *it2 << endl;
@@ -668,8 +675,12 @@ void Grafo::getSubgrafoInduzido(list<int> vertices){
         cout << endl << endl;
     }
 
+    for(int i=0; i < lista_vertices.size(); i++){
+        delete dist[i];
+    }
+    delete dist;
 }
-*/
+
 void Grafo::getComplementar(){
     Grafo g (direcionado);
 
@@ -746,10 +757,10 @@ void Grafo::getPontes(){
     }
 }
 
-/*void grafo::getRaioDiametroCentroPeriferia(){
+void Grafo::getRaioDiametroCentroPeriferia(){
     queue<int> centro;
     queue<int> periferia;
-    int tam = lista_vertices->size();
+    int tam = lista_vertices.size();
     int diametro = 0;//maior valor da matriz
     int raio = numeric_limits<int>::max();//menor valor da matriz
     double **matFloyd;
@@ -807,8 +818,12 @@ void Grafo::getPontes(){
     }
     cout<<"}"<<endl;
 
+    for(int i = 0; i < lista_vertices.size(); i++){
+        delete matFloyd[i];
+    }
+    delete matFloyd;
 }
-*/
+
 void Grafo::getAGM(){
 
     if(direcionado == true){
@@ -983,16 +998,16 @@ bool Grafo::buscaCicloAux(list<int> visitados,int id, int pai)
     }
     return ciclo;*/
 }
-/*
+
 //Função que retorna a lista de adjacência do nó no
-list<pair<int, int> >* grafo::getAdj(int no){
-    for(lista_adjacencia::iterator it = lista_vertices->begin(); it != lista_vertices->end(); it++){
-        if(it->first == no)
-            return &(it->second);
+listaArestas Grafo::getAdj(int no){
+    for(listaVertices::iterator it = lista_vertices.begin(); it != lista_vertices.end(); it++){
+        if(it->id == no)
+            return (it->lista_arestas);
     }
-    return NULL;
+    return listaArestas();
 }
-*/
+
 // Função criar arestas
 Grafo Grafo::copiarGrafo(){
 
@@ -1015,22 +1030,22 @@ Grafo Grafo::copiarGrafo(){
     return copia;
 }
 
-/*int* grafo::retornaVetorDijkstra(int no1)
+int* Grafo::retornaVetorDijkstra(int no1)
 {
-    int tamanho = lista_vertices->size();
-    bool incluidos[lista_vertices->size()]; //Lista de nós já incluídos no caminho mínimo até no1.
+    int tamanho = lista_vertices.size();
+    bool incluidos[lista_vertices.size()]; //Lista de nós já incluídos no caminho mínimo até no1.
     //int *dist[lista_vertices->size()]; //distância provisória de todos até no1
     int *dist = new  int[tamanho];
-    list<int> caminho[lista_vertices->size()]; //uma lista para cada nó indicando o caminho até ele.
-    for(int i = 0; i< (int)lista_vertices->size(); i++){ //inicializa arrays
+    list<int> caminho[lista_vertices.size()]; //uma lista para cada nó indicando o caminho até ele.
+    for(int i = 0; i< (int)lista_vertices.size(); i++){ //inicializa arrays
         dist[i] = numeric_limits<int>::max(); //infinito para todos valores
         incluidos[i] = false;
     }
     dist[no1-1] = 0;
     incluidos[no1-1] = true; //no1 já tem menor caminho encontrado
-    list<pair<int, int> >* adj = getAdj(no1);
-    for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no1
-        dist[it->first-1] = it->second;
+    listaArestas adj = getAdj(no1);
+    for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){ //atualiza valores dos adj de no1
+        dist[it->id-1] = it->peso;
     }
 
     int no_aux = -1, min_aux = 0;
@@ -1038,7 +1053,7 @@ Grafo Grafo::copiarGrafo(){
     for(int g = 0 ;g <tamanho ;g++)
     {
         min_aux = numeric_limits<int>::max();
-        for(int i=0; i<(int)lista_vertices->size(); i++){ //escolhe menor nó para entrar
+        for(int i=0; i<(int)lista_vertices.size(); i++){ //escolhe menor nó para entrar
             if(!incluidos[i] && dist[i] < min_aux){ //nó não incluido e com menor valor de distancia
                 min_aux = dist[i];
                 no_aux = i;
@@ -1046,11 +1061,11 @@ Grafo Grafo::copiarGrafo(){
         }
         incluidos[no_aux] = true; //inclui no_aux;
         adj = getAdj(no_aux+1);
-        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){ //atualiza valores dos adj de no_aux
-            if(!incluidos[it->first-1] && dist[it->first-1] > dist[no_aux] + it->second){ //se adj ainda não foi incluído e tem distancia maior que a nova
-                dist[it->first-1] = dist[no_aux] + it->second;
-                caminho[it->first-1] = caminho[no_aux];
-                caminho[it->first-1].push_back(no_aux+1); //novo caminho é caminho até no_aux mais no_aux;
+        for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){ //atualiza valores dos adj de no_aux
+            if(!incluidos[it->id-1] && dist[it->id-1] > dist[no_aux] + it->peso){ //se adj ainda não foi incluído e tem distancia maior que a nova
+                dist[it->id-1] = dist[no_aux] + it->peso;
+                caminho[it->id-1] = caminho[no_aux];
+                caminho[it->id-1].push_back(no_aux+1); //novo caminho é caminho até no_aux mais no_aux;
             }
         }
     }
@@ -1059,12 +1074,12 @@ Grafo Grafo::copiarGrafo(){
 
 }
 
-double** grafo::retornaMatrizFloyd()
+double** Grafo::retornaMatrizFloyd()
 {
-    int tamanho = lista_vertices->size();
+    int tamanho = lista_vertices.size();
     double **dist = new double*[tamanho]; //matriz contendo as distâncias de i a j;
     list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
-    list<pair<int, int> >* adj;
+    listaArestas adj;
     for(int i=0;i<tamanho;i++){
         dist[i] = new double[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
         caminho[i] = new list<int>[tamanho];
@@ -1076,9 +1091,9 @@ double** grafo::retornaMatrizFloyd()
             }
         }
         adj = getAdj(i+1);
-        for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++){
+        for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){
             //atualiza todos adj de i;
-            dist[i][it->first-1] = it->second;
+            dist[i][it->id-1] = it->peso;
         }
     }
 
@@ -1097,7 +1112,7 @@ double** grafo::retornaMatrizFloyd()
 
     return dist;
 
-}*/
+}
 
 bool Grafo::possuiAresta(int id1, int id2){
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){

@@ -30,18 +30,18 @@ public:
     int getOrdemGrafo(); // 9
     bool verificaTrivial(); // 10
     bool verificaNulo(); // 11
-    //void calculaCaminhoDijkstra(int no1, int no2); // 12
-    //void calculaCaminhoFloyd(int no1, int no2);    // 12
-    //void fechoTransitivoDireto(int id1); // 13
-    //void fechoTransitivoIndireto(int id1); // 14
+    void calculaCaminhoDijkstra(int no1, int no2); // 12
+    void calculaCaminhoFloyd(int no1, int no2);    // 12
+    void fechoTransitivoDireto(int id1); // 13
+    void fechoTransitivoIndireto(int id1); // 14
     void getSequenciaGraus(); // 15
     void getSubgrafoInduzido(list<int> vertices); // 16
     void getComplementar(); // 17
-    //void getComponentesFortementeConexas(); // 18
+    void getComponentesFortementeConexas(); // 18
     bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
     void getPontes(); // 21
-    //void getRaioDiametroCentroPeriferia(); // 22
+    void getRaioDiametroCentroPeriferia(); // 22
     void getAGM(); // 23
     void salvarArquivo(ofstream& arquivo);
     //grafo grafoTransposto();
@@ -66,12 +66,12 @@ private:
     int numeroArestas();
     bool possuiCiclo(int id);
     bool buscaCicloAux(list<int> visitados, int id, int pai);
-    /*void calculaCaminhoDijkstra(int no1, int no2);
-    void calculaCaminhoFloyd(int no1, int no2);
+
+
     int* retornaVetorDijkstra(int no1);
     double** retornaMatrizFloyd();
-
-    list<pair<int, int> >* getAdj(int no);
+    list<Aresta> getAdj(int no);
+    /*
     void mapaVerticedeletar(int id);
     void mapaVerticecriar();
     void listarAdjacentes(int id1);
