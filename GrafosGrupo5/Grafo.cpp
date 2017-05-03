@@ -8,7 +8,7 @@ Grafo::Grafo(int direcionado)
     this->direcionado = direcionado;
 }
 
-//Construtor do grafo, orientação do grafo deve ser passada
+//Construtor do grafo, orientação e tamanho do grafo devem ser passados
 Grafo::Grafo(int direcionado, int tamanho)
 {
     this->direcionado = direcionado;
@@ -180,7 +180,7 @@ int Grafo::getGrauSaida(int id){
     return v->lista_arestas.size();
 }
 
-//Obtem o grau do grafo
+//Obtem o grau do grafo dado que ele é não orientado
 int Grafo::getGrauGrafo()
 {
     int maior_grau = 0;
@@ -342,7 +342,7 @@ bool Grafo::verificaConexo()
     return true;
 }
 
-//Verifica a quantidade de numeros conexos
+//Verifica a quantidade de componentes conexos
 int Grafo::getComponentesConexas()
 {
     if(lista_vertices.size() == 0)
@@ -358,7 +358,8 @@ int Grafo::getComponentesConexas()
     }
 
     return j; //Retorna a ultima posiÁao do vetor;*/
-}/*
+}
+/*
 //
 void grafo::auxVerificaBipartido(int *vetor2,int id,int *j,int id2,bool *verifica)
 {
@@ -479,7 +480,7 @@ void Grafo::fechoTransitivoIndireto(int id1){
     }
     cout << "}"<< endl;
 
-    for(int i = 0; i < lista_vertices.size(); i++){
+    for(int i = 0; i < (int)lista_vertices.size(); i++){
         delete matrizFloyd[i];
     }
     delete matrizFloyd;
@@ -675,7 +676,7 @@ void Grafo::getComponentesFortementeConexas(){
         cout << endl << endl;
     }
 
-    for(int i=0; i < lista_vertices.size(); i++){
+    for(int i=0; i < (int)lista_vertices.size(); i++){
         delete dist[i];
     }
     delete dist;
@@ -818,12 +819,13 @@ void Grafo::getRaioDiametroCentroPeriferia(){
     }
     cout<<"}"<<endl;
 
-    for(int i = 0; i < lista_vertices.size(); i++){
+    for(int i = 0; i < (int)lista_vertices.size(); i++){
         delete matFloyd[i];
     }
     delete matFloyd;
 }
 
+// Imprime o a árvore geradora mínima ou floresta mínima
 void Grafo::getAGM(){
 
     if(direcionado == true){
@@ -876,6 +878,7 @@ void Grafo::getAGM(){
 
 }
 
+// Função auxiliar para imprimir grafo
 void Grafo::imprimirGrafo() {
     cout << lista_vertices.size();
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
@@ -886,6 +889,7 @@ void Grafo::imprimirGrafo() {
     }
 }
 
+// Função auxiliar para salvar um grafo em memória no arquivo
 void Grafo::salvarArquivo(ofstream& arquivo) {
     arquivo << lista_vertices.size();
 
@@ -926,17 +930,11 @@ bool Grafo::possuiCiclo(int id)
 
 bool Grafo::buscaCicloAux(list<int> visitados,int id, int pai)
 {
-    //cout << "Buca no id " << id << ", a partir do id "<< pai << endl;
     list<int> visitados_2;
 
     for(list<int>::iterator it = visitados.begin(); it != visitados.end(); it++){
         visitados_2.push_back(*it);
     }
-    /*cout << "Visitados_2: " << endl;
-    for(list<int>::iterator it = visitados_2.begin(); it != visitados_2.end(); it++){
-        cout << *it << ", ";
-    }
-    cout << endl;*/
 
     Vertice* v = getVertice(id);
     bool ciclo = false;
@@ -966,49 +964,18 @@ bool Grafo::buscaCicloAux(list<int> visitados,int id, int pai)
 
     return ciclo;
 
-    /*//cout << "Visitando ID " << id << " a partir do nó " << pai << endl;
-    list<pair<int, int> >*  adj = getAdj(id);
-    list<int> visitados_2;
-    bool ciclo = false;
-    for(list<int>::iterator it = visitados.begin(); it != visitados.end(); it++){
-        visitados_2.push_back(*it);
-    }
-    for(list<pair<int, int> >::iterator it = adj->begin(); it != adj->end(); it++)
-    {
-        //cout << "Aresta ID2: " << it->first << endl;
-        bool found = (std::find(visitados_2.begin(), visitados_2.end(), it->first) != visitados_2.end());
-        if(it->first == pai){
-            //cout << "Nó pai, ignorando... " << endl;
-            continue;
-        }
-
-        if(!found){
-            //cout << "Não visitado ainda. Adicionando a visitados" << endl;
-            visitados_2.push_back(it->first);
-            ciclo = auxbuscaProfundidadeCiclo(visitados_2, it->first, id);
-            if(ciclo == true)
-                break;
-        }
-        else{
-            //cout << "Nó já visitado" << endl;
-            ciclo = true;
-            break;
-        }
-
-    }
-    return ciclo;*/
 }
 
-//Função que retorna a lista de adjacência do nó no
-listaArestas Grafo::getAdj(int no){
+//Função que retorna a lista de adjacência do vértice v
+listaArestas Grafo::getAdj(int v){
     for(listaVertices::iterator it = lista_vertices.begin(); it != lista_vertices.end(); it++){
-        if(it->id == no)
+        if(it->id == v)
             return (it->lista_arestas);
     }
     return listaArestas();
 }
 
-// Função criar arestas
+// Retorna uma cópia do grafo atual
 Grafo Grafo::copiarGrafo(){
 
     Grafo copia(direcionado);
@@ -1114,6 +1081,7 @@ double** Grafo::retornaMatrizFloyd()
 
 }
 
+// Função auxiliar para verificar se existe uma aresta entre o vértice id1 e id2
 bool Grafo::possuiAresta(int id1, int id2){
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
         if(v->id == id1){
@@ -1127,6 +1095,8 @@ bool Grafo::possuiAresta(int id1, int id2){
     return false;
 }
 
+// Função auxiliar para objter um objeto vértice
+// retorna nulo em caso de falha
 Vertice* Grafo::getVertice(int id){
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
         if(v->id == id){
