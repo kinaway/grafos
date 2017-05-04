@@ -64,6 +64,12 @@ bool Grafo::deletarVertice(int id)
                 }
             }
         }
+        for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+            // encontrou o vértice id
+            if(v->id > id){
+                v->id = v->id-1;
+            }
+        }
         return true;
      }
      else
@@ -467,7 +473,7 @@ int* grafo::auxbuscaProfundidadeTransitivo(int* vetor3,int id1,int id2,int* j)
  //Verifica o conjunto vertices que sao transitivos indiretos
 void Grafo::fechoTransitivoIndireto(int id1){
     double ** matrizFloyd;
-    matrizFloyd = retornaMatrizFloyd();
+    matrizFloyd = retornaMatrizFloyd(true);
     cout << " O conjunto de nós é: {";
     for(int i=0;i< (int)lista_vertices.size();i++)
     {
@@ -646,7 +652,7 @@ void Grafo::getSubgrafoInduzido(list<int> vertices){
 void Grafo::getComponentesFortementeConexas(){
     list<list<int> > lista_componentes = list<list<int> >(); //lista contendo as componentes conexas
     Grafo copia = copiarGrafo(); //usa uma copia para excluir nós já inseridos numa componente conexa.
-    double **dist = retornaMatrizFloyd(); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
+    double **dist = retornaMatrizFloyd(true); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
     int vertice_aux;
     cout << string(80, '\n'); //'limpa' console.
     for(listaVertices::iterator it = copia.lista_vertices.begin(); it != copia.lista_vertices.end(); it++){
@@ -762,49 +768,57 @@ void Grafo::getRaioDiametroCentroPeriferia(){
     queue<int> centro;
     queue<int> periferia;
     int tam = lista_vertices.size();
-    int diametro = 0;//maior valor da matriz
-    int raio = numeric_limits<int>::max();//menor valor da matriz
+    int listaExcentricidade[tam];
+    double diametro = 0;//maior valor da matriz
+    double raio = numeric_limits<int>::max();//menor valor da matriz
     double **matFloyd;
-    matFloyd = retornaMatrizFloyd();
+    matFloyd = retornaMatrizFloyd(false);
     for(int i=0;i< tam ;i++)//procura o maior caminho mais curto (diametro) do grafo
     {
+        int maior = 0;
+        //int menor = numeric_limits<int>::max();
         for(int j=0;j< tam ;j++)
         {
-
-            if(raio > matFloyd[i][j] && matFloyd[i][j] != 0)
+//            if(diametro < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
+//            {
+//                diametro = matFloyd[i][j];
+//            }
+            if(maior < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
             {
-                raio = matFloyd[i][j];
-            }
-
-            if(diametro < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
-            {
-                diametro = matFloyd[i][j];
+                maior = matFloyd[i][j];
+                listaExcentricidade[i] = matFloyd[i][j];
             }
         }
     }
-
-
-    for(int l=0;l<tam;l++)
+    for(int l = 0;l<tam;l++)
     {
-        for(int c=0;c<tam;c++)
+        if(listaExcentricidade[l] < raio)
         {
-            if(matFloyd[l][c] == raio)
-            {
-                centro.push(l+1);
-                centro.push(c+1);
-            }
-             if(matFloyd[l][c] == diametro)
-            {
-                periferia.push(l+1);
-                periferia.push(c+1);
-            }
+            raio = listaExcentricidade[l];
+        }
+        if(listaExcentricidade[l] > diametro)
+        {
+            diametro = listaExcentricidade[l];
         }
     }
+    
+    for(int k=0;k<tam;k++)
+    {
+        if(listaExcentricidade[k] == raio)
+        {
+            centro.push(k+1);
+        }
+        if(listaExcentricidade[k] == diametro)
+        {
+            periferia.push(k+1);
+        }
+    }
+
 
     cout << "Raio :"<<raio<<endl;
     cout <<"Diâmetro :"<<diametro<<endl;
     cout << "Centro :{";
-    for(int i = 0;i< (int)centro.size();i ++)
+    while(!centro.empty())
     {
         cout << centro.front()<<" ";
         centro.pop();
@@ -812,7 +826,8 @@ void Grafo::getRaioDiametroCentroPeriferia(){
     cout<<"}"<<endl;
 
     cout << "Periferia :{";
-    for(int i = 0;i< (int)periferia.size();i ++)
+    //for(int i = 0;i< (int)periferia.size();i ++)
+    while(!periferia.empty())
     {
         cout << periferia.front()<<" ";
         periferia.pop();
@@ -840,7 +855,7 @@ void Grafo::getAGM(){
     }
 
     // Executando algoritmo de Kruskal
-    while(copia.numeroArestas() > 0 || g.numeroArestas() == this.lista_vertices.size()-1){
+    while(copia.numeroArestas() > 0 || g.numeroArestas() == this->lista_vertices.size()-1){
         int menor_peso = numeric_limits<int>::max();
         int id1_escolhido = -1;
         int id2_escolhido = -1;
@@ -1041,7 +1056,7 @@ int* Grafo::retornaVetorDijkstra(int no1)
 
 }
 
-double** Grafo::retornaMatrizFloyd()
+double** Grafo::retornaMatrizFloyd(bool ponderado)
 {
     int tamanho = lista_vertices.size();
     double **dist = new double*[tamanho]; //matriz contendo as distâncias de i a j;
@@ -1060,7 +1075,15 @@ double** Grafo::retornaMatrizFloyd()
         adj = getAdj(i+1);
         for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){
             //atualiza todos adj de i;
-            dist[i][it->id-1] = it->peso;
+            if(ponderado)
+            {
+                dist[i][it->id-1] = it->peso;
+            }else{
+                if(i != it->id-1)
+                {
+                    dist[i][it->id-1] = 1;
+                }
+            }
         }
     }
 

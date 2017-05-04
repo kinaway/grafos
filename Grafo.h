@@ -47,6 +47,7 @@ public:
     //grafo grafoTransposto();
     int getComponentesConexas();
     void imprimirGrafo();
+    //double** retornaMatrizCaminho();
 
     ~Grafo();
 
@@ -69,7 +70,7 @@ private:
 
 
     int* retornaVetorDijkstra(int no1);
-    double** retornaMatrizFloyd();
+    double** retornaMatrizFloyd(bool ponderado);
     list<Aresta> getAdj(int no);
     /*
     void mapaVerticedeletar(int id);
