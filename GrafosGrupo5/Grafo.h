@@ -66,7 +66,8 @@ private:
     int numeroArestas();
     bool possuiCiclo(int id);
     bool buscaCicloAux(list<int> visitados, int id, int pai);
-
+    void buscaPontes();
+    void buscaPontesAux(Vertice v, int* pre, int* parent, int* low, int *cnt, list<pair<int,int> >* bridges);
 
     int* retornaVetorDijkstra(int no1);
     double** retornaMatrizFloyd();

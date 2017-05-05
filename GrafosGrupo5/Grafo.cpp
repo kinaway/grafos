@@ -316,7 +316,7 @@ void Grafo::auxbuscaProfundidade(int* vetor, int id_vertice, int j)
     }
 }
 
-bool Grafo::verificaArestaPonte(int id1, int id2, int peso)
+/*bool Grafo::verificaArestaPonte(int id1, int id2, int peso)
 {
     int componentes = getComponentesConexas();
     Grafo copia = copiarGrafo();
@@ -326,7 +326,7 @@ bool Grafo::verificaArestaPonte(int id1, int id2, int peso)
         copia.deletarAresta(id2, id1, peso);
     int componentes2 = copia.getComponentesConexas();
     return componentes != componentes2;
-}
+}*/
 
 //Verifica se o grafo È conexo
 bool Grafo::verificaConexo()
@@ -746,12 +746,7 @@ void Grafo::getPontes(){
 
     if(direcionado == false)
     {
-        for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
-            for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++){
-                if(verificaArestaPonte(v->id, a->id, a->peso))
-                    cout << v->id << "-" << a->id << " " << a->peso << endl;
-            }
-        }
+        buscaPontes();
     }
     else{
         cout << "Para o cálculo de pontes, o grafo deve ser não-orientado" << endl;
@@ -1078,6 +1073,78 @@ double** Grafo::retornaMatrizFloyd()
     }
 
     return dist;
+
+}
+
+// Implementação do algoritmo de Tarjan para a busca de arestas pontes
+// utiliza uma busca em profundidade para busca de arestas não abraçadas por nehuma outra
+// conforme descrito em ime.usp.br/~pf/algoritmos_para_grafos/aulas/bridges.html
+void Grafo::buscaPontes(){
+    list<pair<int,int> > pontes;
+    int* pre = new int[lista_vertices.size()];
+    int* parent = new int[lista_vertices.size()];
+    int* low = new int[lista_vertices.size()];
+    int cnt = 0;
+
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        pre[v->id-1] = parent[v->id-1] =  -1;
+        low[v->id-1] = -1;
+    }
+
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++){
+        if (pre[v->id-1] == -1) {
+         parent[v->id-1] = v->id;
+
+         buscaPontesAux(*v, pre, parent, low, &cnt, &pontes);
+      }
+    }
+
+    for(list<pair<int,int> >::iterator it = pontes.begin(); it != pontes.end(); it++){
+        cout << it->first << "-" << it->second << endl;
+    }
+
+}
+
+void Grafo::buscaPontesAux(Vertice v, int* pre, int* parent, int* low, int* cnt, list<pair<int,int> >* bridges){
+    int minn;
+
+    pre[v.id-1] = *cnt;
+    *cnt = *cnt + 1;
+
+    minn = pre[v.id-1];
+    for(listaArestas::iterator a = v.lista_arestas.begin(); a != v.lista_arestas.end(); a++){
+        int incidente_id = a->id;
+        if(pre[incidente_id-1] == -1){
+            parent[incidente_id-1] = v.id;
+            Vertice *u = getVertice(incidente_id);
+            buscaPontesAux(*u, pre, parent, low, cnt, bridges);
+            if (low[incidente_id-1] < minn) /*A*/
+                minn = low[incidente_id-1];
+        }
+
+        else {
+            if (pre[incidente_id-1] < minn && incidente_id != parent[v.id-1]) /*B*/
+                minn = pre[incidente_id-1];
+        }
+    }
+    low[v.id-1] = minn;
+    for(listaVertices::iterator vertice = lista_vertices.begin(); vertice != lista_vertices.end(); vertice++){
+        if(parent[vertice->id-1] != -1)
+        if (low[vertice->id-1] == pre[vertice->id-1] && parent[vertice->id-1] != vertice->id){
+            bool already_in = false;
+            for(list<pair<int,int> >::iterator it = bridges->begin(); it != bridges->end(); it++){
+                if((it->first == parent[vertice->id-1] && it->second == vertice->id) ||
+                    (it->first == vertice->id && it->second == parent[vertice->id-1])){
+                    already_in = true;
+                    break;
+                }
+            }
+            if(already_in == false){
+                bridges->push_back(make_pair(parent[vertice->id-1], vertice->id));
+            }
+
+        }
+    }
 
 }
 
