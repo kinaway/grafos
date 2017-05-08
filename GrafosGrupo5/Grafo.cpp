@@ -1099,6 +1099,11 @@ void Grafo::buscaPontes(){
       }
     }
 
+    if(pontes.size() == 0){
+        cout << "Não existem pontes neste grafo" << endl;
+        return;
+    }
+
     for(list<pair<int,int> >::iterator it = pontes.begin(); it != pontes.end(); it++){
         cout << it->first << "-" << it->second << endl;
     }
