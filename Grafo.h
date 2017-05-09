@@ -71,7 +71,7 @@ private:
     void buscaPontesAux(Vertice v, int* pre, int* parent, int* low, int *cnt, list<pair<int,int> >* bridges);
 
     int* retornaVetorDijkstra(int no1);
-    double** retornaMatrizFloyd();
+    double** retornaMatrizFloyd(bool ponderado);
     list<Aresta> getAdj(int no);
     /*
     void mapaVerticedeletar(int id);

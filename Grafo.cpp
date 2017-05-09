@@ -376,7 +376,7 @@ int Grafo::getComponentesConexas()
 void Grafo::fechoTransitivoIndireto(int id1)
 {
     double ** matrizFloyd;
-    matrizFloyd = retornaMatrizFloyd();
+    matrizFloyd = retornaMatrizFloyd(true);
     cout << " O conjunto de nós é: {";
     for(int i=0; i< (int)lista_vertices.size(); i++)
     {
@@ -581,7 +581,7 @@ void Grafo::getComponentesFortementeConexas()
 {
     list<list<int> > lista_componentes = list<list<int> >(); //lista contendo as componentes conexas
     Grafo copia = copiarGrafo(); //usa uma copia para excluir nós já inseridos numa componente conexa.
-    double **dist = retornaMatrizFloyd(); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
+    double **dist = retornaMatrizFloyd(true); //Gera matriz de distancias entre todos pares de nó. paramentros não interferem.
     int vertice_aux;
     cout << string(80, '\n'); //'limpa' console.
     for(listaVertices::iterator it = copia.lista_vertices.begin(); it != copia.lista_vertices.end(); it++)
@@ -797,54 +797,61 @@ void Grafo::getPontes()
     }
 }
 
-void Grafo::getRaioDiametroCentroPeriferia()
-{
+void Grafo::getRaioDiametroCentroPeriferia(){
     queue<int> centro;
     queue<int> periferia;
     int tam = lista_vertices.size();
-    int diametro = 0;//maior valor da matriz
-    int raio = numeric_limits<int>::max();//menor valor da matriz
+    int listaExcentricidade[tam];
+    double diametro = 0;//maior valor da matriz
+    double raio = numeric_limits<int>::max();//menor valor da matriz
     double **matFloyd;
-    matFloyd = retornaMatrizFloyd();
-    for(int i=0; i< tam ; i++) //procura o maior caminho mais curto (diametro) do grafo
+    matFloyd = retornaMatrizFloyd(false);
+    for(int i=0;i< tam ;i++)//procura o maior caminho mais curto (diametro) do grafo
     {
-        for(int j=0; j< tam ; j++)
+        int maior = 0;
+        //int menor = numeric_limits<int>::max();
+        for(int j=0;j< tam ;j++)
         {
-
-            if(raio > matFloyd[i][j] && matFloyd[i][j] != 0)
+//            if(diametro < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
+//            {
+//                diametro = matFloyd[i][j];
+//            }
+            if(maior < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
             {
-                raio = matFloyd[i][j];
-            }
-
-            if(diametro < matFloyd[i][j] && matFloyd[i][j] != numeric_limits<int>::max())
-            {
-                diametro = matFloyd[i][j];
+                maior = matFloyd[i][j];
+                listaExcentricidade[i] = matFloyd[i][j];
             }
         }
     }
-
-
-    for(int l=0; l<tam; l++)
+    for(int l = 0;l<tam;l++)
     {
-        for(int c=0; c<tam; c++)
+        if(listaExcentricidade[l] < raio)
         {
-            if(matFloyd[l][c] == raio)
-            {
-                centro.push(l+1);
-                centro.push(c+1);
-            }
-            if(matFloyd[l][c] == diametro)
-            {
-                periferia.push(l+1);
-                periferia.push(c+1);
-            }
+            raio = listaExcentricidade[l];
+        }
+        if(listaExcentricidade[l] > diametro)
+        {
+            diametro = listaExcentricidade[l];
         }
     }
+    
+    for(int k=0;k<tam;k++)
+    {
+        if(listaExcentricidade[k] == raio)
+        {
+            centro.push(k+1);
+        }
+        if(listaExcentricidade[k] == diametro)
+        {
+            periferia.push(k+1);
+        }
+    }
+
 
     cout << "Raio :"<<raio<<endl;
     cout <<"Diâmetro :"<<diametro<<endl;
     cout << "Centro :{";
-    for(int i = 0; i< (int)centro.size(); i ++)
+    while(!centro.empty())
     {
         cout << centro.front()<<" ";
         centro.pop();
@@ -852,15 +859,15 @@ void Grafo::getRaioDiametroCentroPeriferia()
     cout<<"}"<<endl;
 
     cout << "Periferia :{";
-    for(int i = 0; i< (int)periferia.size(); i ++)
+    //for(int i = 0;i< (int)periferia.size();i ++)
+    while(!periferia.empty())
     {
         cout << periferia.front()<<" ";
         periferia.pop();
     }
     cout<<"}"<<endl;
 
-    for(int i = 0; i < (int)lista_vertices.size(); i++)
-    {
+    for(int i = 0; i < (int)lista_vertices.size(); i++){
         delete matFloyd[i];
     }
     delete matFloyd;
@@ -1115,43 +1122,41 @@ int* Grafo::retornaVetorDijkstra(int no1)
 
 }
 
-double** Grafo::retornaMatrizFloyd()
+double** Grafo::retornaMatrizFloyd(bool ponderado)
 {
     int tamanho = lista_vertices.size();
     double **dist = new double*[tamanho]; //matriz contendo as distâncias de i a j;
     list<int> *caminho[tamanho]; //para cada ij, uma lista indicando o caminho entre eles.
     listaArestas adj;
-    for(int i=0; i<tamanho; i++)
-    {
+    for(int i=0;i<tamanho;i++){
         dist[i] = new double[tamanho];//cria variável dist[tamanho][tamanho] dinamicamente
         caminho[i] = new list<int>[tamanho];
-        for(int j=0; j<tamanho; j++)
-        {
-            if(i==j)
-            {
+        for(int j=0;j<tamanho;j++){
+            if(i==j){
                 dist[i][j] = 0;
-            }
-            else
-            {
+            } else {
                 dist[i][j] = numeric_limits<int>::max();//dist começa com infinito.
             }
         }
         adj = getAdj(i+1);
-        for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++)
-        {
+        for(listaArestas::iterator it = adj.begin(); it != adj.end(); it++){
             //atualiza todos adj de i;
-            dist[i][it->id-1] = it->peso;
+            if(ponderado)
+            {
+                dist[i][it->id-1] = it->peso;
+            }else{
+                if(i != it->id-1)
+                {
+                    dist[i][it->id-1] = 1;
+                }
+            }
         }
     }
 
-    for(int k=0; k<tamanho; k++)
-    {
-        for(int i=0; i<tamanho; i++)
-        {
-            for(int j=0; j<tamanho; j++)
-            {
-                if(dist[i][j] > dist[i][k] + dist[k][j])
-                {
+    for(int k=0;k<tamanho;k++){
+        for(int i=0;i<tamanho;i++){
+            for(int j=0;j<tamanho;j++){
+                if(dist[i][j] > dist[i][k] + dist[k][j]){
                     dist[i][j] = dist[i][k] + dist[k][j];
                     caminho[i][j] = caminho[i][k];
                     caminho[i][j].push_back(k+1); //caminho de ij passa a ser caminho de i a k mais k mais caminho de k a j;
