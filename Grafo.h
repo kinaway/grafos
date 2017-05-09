@@ -40,6 +40,7 @@ public:
     void getComponentesFortementeConexas(); // 18
     bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
+    void auxbuscaProfundidadeArticulacao(tuple<int, int,int>* vetor, int id_vertice);//20
     void getPontes(); // 21
     void getRaioDiametroCentroPeriferia(); // 22
     void getAGM(); // 23
@@ -47,7 +48,6 @@ public:
     //grafo grafoTransposto();
     int getComponentesConexas();
     void imprimirGrafo();
-    //double** retornaMatrizCaminho();
 
     ~Grafo();
 
@@ -67,10 +67,11 @@ private:
     int numeroArestas();
     bool possuiCiclo(int id);
     bool buscaCicloAux(list<int> visitados, int id, int pai);
-
+    void buscaPontes();
+    void buscaPontesAux(Vertice v, int* pre, int* parent, int* low, int *cnt, list<pair<int,int> >* bridges);
 
     int* retornaVetorDijkstra(int no1);
-    double** retornaMatrizFloyd(bool ponderado);
+    double** retornaMatrizFloyd();
     list<Aresta> getAdj(int no);
     /*
     void mapaVerticedeletar(int id);
