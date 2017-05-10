@@ -758,8 +758,10 @@ void Grafo::auxbuscaProfundidadeArticulacao(tuple<int, int,int>* vetor, int id_v
     }
 }
 
+
 void Grafo::getArticulacoes()
 {
+    j = 1;
     tuple <int,int,int> vetor[lista_vertices.size()];
     for(int i = 0; i < (int)lista_vertices.size(); i++)
     {
