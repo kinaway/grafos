@@ -12,7 +12,8 @@
 
 using namespace std;
 
-int getInputInt(){
+int getInputInt()
+{
     int numero;
     string input;
     getline (std::cin, input);
@@ -20,19 +21,22 @@ int getInputInt(){
     return numero;
 }
 
-string getInputString(){
+string getInputString()
+{
     string input;
     getline (std::cin, input);
     return input;
 }
 
-void clear(){
+void clear()
+{
     // system('cls') so funciona no windows
     // maneira multiplataforma mais simples de limpar console
     cout << string(80, '\n');
 }
 
-void voltarMenu(){
+void voltarMenu()
+{
     cout << "Pressione Enter para voltar ao menu." << endl;
     getInputString();
     clear();
@@ -123,10 +127,12 @@ void criarAresta(Grafo *g)
     cout << "Digite o peso desta aresta: " << endl;
     peso = getInputInt();
 
-    if(g->criarAresta(id1,id2,peso) == true){
+    if(g->criarAresta(id1,id2,peso) == true)
+    {
         cout << "A aresta foi criada." << endl;
     }
-    else{
+    else
+    {
         cout << "Não é possível criar a aresta pois um dos vértices não existe no grafo." << endl;
     }
     voltarMenu();
@@ -140,46 +146,56 @@ void obterGrauVertice(Grafo *g)
     cout << "Digite um id: " << endl;
     id = getInputInt();
 
-    if(g->direcionado == true){
+    if(g->direcionado == true)
+    {
         int grau_entrada = g->getGrauEntrada(id);
         int grau_saida = g->getGrauSaida(id);
 
-        if(grau_entrada != -1 && grau_saida != -1){
+        if(grau_entrada != -1 && grau_saida != -1)
+        {
             cout << "Grau de entrada do vértice " << id << ": "<< grau_entrada << endl;
             cout << "Grau de saída do vértice " << id << ": "<< grau_saida << endl;
             check = true;
         }
     }
-    else{
+    else
+    {
         int grau = g->getGrau(id);
-        if(grau != -1){
+        if(grau != -1)
+        {
             cout << "Grau do vértice " << id << ": "<< grau << endl;
             check = true;
         }
     }
 
-    if(check == false){
+    if(check == false)
+    {
         cout << "Não foi possível obter o grau do vértice selecionado. " << endl;
     }
 
     voltarMenu();
 }
 
-void obterGrauGrafo(Grafo *g) {
+void obterGrauGrafo(Grafo *g)
+{
     int grau = g->getGrauGrafo();
     cout << "Grau do grafo: " << grau << endl;
 
     voltarMenu();
 }
 
-void verificarKRegular(Grafo *g) {
+void verificarKRegular(Grafo *g)
+{
     cout << "Digite o K: "<<endl;
     int k;
     k = getInputInt();
 
-    if(g->verificaRegular(k)){
+    if(g->verificaRegular(k))
+    {
         cout << "O Grafo é " << k << " regular." << endl;
-    } else {
+    }
+    else
+    {
         cout << "O Grafo não é " << k << " regular." << endl;
     }
 
@@ -187,33 +203,43 @@ void verificarKRegular(Grafo *g) {
 }
 
 
-void obterOrdemGrafo(Grafo *g) {
+void obterOrdemGrafo(Grafo *g)
+{
     cout << "A ordem do Grafo é "<< g->getOrdemGrafo() <<endl;
 
     voltarMenu();
 }
 
-void isTrivial(Grafo *g) {
-    if(g->verificaTrivial()){
+void isTrivial(Grafo *g)
+{
+    if(g->verificaTrivial())
+    {
         cout << "O Grafo é trivial.";
-    } else {
+    }
+    else
+    {
         cout << "O Grafo nao é trivial.";
     }
 
     voltarMenu();
 }
 
-void isNulo(Grafo *g) {
-    if(g->verificaNulo()){
+void isNulo(Grafo *g)
+{
+    if(g->verificaNulo())
+    {
         cout << "O Grafo é nulo." << endl;
-    } else {
+    }
+    else
+    {
         cout << "O Grafo nao é nulo." << endl;
     }
 
     voltarMenu();
 }
 
-void calcularCaminho(Grafo *g) {
+void calcularCaminho(Grafo *g)
+{
     int algoritmo;
     int no1, no2;
 
@@ -228,20 +254,24 @@ void calcularCaminho(Grafo *g) {
     cout << "Qual o segundo nó?:"<<endl;
     no2 = getInputInt();
 
-    if(algoritmo == 1){
+    if(algoritmo == 1)
+    {
         g->calculaCaminhoDijkstra(no1, no2);
     }
-    else if(algoritmo == 2){
+    else if(algoritmo == 2)
+    {
         g->calculaCaminhoFloyd(no1, no2);
     }
-    else{
+    else
+    {
         cout << "Algoritmo escolhido inválido." << endl;
     }
 
     voltarMenu();
 }
 
-void calcularFechoDireto(Grafo *g) {
+void calcularFechoDireto(Grafo *g)
+{
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     no1 = getInputInt();
@@ -251,7 +281,8 @@ void calcularFechoDireto(Grafo *g) {
     voltarMenu();
 }
 
-void calcularFechoIndireto(Grafo *g) {
+void calcularFechoIndireto(Grafo *g)
+{
     cout << "Informe o numero do no1:"<<endl;
     int no1;
     no1 = getInputInt();
@@ -260,18 +291,21 @@ void calcularFechoIndireto(Grafo *g) {
     voltarMenu();
 }
 
-void imprimirSequenciaGraus(Grafo *g) {
+void imprimirSequenciaGraus(Grafo *g)
+{
     cout << "A sequencia de Graus é:" << endl;
     g->getSequenciaGraus(); //Imprime a sequencia de graus do grafo
 
     voltarMenu();
 }
 
-void getSubgrafoInduzido(Grafo *g) {
+void getSubgrafoInduzido(Grafo *g)
+{
     cout << "Digite os vertices. -1 para parar." << endl;
     int c = 0;
     list<int> vertices;
-    while(true){
+    while(true)
+    {
         c = getInputInt();
         if(c == -1)
             break;
@@ -283,62 +317,76 @@ void getSubgrafoInduzido(Grafo *g) {
     voltarMenu();
 }
 
-void getGrafoComplementar(Grafo *g) {
+void getGrafoComplementar(Grafo *g)
+{
     cout << "O grafo complementar é:" << endl;
     g->getComplementar(); //Imprime o grafo complementar do grafo lido
 
     voltarMenu();
 }
-void getComponentesFortementeConexas(Grafo *g) {
+void getComponentesFortementeConexas(Grafo *g)
+{
     cout << "As componentes são:" << endl;
     g->getComponentesFortementeConexas(); //
 
     voltarMenu();
 }
 
-void isEuleriano(Grafo *g) {
-    if(g->verificaEuleriano()){
+void isEuleriano(Grafo *g)
+{
+    if(g->verificaEuleriano())
+    {
         cout << "O Grafo é Euleriano." << endl;
-    } else {
+    }
+    else
+    {
         cout << "O Grafo nao é Euleriano." << endl;
     }
 
     voltarMenu();
 }
 
-void getArticulacoes(Grafo *g) {
+void getArticulacoes(Grafo *g)
+{
     cout << "Os nós de articulação são:" << endl;
     g->getArticulacoes();
 
     voltarMenu();
 }
 
-void getPontes(Grafo *g) {
+void getPontes(Grafo *g)
+{
     cout << "As arestas pontes são:" << endl;
     g->getPontes();
 
     voltarMenu();
 }
 
-void getRaioDiametroCentroPeriferia(Grafo *g){
+void getRaioDiametroCentroPeriferia(Grafo *g)
+{
     cout << "O raio, diâmetro, centro e periferia são:" << endl;
     g->getRaioDiametroCentroPeriferia(); //
 
     voltarMenu();
 }
 
-void getAGM(Grafo *g){
+void getAGM(Grafo *g)
+{
     cout << "A AGM ou floresta mínima é:" << endl;
     g->getAGM();
 
     voltarMenu();
 }
 
-void salvarArquivo(Grafo *g, char nome[]){
+void salvarArquivo(Grafo *g, char nome[])
+{
     ofstream arquivo(nome);
-    if(arquivo.is_open()){
+    if(arquivo.is_open())
+    {
         g->salvarArquivo(arquivo);
-    } else {
+    }
+    else
+    {
         cout << "arquivo de saida '"<<nome<<"' não encontrado!"<<endl;
     }
 }
@@ -378,14 +426,15 @@ void menu()
 
 int main(int argc, char *argv[])
 {
-    if(argc < 3){
+    if(argc < 3)
+    {
         cout << "Falta argumentos!" << endl << "Nome de arquivo de entrada e nome de arquivo de saida necessários.";
         exit(0);
     }
 
     ifstream txtFile;
     string input;
-    int i,vetor[3],c, direcionado,escolhas = 1;
+    int i,vetor[3],c, direcionado,escolhas = 1,ponderado;
     string nome;
     nome = argv[1];
     cout << endl << "O grafo é direcionado?"  <<endl;
@@ -396,33 +445,57 @@ int main(int argc, char *argv[])
     clear();
     txtFile.open(nome.c_str());
     txtFile >> c;
-
     Grafo g(direcionado, c);
-
-    while(!txtFile.eof())
+    cout << endl << "O grafo Ã© ponderado?"  <<endl;
+    cout << "1 -" << " " << "Sim" << endl;
+    cout << "0 -" << " " << "Nao" << endl;
+    ponderado = getInputInt();
+    if(ponderado == 1)
     {
-        i = 0;
-        while(i!=3){
-            txtFile >> c;
-            vetor[i] = c;
-            i++;
-            if(i == 3)
+        while(!txtFile.eof())
+        {
+            i = 0;
+            while(i!=3)
             {
-                /*if(!g.verificaIdExiste(vetor[0])){
-                    g.criarVertice(vetor[0]);
+                txtFile >> c;
+                vetor[i] = c;
+                i++;
+                if(i == 3)
+                {
+                    g.criarAresta(vetor[0],vetor[1],vetor[2]);
+                    if(direcionado == 0)
+                        g.criarAresta(vetor[1],vetor[0],vetor[2]);
                 }
-                if(!g.verificaIdExiste(vetor[1])){
-                    g.criarVertice(vetor[1]);
-                }*/
-                g.criarAresta(vetor[0],vetor[1],vetor[2]);
-                if(direcionado == 0)
-                    g.criarAresta(vetor[1],vetor[0],vetor[2]);
             }
         }
     }
+    else
+    {
+        while(!txtFile.eof())
+        {
+            i = 0;
+            while(i!=2)
+            {
+                txtFile >> c;
+                vetor[i] = c;
+                i++;
+                if(i == 2)
+                {
+                    g.criarAresta(vetor[0],vetor[1],0);
+                    if(direcionado == 0)
+                        g.criarAresta(vetor[1],vetor[0],0);
+                }
+            }
+
+        }
+    }
+
+
+
     txtFile.close();
 
-    while(escolhas !=0){
+    while(escolhas !=0)
+    {
 
 
         menu();
@@ -430,78 +503,78 @@ int main(int argc, char *argv[])
         clear();
         switch(escolhas)
         {
-            case 1:
-                criarVertice(&g);
-                break;
-            case 2:
-                verificarIdxiste(&g);
-                break;
-            case 3:
-                deletarVertice(&g);
-                break;
-            case 4:
-                deletarAresta(&g);
-                break;
-            case 5:
-                criarAresta(&g);
-                break;
-            case 6:
-                obterGrauVertice(&g);
-                break;
-            case 7:
-                obterGrauGrafo(&g);
-                break;
-            case 8:
-                verificarKRegular(&g);
-                break;
-            case 9:
-                obterOrdemGrafo(&g);
-                break;
-            case 10:
-                isTrivial(&g);
-                break;
-            case 11:
-                isNulo(&g);
-                break;
-            case 12:
-                calcularCaminho(&g);
-                break;
-            case 13:
-                calcularFechoDireto(&g);
-                break;
-            case 14:
-                calcularFechoIndireto(&g);
-                break;
-            case 15:
-                imprimirSequenciaGraus(&g);
-                break;
-            case 16:
-                getSubgrafoInduzido(&g);
-                break;
-            case 17:
-                getGrafoComplementar(&g);
-                break;
-            case 18:
-                getComponentesFortementeConexas(&g);
-                break;
-            case 19:
-                isEuleriano(&g);
-                break;
-            case 20:
-                getArticulacoes(&g);
-                break;
-            case 21:
-                getPontes(&g);
-                break;
-            case 22:
-                getRaioDiametroCentroPeriferia(&g);
-                break;
-            case 23:
-                getAGM(&g);
-                break;
-            case 0:
-                salvarArquivo(&g, argv[2]);
-                break;
+        case 1:
+            criarVertice(&g);
+            break;
+        case 2:
+            verificarIdxiste(&g);
+            break;
+        case 3:
+            deletarVertice(&g);
+            break;
+        case 4:
+            deletarAresta(&g);
+            break;
+        case 5:
+            criarAresta(&g);
+            break;
+        case 6:
+            obterGrauVertice(&g);
+            break;
+        case 7:
+            obterGrauGrafo(&g);
+            break;
+        case 8:
+            verificarKRegular(&g);
+            break;
+        case 9:
+            obterOrdemGrafo(&g);
+            break;
+        case 10:
+            isTrivial(&g);
+            break;
+        case 11:
+            isNulo(&g);
+            break;
+        case 12:
+            calcularCaminho(&g);
+            break;
+        case 13:
+            calcularFechoDireto(&g);
+            break;
+        case 14:
+            calcularFechoIndireto(&g);
+            break;
+        case 15:
+            imprimirSequenciaGraus(&g);
+            break;
+        case 16:
+            getSubgrafoInduzido(&g);
+            break;
+        case 17:
+            getGrafoComplementar(&g);
+            break;
+        case 18:
+            getComponentesFortementeConexas(&g);
+            break;
+        case 19:
+            isEuleriano(&g);
+            break;
+        case 20:
+            getArticulacoes(&g);
+            break;
+        case 21:
+            getPontes(&g);
+            break;
+        case 22:
+            getRaioDiametroCentroPeriferia(&g);
+            break;
+        case 23:
+            getAGM(&g);
+            break;
+        case 0:
+            salvarArquivo(&g, argv[2]);
+            break;
         }
     }
 }

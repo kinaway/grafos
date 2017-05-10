@@ -5,8 +5,10 @@
 #include <algorithm>
 #include "Aresta.h"
 #include "Vertice.h"
+#include <tr1/tuple>
 
 using namespace std;
+using namespace std::tr1;
 typedef list<pair<int, list<pair<int, int> > > >  lista_adjacencia;
 typedef list<Vertice> listaVertices;
 
@@ -40,6 +42,7 @@ public:
     void getComponentesFortementeConexas(); // 18
     bool verificaEuleriano(); // 19
     void getArticulacoes(); // 20
+    void auxbuscaProfundidadeArticulacao(tuple<int, int,int>* vetor, int id_vertice);//20
     void getPontes(); // 21
     void getRaioDiametroCentroPeriferia(); // 22
     void getAGM(); // 23
@@ -70,7 +73,7 @@ private:
     void buscaPontesAux(Vertice v, int* pre, int* parent, int* low, int *cnt, list<pair<int,int> >* bridges);
 
     int* retornaVetorDijkstra(int no1);
-    double** retornaMatrizFloyd();
+    double** retornaMatrizFloyd(bool ponderado);
     list<Aresta> getAdj(int no);
     /*
     void mapaVerticedeletar(int id);
