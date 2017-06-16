@@ -446,7 +446,7 @@ int main(int argc, char *argv[])
     txtFile.open(nome.c_str());
     txtFile >> c;
     Grafo g(direcionado, c);
-    cout << endl << "O grafo Ã© ponderado?"  <<endl;
+    cout << endl << "O grafo é ponderado?"  <<endl;
     cout << "1 -" << " " << "Sim" << endl;
     cout << "0 -" << " " << "Nao" << endl;
     ponderado = getInputInt();
@@ -454,43 +454,30 @@ int main(int argc, char *argv[])
     {
         while(!txtFile.eof())
         {
-            i = 0;
-            while(i!=3)
+            for(int i = 0; i < 3; i++)
             {
                 txtFile >> c;
                 vetor[i] = c;
-                i++;
-                if(i == 3)
-                {
-                    g.criarAresta(vetor[0],vetor[1],vetor[2]);
-                    if(direcionado == 0)
-                        g.criarAresta(vetor[1],vetor[0],vetor[2]);
-                }
             }
+            g.criarAresta(vetor[0],vetor[1],vetor[2]);
+            if(direcionado == 0)
+                g.criarAresta(vetor[1],vetor[0],vetor[2]);
         }
     }
     else
     {
         while(!txtFile.eof())
         {
-            i = 0;
-            while(i!=2)
+            for(int i = 0; i < 2; i++)
             {
                 txtFile >> c;
                 vetor[i] = c;
-                i++;
-                if(i == 2)
-                {
-                    g.criarAresta(vetor[0],vetor[1],0);
-                    if(direcionado == 0)
-                        g.criarAresta(vetor[1],vetor[0],0);
-                }
             }
-
+            g.criarAresta(vetor[0],vetor[1],0);
+            if(direcionado == 0)
+                g.criarAresta(vetor[1],vetor[0],0);
         }
     }
-
-
 
     txtFile.close();
 
