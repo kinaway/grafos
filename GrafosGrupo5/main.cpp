@@ -434,22 +434,23 @@ int main(int argc, char *argv[])
 
     ifstream txtFile;
     string input;
-    int i,vetor[3],c, direcionado,escolhas = 1,ponderado;
+    int vetor[3],c, direcionado,escolhas = 1,ponderado;
     string nome;
     nome = argv[1];
     cout << endl << "O grafo é direcionado?"  <<endl;
-    cout << "1 -" << " " << "Sim" << endl;
-    cout << "0 -" << " " << "Nao" << endl;
+    cout << "1 - Sim" << endl;
+    cout << "0 - Nao" << endl;
     direcionado = getInputInt();
     cout << endl;
-    clear();
+    cout << endl << "O grafo é ponderado?"  <<endl;
+    cout << "1 - Sim" << endl;
+    cout << "0 - Nao" << endl;
+    ponderado = getInputInt();
+
     txtFile.open(nome.c_str());
     txtFile >> c;
     Grafo g(direcionado, c);
-    cout << endl << "O grafo é ponderado?"  <<endl;
-    cout << "1 -" << " " << "Sim" << endl;
-    cout << "0 -" << " " << "Nao" << endl;
-    ponderado = getInputInt();
+
     if(ponderado == 1)
     {
         while(!txtFile.eof())
