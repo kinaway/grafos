@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <sstream>
+#include <vector>
 #include "Aresta.h"
 #include "Vertice.h"
 #include "Grafo.h"
@@ -434,46 +435,40 @@ int main(int argc, char *argv[])
 
     ifstream txtFile;
     string input;
-    int vetor[3],c, direcionado,escolhas = 1,ponderado;
+    int c, direcionado,escolhas = 1,ponderado;
     string nome;
+    string line;
     nome = argv[1];
     cout << endl << "O grafo é direcionado?"  <<endl;
     cout << "1 - Sim" << endl;
     cout << "0 - Nao" << endl;
     direcionado = getInputInt();
-    cout << endl;
-    cout << endl << "O grafo é ponderado?"  <<endl;
-    cout << "1 - Sim" << endl;
-    cout << "0 - Nao" << endl;
-    ponderado = getInputInt();
 
     txtFile.open(nome.c_str());
-    txtFile >> c;
-    Grafo g(direcionado, c);
 
-    if(ponderado == 1)
-    {
-        while(!txtFile.eof())
-        {
-            for(int i = 0; i < 3; i++)
-            {
-                txtFile >> c;
-                vetor[i] = c;
-            }
+    getline(txtFile, line);
+    Grafo g(direcionado, atoi(line.c_str()));
+
+    while (getline(txtFile, line)){
+
+        string buffer;
+        stringstream ss(line); // Insert the string into a stream
+
+        vector<int> vetor; // Create vector to hold our words
+
+        while (ss >> buffer){
+            int valor = atoi(buffer.c_str());
+            vetor.push_back(valor);
+        }
+
+        //cout << "Characters: " << vetor[0] << ", " << vetor[1]<< ", " << vetor[2] << endl;
+        if(vetor.size() == 3){
             g.criarAresta(vetor[0],vetor[1],vetor[2]);
             if(direcionado == 0)
                 g.criarAresta(vetor[1],vetor[0],vetor[2]);
         }
-    }
-    else
-    {
-        while(!txtFile.eof())
-        {
-            for(int i = 0; i < 2; i++)
-            {
-                txtFile >> c;
-                vetor[i] = c;
-            }
+
+        else if(vetor.size() == 2){
             g.criarAresta(vetor[0],vetor[1],0);
             if(direcionado == 0)
                 g.criarAresta(vetor[1],vetor[0],0);
@@ -484,8 +479,6 @@ int main(int argc, char *argv[])
 
     while(escolhas !=0)
     {
-
-
         menu();
         escolhas = getInputInt();
         clear();
