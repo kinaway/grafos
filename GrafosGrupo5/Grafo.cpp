@@ -10,13 +10,19 @@ Grafo::Grafo(int direcionado)
 }
 
 //Construtor do grafo, orientação e tamanho do grafo devem ser passados
-Grafo::Grafo(int direcionado, int tamanho)
+Grafo::Grafo(int direcionado, int tamanho, vector<int>* p)
 {
     this->direcionado = direcionado;
     for(int i = 1; i < tamanho+1; i++)
     {
         criarVertice(i);
     }
+    if(p != NULL){
+        for(int i = 0; i < p->size(); i++){
+            particoes.push_back((*p)[i]);
+        }
+    }
+
 }
 
 // Função para adicionar um vértice id no grafo

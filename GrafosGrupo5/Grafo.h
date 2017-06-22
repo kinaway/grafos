@@ -3,6 +3,7 @@
 #include <iostream>
 #include <list>
 #include <algorithm>
+#include <vector>
 #include "Aresta.h"
 #include "Vertice.h"
 #include <tr1/tuple>
@@ -11,12 +12,13 @@ using namespace std;
 using namespace std::tr1;
 typedef list<pair<int, list<pair<int, int> > > >  lista_adjacencia;
 typedef list<Vertice> listaVertices;
+typedef vector<int> Particao;
 
 class Grafo
 {
 public:
     Grafo (int direcionado);
-    Grafo (int direcionado, int tamanho);
+    Grafo (int direcionado, int tamanho, vector<int>* p = NULL);
     bool direcionado;
 
     bool criarVertice(int id);      // 1
@@ -56,6 +58,7 @@ public:
 private:
     //lista_adjacencia *lista_vertices; //lista com um pair contendo :id do vertice, lista de adjacência dele contendo: id do nó para quem tem ligação, valor da aresta;
     listaVertices lista_vertices;
+    Particao particoes;
 
     Vertice* getVertice(int id);
 
