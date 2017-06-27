@@ -458,29 +458,12 @@ int main(int argc, char *argv[])
     if(v.size() == 1){
         ordem = v[0];
     }
-    else if(v.size() > 1){
-        ordem = v[0];
-        int total = 0;
-        particoes = new vector<int>;
-        for(int i = 1; i < v.size(); i++){
-            particoes->push_back(v[i]);
-            total += v[i];
-        }
-        if(total != ordem){
-            cout << "Primeira linha do arquivo deve conter m [d]" << endl;
-            cout << "Onde m é a ordem do grafo, e d são diferentes particões" << endl;
-            cout << "dado que a soma de todas as partiçoes é igual a m" << endl;
-            return 0;
-        }
-    }
     else{
-        cout << "Primeira linha do arquivo deve conter m [d]" << endl;
-        cout << "Onde m é a ordem do grafo, e d são diferentes particões" << endl;
-        cout << "dado que a soma de todas as partiçoes é igual a m" << endl;
+        cout << "Arquivo de entrada inválido. Primeira linha deve conter o número de nós do grafo." << endl;
         return 0;
     }
 
-    Grafo g(direcionado, ordem, particoes);
+    Grafo g(direcionado, ordem);
 
     while (getline(txtFile, line)){
 
@@ -501,7 +484,7 @@ int main(int argc, char *argv[])
         g.criarAresta(vetor[0],vetor[1],vetor[2]);
         if(direcionado == 0)
             g.criarAresta(vetor[1],vetor[0],vetor[2]);
-        cout << "Nó criado: " << vetor[0] << ", " << vetor[1]<< ", " << vetor[2] << endl;
+        //cout << "Nó criado: " << vetor[0] << ", " << vetor[1]<< ", " << vetor[2] << endl;
 
     }
 
