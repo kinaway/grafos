@@ -52,6 +52,9 @@ public:
     //grafo grafoTransposto();
     int getComponentesConexas();
     void imprimirGrafo();
+    void getPAGMGRandomizado();
+    void getPAGMGReativo();
+    void getPAGMGGuloso();
 
     ~Grafo();
 
@@ -78,6 +81,8 @@ private:
     int* retornaVetorDijkstra(int no1);
     double** retornaMatrizFloyd(bool ponderado);
     list<Aresta> getAdj(int no);
+    int getParticao(int id);
+
     /*
     void mapaVerticedeletar(int id);
     void mapaVerticecriar();
