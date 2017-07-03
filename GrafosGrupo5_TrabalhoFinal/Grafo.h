@@ -20,8 +20,9 @@ public:
     Grafo (int direcionado);
     Grafo (int direcionado, int tamanho, vector<int>* p = NULL);
     bool direcionado;
+    Particao particoes;
 
-    bool criarVertice(int id);      // 1
+    bool criarVertice(int id, int particao);      // 1
     bool verificaIdExiste(int id);  // 2
     bool deletarVertice(int id);    // 3
     bool deletarAresta(int id,int id2,int peso);    // 4
@@ -61,7 +62,7 @@ public:
 private:
     //lista_adjacencia *lista_vertices; //lista com um pair contendo :id do vertice, lista de adjacência dele contendo: id do nó para quem tem ligação, valor da aresta;
     listaVertices lista_vertices;
-    Particao particoes;
+
 
     Vertice* getVertice(int id);
 

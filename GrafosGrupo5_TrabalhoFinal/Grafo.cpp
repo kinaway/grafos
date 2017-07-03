@@ -15,7 +15,7 @@ Grafo::Grafo(int direcionado, int tamanho, vector<int>* p)
     this->direcionado = direcionado;
     for(int i = 1; i < tamanho+1; i++)
     {
-        criarVertice(i);
+        criarVertice(i, 0);
     }
     if(p != NULL){
         for(int i = 0; i < p->size(); i++){
@@ -27,13 +27,17 @@ Grafo::Grafo(int direcionado, int tamanho, vector<int>* p)
 
 // Função para adicionar um vértice id no grafo
 // retorna false em caso de falha
-bool Grafo::criarVertice(int id)
+bool Grafo::criarVertice(int id, int particao)
 {
     Vertice* v = getVertice(id);
     if(v == NULL)
     {
-        Vertice v(id);
+        Vertice v(id, particao);
         lista_vertices.push_back(v);
+        bool contains_partition = (std::find(particoes.begin(), particoes.end(), particao) != particoes.end());
+        if(!contains_partition){
+            particoes.push_back(particao);
+        }
         return true;
     }
     else
@@ -340,7 +344,7 @@ Grafo Grafo::copiarGrafo()
     {
         if(!copia.verificaIdExiste(v->id))
         {
-            copia.criarVertice(v->id);
+            copia.criarVertice(v->id, v->particao);
         }
     }
 
@@ -398,21 +402,22 @@ void Grafo::getPAGMGRandomizado(){
 
     vector<Vertice*> selected_nodes;
 
-    int range = 1;
+    bool covered_partitions[particoes.size()];
+    for(int i = 0; i < particoes.size(); i++){
+        covered_partitions[i] = false;
+    }
 
-    for(vector<int>::iterator it = particoes.begin(); it != particoes.end(); it++){
-
-        int min_range = range;
-        int max_range = *it + range - 1;
-        //cout << "Range: " << min_range << ", " << max_range << endl;
-
-        int selected = rand() % (max_range-min_range+1) + min_range;
-        //cout << "Nó selecionado:" << selected<< endl;
+    while(selected_nodes.size() < particoes.size()){
+        int selected = rand() % (lista_vertices.size());
         Vertice* selected_node = getVertice(selected);
-        selected_nodes.push_back(selected_node);
-
-        range += *it;
-
+        //cout << "Random selected :" << selected << endl;
+        int selected_partition = selected_node->particao-1;
+        if(covered_partitions[selected_partition] != true){
+            covered_partitions[selected_partition] = true;
+            Vertice* selected_node = getVertice(selected);
+            selected_nodes.push_back(selected_node);
+            //cout << "Nó selecionado:" << selected << "(part "  << selected_partition+1 << ")"<< endl;
+        }
     }
 
     Grafo g(this->direcionado, this->lista_vertices.size(), &this->particoes);
@@ -444,7 +449,7 @@ void Grafo::getPAGMGRandomizado(){
 
 void Grafo::getPAGMGReativo(){
 
-    double alpha = 0.5;
+    double alpha = 0.1;
 
     vector<pair<int, Aresta*> > selected_edges;
     vector<pair<int, Aresta*> > arestasOrdenadas;
@@ -533,8 +538,10 @@ void Grafo::getPAGMGReativo(){
             int id_node_2 = lcr[selected].second->id;
             int peso = lcr[selected].second->peso;
 
-            int part1 = getParticao(id_node_1);
-            int part2 = getParticao(id_node_2);
+            int part1 = (getVertice(id_node_1))->particao-1;
+            int part2 = (getVertice(id_node_2))->particao-1;
+            //int part1 = getParticao(id_node_1);
+            //int part2 = getParticao(id_node_2);
 
             //cout << "Node 1 (particao "<< part1 <<"): " << id_node_1 << ", Node 2 (particao "<< part2<< "): " << id_node_2 << ", peso: " << peso << endl;
 
@@ -551,7 +558,7 @@ void Grafo::getPAGMGReativo(){
             else{
                 arestasOrdenadas.erase(std::remove(arestasOrdenadas.begin(), arestasOrdenadas.end(), lcr[selected]), arestasOrdenadas.end());
                 //cout << "Não adicionado, nós na mesma partição ou em partição repetida." << endl;
-                //cout << "arestasOrdenadas.size(): " << arestasOrdenadas.size() <<  endl;
+                //out << "arestasOrdenadas.size(): " << arestasOrdenadas.size() <<  endl;
                 lcr.erase(lcr.begin() + selected);
 
                 selected = -1;
@@ -592,6 +599,8 @@ int Grafo::getParticao(int id){
         range += *it;
         counter += 1;
     }
+
+    return -1;
 
 }
 

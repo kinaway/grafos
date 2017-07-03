@@ -93,75 +93,50 @@ int main(int argc, char *argv[])
 
     ifstream txtFile;
     string nome, input, line, buffer;
-    int ordem, direcionado,escolhas = 1;
-    vector<int>* particoes = NULL;
+    int escolhas = 1;
     nome = argv[1];
 
-    cout << endl << "O grafo é direcionado?"  <<endl;
-    cout << "1 - Sim" << endl;
-    cout << "0 - Nao" << endl;
-    direcionado = getInputInt();
+    bool direcionado = false;
 
     txtFile.open(nome.c_str());
-    getline(txtFile, line);
 
     stringstream ss(line);
     vector<int> v;
+    vector<int> vertices;
 
-     while (ss >> buffer){
-        int valor = atoi(buffer.c_str());
-        v.push_back(valor);
-    }
-
-    if(v.size() == 1){
-        ordem = v[0];
-    }
-    else if(v.size() > 1){
-        ordem = v[0];
-        int total = 0;
-        particoes = new vector<int>;
-        for(int i = 1; i < v.size(); i++){
-            particoes->push_back(v[i]);
-            total += v[i];
-        }
-        if(total != ordem){
-            cout << "Primeira linha do arquivo deve conter m [d]" << endl;
-            cout << "Onde m é a ordem do grafo, e d são diferentes particões" << endl;
-            cout << "dado que a soma de todas as partiçoes é igual a m" << endl;
-            return 0;
-        }
-    }
-    else{
-        cout << "Primeira linha do arquivo deve conter m [d]" << endl;
-        cout << "Onde m é a ordem do grafo, e d são diferentes particões" << endl;
-        cout << "dado que a soma de todas as partiçoes é igual a m" << endl;
-        return 0;
-    }
-
-    Grafo g(direcionado, ordem, particoes);
+    Grafo g(direcionado);
 
     while (getline(txtFile, line)){
 
         string buffer;
         stringstream ss(line); // Insert the string into a stream
 
-        vector<int> vetor; // Create vector to hold our words
-
         while (ss >> buffer){
-            int v = atoi(buffer.c_str());
-            vetor.push_back(v);
+            int valor = atoi(buffer.c_str());
+            v.push_back(valor);
         }
 
-        // caso não tenha peso nas arestas, adicionamos peso 0
-        if(vetor.size() == 2)
-            vetor.push_back(0);
+        if(v.size() == 1){
+            //cout << "É uma particão! " << endl;
+            vertices.push_back(v[0]);
+        }
 
-        g.criarAresta(vetor[0],vetor[1],vetor[2]);
-        if(direcionado == 0)
-            g.criarAresta(vetor[1],vetor[0],vetor[2]);
-        cout << "Nó criado: " << vetor[0] << ", " << vetor[1]<< ", " << vetor[2] << endl;
+        else if(v.size() == 3){
+            //cout << "É uma aresta!" << endl;
+            g.criarAresta(v[0], v[1], v[2]);
+        }
+        else{
+            cout << "Vertices: "<< endl;
+            for(int i = 0; i < vertices.size(); i++){
+                cout << "[" << i << "]: " << vertices[i] << endl;
+                g.criarVertice(i, vertices[i]);
+            }
+        }
+
+        v.clear();
 
     }
+
 
     txtFile.close();
 

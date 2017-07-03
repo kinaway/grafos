@@ -1,7 +1,8 @@
 #include "Vertice.h"
 
-Vertice::Vertice(int id){
+Vertice::Vertice(int id, int particao){
     this->id = id;
+    this->particao = particao;
 }
 
 void Vertice::adicionaAresta(int id, int peso){

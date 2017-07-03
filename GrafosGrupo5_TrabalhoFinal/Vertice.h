@@ -11,9 +11,10 @@ class Vertice
 {
 public:
     int id;
+    int particao;
     listaArestas lista_arestas;
 
-    Vertice (int id);
+    Vertice (int id, int particao);
     void adicionaAresta(int id, int peso);
 
     ~Vertice();
