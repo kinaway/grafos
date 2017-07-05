@@ -395,6 +395,87 @@ Vertice* Grafo::getVertice(int id)
 }
 
 void Grafo::getPAGMGGuloso(){
+    double grau_aux = numeric_limits<double>::max();
+    Vertice *vertice_aux,*vertice_min,*vertice_aux2;
+    Aresta *aresta_min;
+    int particao_visitada[particoes.size()];
+    int vertices_arvore[particoes.size()];
+    int peso_arestas[particoes.size()-1];
+    int particao1,particao2;
+
+    for(int i = 0; i<particoes.size(); i++)
+    {
+
+        particao_visitada[i] = -1;
+        vertices_arvore[i] = -1;
+    }
+
+
+    for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++)
+    {
+        for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++)
+        {
+            vertice_aux = getVertice(a->id);
+
+            particao1 = v->particao;
+            particao2 = vertice_aux->particao;
+            if(particao1 != particao2 && a->peso < grau_aux)
+            {
+                grau_aux = a->peso;
+                //aresta_min = &a;
+                vertices_arvore[0] = v->id;
+                vertice_aux2 = getVertice(a->id);
+                peso_arestas[0] = a->peso;
+            }
+        }
+    }
+
+    vertices_arvore[1] = vertice_aux2->id;
+    vertice_aux = getVertice(vertices_arvore[0]);
+    particao_visitada[vertice_aux->particao] = 1;
+    particao_visitada[vertice_aux2->particao] = 1;
+
+ int  i = 2;
+    while(i < particoes.size())
+    {
+        int j = 0;
+        grau_aux = numeric_limits<double>::max();
+        while( vertices_arvore[j] != -1 )
+        {
+            vertice_aux2 = getVertice(vertices_arvore[j]);
+            for(listaArestas::iterator a = vertice_aux2->lista_arestas.begin(); a != vertice_aux2->lista_arestas.end(); a++)
+            {
+                vertice_aux = getVertice(a->id);
+                particao1 = vertice_aux->particao;
+                particao2 = vertice_aux2->particao;
+                if(particao1 != particao2 && a->peso < grau_aux && particao_visitada[particao1] != 1 )
+                {
+                    grau_aux = a->peso;
+                    //vertice_min = vertice_aux;
+                    //aresta_min = *a;
+                    vertices_arvore[i] = vertice_aux->id;
+                    peso_arestas[i-1] = aresta_min->peso;
+                }
+            }
+
+            j++;
+        }
+        vertice_aux2 = getVertice(vertices_arvore[i]);
+        particao_visitada[vertice_aux2->particao] = 1;
+        i++;
+    }
+
+  Grafo arvoreGulosa(this->direcionado, this->lista_vertices.size(), &this->particoes);
+    for(int i = 0; i<particoes.size(); i++)
+    {
+        vertice_aux2 = getVertice(vertices_arvore[i]);
+        arvoreGulosa.criarVertice(vertices_arvore[i],vertice_aux2->particao);
+        if(i>=1)
+        {
+            arvoreGulosa.criarAresta(vertices_arvore[i-1],vertices_arvore[i],peso_arestas[i-1]);
+        }
+    }
+
 
 }
 
