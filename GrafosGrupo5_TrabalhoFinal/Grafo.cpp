@@ -547,6 +547,7 @@ void Grafo::getPAGMGReativo(){
 
             if(part1 != part2 &&
                 ((particoesPreenchidas[part1] == id_node_1 && particoesPreenchidas[part2] == -1) ||
+                (particoesPreenchidas[part1] == id_node_1 && particoesPreenchidas[part2] == id_node_2) ||
                 (particoesPreenchidas[part1] == -1 && particoesPreenchidas[part2] == id_node_2) ||
                 (particoesPreenchidas[part1] == -1 && particoesPreenchidas[part2] == -1))){
                 //cout << "Adicionado!" << endl;
@@ -554,13 +555,13 @@ void Grafo::getPAGMGReativo(){
                 particoesPreenchidas[part1] = id_node_1;
                 particoesPreenchidas[part2] = id_node_2;
                 arestasOrdenadas.erase(std::remove(arestasOrdenadas.begin(), arestasOrdenadas.end(), lcr[selected]), arestasOrdenadas.end());
+                lcr.erase(lcr.begin() + selected);
             }
             else{
                 arestasOrdenadas.erase(std::remove(arestasOrdenadas.begin(), arestasOrdenadas.end(), lcr[selected]), arestasOrdenadas.end());
                 //cout << "Não adicionado, nós na mesma partição ou em partição repetida." << endl;
                 //out << "arestasOrdenadas.size(): " << arestasOrdenadas.size() <<  endl;
                 lcr.erase(lcr.begin() + selected);
-
                 selected = -1;
 
             }
