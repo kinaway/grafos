@@ -1,0 +1,206 @@
+# depslib dependency file v1.0
+1493201305 source:/home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
+
+1493202660 /home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/Vertice.h
+	<list>
+	"Aresta.h"
+
+1493201763 /home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/Grafo.h
+	<iostream>
+	<list>
+	<algorithm>
+	"Aresta.h"
+	"Vertice.h"
+
+1493202332 /home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/Aresta.h
+
+1493202639 source:/home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/Grafo.cpp
+	"Grafo.h"
+	<limits>
+	<fstream>
+	<queue>
+
+1493202325 source:/home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/Aresta.cpp
+	"Aresta.h"
+
+1493202633 source:/home/hauck/grafos/grafos2/grafos_v2/GrafosGrupo5/Vertice.cpp
+	"Vertice.h"
+
+1493979714 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Aresta.cpp
+	"Aresta.h"
+
+1493979714 /home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Aresta.h
+
+1494430639 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Grafo.cpp
+	"Grafo.h"
+	<limits>
+	<fstream>
+	<queue>
+	<tr1/tuple>
+
+1494378483 /home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Grafo.h
+	<iostream>
+	<list>
+	<algorithm>
+	"Aresta.h"
+	"Vertice.h"
+	<tr1/tuple>
+
+1493979714 /home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Vertice.h
+	<list>
+	"Aresta.h"
+
+1493979714 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/Vertice.cpp
+	"Vertice.h"
+
+1494375930 source:/home/hauck/grafos/grafos2/grafos/GrafosGrupo5/main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
+
+1493979714 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/Aresta.cpp
+	"Aresta.h"
+
+1493979714 /home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/Aresta.h
+
+1498145956 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/Grafo.cpp
+	"Grafo.h"
+	<limits>
+	<fstream>
+	<queue>
+	<tr1/tuple>
+
+1498145942 /home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/Grafo.h
+	<iostream>
+	<list>
+	<algorithm>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	<tr1/tuple>
+
+1493979714 /home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/Vertice.h
+	<list>
+	"Aresta.h"
+
+1493979714 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/Vertice.cpp
+	"Vertice.h"
+
+1498139188 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5/main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
+
+1493979714 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/Aresta.cpp
+	"Aresta.h"
+
+1493979714 /home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/Aresta.h
+
+1499272371 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/Grafo.cpp
+	"Grafo.h"
+	<limits>
+	<fstream>
+	<queue>
+	<tr1/tuple>
+
+1499108337 /home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/Grafo.h
+	<iostream>
+	<list>
+	<algorithm>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	<tr1/tuple>
+
+1499107021 /home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/Vertice.h
+	<list>
+	"Aresta.h"
+
+1499112301 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
+
+1499107040 source:/home/hauck/TrabalhoGrafos/grafos/GrafosGrupo5_TrabalhoFinal/Vertice.cpp
+	"Vertice.h"
+
+1499258178 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\aresta.cpp
+	"Aresta.h"
+
+1499258178 c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\aresta.h
+
+1499258178 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\vertice.cpp
+	"Vertice.h"
+
+1499258178 c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\vertice.h
+	<list>
+	"Aresta.h"
+
+1499290983 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\grafo.cpp
+	"Grafo.h"
+	<limits>
+	<time.h>
+	<fstream>
+	<queue>
+	<tr1/tuple>
+
+1499289398 c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\grafo.h
+	<iostream>
+	<list>
+	<algorithm>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	<tr1/tuple>
+
+1499290911 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\grafosgrupo5_trabalhofinal\main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
+
