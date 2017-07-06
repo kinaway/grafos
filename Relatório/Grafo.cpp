@@ -166,6 +166,23 @@ bool Grafo::criarAresta(int u, int v, int p)
     }
 }
 
+bool Grafo::criarAresta2(int u, int v, int p)
+{
+    Vertice* vertice_v = getVertice(u);
+    Vertice* vertice_u = getVertice(v);
+
+    // ambos vértices devem estar presentes no grafo
+    if(vertice_v != NULL && vertice_u != NULL)
+    {
+        vertice_v->adicionaAresta(v, p);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 // Função auxiliar para detectar ciclos em um grafo
 bool Grafo::possuiCiclo(int id)
 {
@@ -263,8 +280,8 @@ void Grafo::getAGM()
         }
 
         // adiciona aresta de menor peso no grafo
-        criarAresta(id1_escolhido, id2_escolhido, menor_peso);
-        criarAresta(id2_escolhido, id1_escolhido, menor_peso);
+        criarAresta2(id1_escolhido, id2_escolhido, menor_peso);
+        criarAresta2(id2_escolhido, id1_escolhido, menor_peso);
 
         // caso a aresta gere ciclo, remova
         if(possuiCiclo(id1_escolhido))
@@ -292,8 +309,8 @@ void Grafo::imprimirGrafo()
     {
         for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++)
         {
-            cout << endl;
-            cout << v->id << " " << a->id << " " << a->peso;
+            //cout << endl;
+            //cout << v->id << " " << a->id << " " << a->peso;
             peso_total += a->peso;
         }
     }
@@ -503,6 +520,7 @@ void Grafo::getPAGMGGuloso()
 
 void Grafo::getPAGMGGulosoRandomizado()
 {
+    srand (time(NULL));
     double grau_aux = numeric_limits<double>::max();
     double grau_aux_min, grau_aux_max;
     Vertice *vertice_aux,*vertice_min,*vertice_aux2;
@@ -550,9 +568,9 @@ void Grafo::getPAGMGGulosoRandomizado()
     int id_aux_aux, id_aux_aux2;
     double peso_total = peso_arestas[0];
     double d_max;
-    double alpha = 0.05;
+    double alpha    = 0.4;
     list<Aresta> *canditatos;
-    srand (time(NULL));
+
     while(i < particoes.size())
     {
         int j = 0;
@@ -665,8 +683,11 @@ void Grafo::getPAGMGRandomizado()
         }
     }
 
-    Grafo g(this->direcionado, this->lista_vertices.size(), &this->particoes);
-
+    Grafo g(this->direcionado);//, this->lista_vertices.size(), &this->particoes);
+    for(int i = 0; i < selected_nodes.size(); i++)
+    {
+        g.criarVertice(selected_nodes[i]->id, selected_nodes[i]->particao);
+    }
     //cout << endl << "Selecionados:"  << endl;
     for(int i = 0; i < selected_nodes.size(); i++)
     {
@@ -679,7 +700,7 @@ void Grafo::getPAGMGRandomizado()
             {
                 if(selected_nodes[j]->id == a->id)
                 {
-                    g.criarAresta(selected_nodes[i]->id, a->id, a->peso);
+                    g.criarAresta2(selected_nodes[i]->id, a->id, a->peso);
                     break;
                 }
             }

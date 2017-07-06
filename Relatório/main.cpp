@@ -89,12 +89,12 @@ void menu()
 
 int main()
 {
-    char *instancias[] = {"27europ47.clu", "26bier127.gr5"};
-    for(int i = 0; i<2; i++){
+    char *instancias[] = {"10att48.clu", "10gr48.clu","10hk48.clu","11eil51.clu","12brazil58.clu","14st70.clu","15spain47.clu","16eil76.clu","16pr76.clu","20gr96.clu","20kroa100.clu","20krob100.clu","20kroc100.clu","20krod100.clu","20kroe100.clu","20rat99.clu","20rd100.clu","21eil101.clu","21lin105.clu","22pr107.clu","24gr120.clu","25pr124.clu","26bier127.clu","27europ47.clu","28gr137.clu","28pr136.clu","29pr144.clu","30kroa150.clu","30krob150.clu","31pr152.clu","32u159.clu","34gr202europe.clu","35gr137america.clu","40kroa200.clu","40krob200.clu","50gr96africa.clu"};
+    for(int i = 0; i<1; i++){
     ifstream txtFile;
     string nome, input, line, buffer;
     int escolhas = 1;
-    nome = instancias[i];
+    nome = instancias[13];
     cout << nome << endl;
     bool direcionado = false;
 
@@ -141,20 +141,23 @@ int main()
     txtFile.close();
     clock_t Ticks[2];
 
-    Ticks[0] = clock();
+    /*Ticks[0] = clock();
     getPAGMGGuloso(&g);
     Ticks[1] = clock();
     double tempo = (Ticks[1] - Ticks[0]) * 1000.0;
     cout << "Tempo: " << tempo << endl << endl;
-
+*/
+ double tempo = (Ticks[1] - Ticks[0]) * 1000.0;
+  for(int j=0;j<10;j++){
     Ticks[0] = clock();
     getPAGMGGulosoRandomizado(&g);
     Ticks[1] = clock();
-    tempo = (Ticks[1] - Ticks[0]) * 1000.0;
+     tempo = (Ticks[1] - Ticks[0]) * 1000.0;
     cout << "Tempo: " << tempo << endl << endl;
 
+  }
     Ticks[0] = clock();
-    getPAGMGReativo(&g);
+    getPAGMGRandomizado(&g);
     Ticks[1] = clock();
     tempo = (Ticks[1] - Ticks[0]) * 1000.0;
     cout << "Tempo: " << tempo << endl << endl;
