@@ -451,24 +451,26 @@ void Grafo::getPAGMGGuloso()
             particao2 = vertice_aux->particao;
             if(particao1 != particao2 && a->peso < grau_aux)
             {
+                //Seleciona menor aresta para começar a solução
                 grau_aux = a->peso;
-                //aresta_min = &a;
                 vertices_arvore[0] = v->id;
                 vertice_aux2 = getVertice(a->id);
                 peso_arestas[0] = a->peso;
             }
         }
     }
-
+    //Inclui aresta e vertices na solução
     vertices_arvore[1] = vertice_aux2->id;
     vertice_aux = getVertice(vertices_arvore[0]);
     particao_visitada[vertice_aux->particao] = 1;
     particao_visitada[vertice_aux2->particao] = 1;
-    int  i = 2;
+
+    int  i = 2; // 0 e 1 já foram incluídos
     int id_aux_aux, id_aux_aux2;
     double peso_total = peso_arestas[0];
     while(i < particoes.size())
     {
+        //Adiciona um vértice para cada partição
         int j = 0;
         grau_aux = numeric_limits<double>::max();
         while(j<particoes.size() && vertices_arvore[j] != -1 )
@@ -481,9 +483,8 @@ void Grafo::getPAGMGGuloso()
                 particao2 = vertice_aux2->particao;
                 if(particao1 != particao2 && a->peso < grau_aux && particao_visitada[particao1] != 1 )
                 {
+                    //Seleciona menor aresta que liga diferente partições a alguém já na solução
                     grau_aux = a->peso;
-                    //vertice_min = vertice_aux;
-                    //aresta_min = *a;
                     id_aux_aux = vertice_aux->id;
                     peso_arestas[i-1] = a->peso;
                     id_aux_aux2 = vertice_aux2->id;
@@ -493,6 +494,7 @@ void Grafo::getPAGMGGuloso()
 
             j++;
         }
+        //Insere vértice e aresta na solução
         vertices_arvore[i] = id_aux_aux;
         peso_total += peso_arestas[i-1];
         vertice_aux2 = getVertice(vertices_arvore[i]);
@@ -502,23 +504,12 @@ void Grafo::getPAGMGGuloso()
 
 
     cout << "PAGMGGuloso: " << peso_total << endl;
-    /*
-      Grafo arvoreGulosa(this->direcionado, this->lista_vertices.size(), &this->particoes);
-        for(int i = 0; i<particoes.size(); i++)
-        {
-            vertice_aux2 = getVertice(vertices_arvore[i]);
-            arvoreGulosa.criarVertice(vertices_arvore[i],vertice_aux2->particao);
-            if(i>=1)
-            {
-                arvoreGulosa.criarAresta(vertices_arvore[i-1],vertices_arvore[i],peso_arestas[i-1]);
-            }
-        }
-    */
+
 
 }
 
 
-void Grafo::getPAGMGGulosoRandomizado()
+void Grafo::getPAGMGGulosoReativo()
 {
     srand (time(NULL));
     double grau_aux = numeric_limits<double>::max();
@@ -536,14 +527,11 @@ void Grafo::getPAGMGGulosoRandomizado()
         vertices_arvore[i] = -1;
     }
 
-    int qtd_arestas = 0;
-    int qtd_vertices = 0;
     for(listaVertices::iterator v = lista_vertices.begin(); v != lista_vertices.end(); v++)
     {
         qtd_vertices++;
         for(listaArestas::iterator a = v->lista_arestas.begin(); a != v->lista_arestas.end(); a++)
         {
-            qtd_arestas = qtd_arestas + 1;
 
             vertice_aux = getVertice(a->id);
 
@@ -578,6 +566,7 @@ void Grafo::getPAGMGGulosoRandomizado()
         grau_aux_max = numeric_limits<double>::min();
         while(j<particoes.size() && vertices_arvore[j] != -1 )
         {
+            //Percorre todas arestas e obtém menor e maior peso.
             vertice_aux2 = getVertice(vertices_arvore[j]);
             for(listaArestas::iterator a = vertice_aux2->lista_arestas.begin(); a != vertice_aux2->lista_arestas.end(); a++)
             {
@@ -586,18 +575,14 @@ void Grafo::getPAGMGGulosoRandomizado()
                 particao2 = vertice_aux2->particao;
                 if(particao1 != particao2 && a->peso < grau_aux_min && particao_visitada[particao1] != 1 )
                 {
+                    //Seleciona o menor peso das arestas possíveis a entrar
                     grau_aux_min = a->peso;
-                    //id_aux_aux = vertice_aux->id;
-                    //peso_arestas[i-1] = a->peso;
-                    //id_aux_aux2 = vertice_aux2->id;
 
                 }
                 if(particao1 != particao2 && a->peso > grau_aux_max && particao_visitada[particao1] != 1 )
                 {
+                    //Seleciona o maior peso das arestas possíveis a entrar
                     grau_aux_max = a->peso;
-                    //id_aux_aux = vertice_aux->id;
-                    //peso_arestas[i-1] = a->peso;
-                    //id_aux_aux2 = vertice_aux2->id;
 
                 }
 
@@ -606,7 +591,8 @@ void Grafo::getPAGMGGulosoRandomizado()
             j++;
         }
 
-        d_max = grau_aux_min + alpha * (grau_aux_max - grau_aux_min);
+        d_max = grau_aux_min + alpha * (grau_aux_max - grau_aux_min); //Define quais vão ser os candidatos da lista restrita
+
         j = 0;
         canditatos = new list<Aresta>();
         while(j<particoes.size() && vertices_arvore[j] != -1 )
@@ -619,6 +605,7 @@ void Grafo::getPAGMGGulosoRandomizado()
                 particao2 = vertice_aux2->particao;
                 if(particao1 != particao2 && a->peso <= d_max && particao_visitada[particao1] != 1 )
                 {
+                    //Arestas menores que d_max entram para a lista de possíveis.
                     canditatos->push_back(*a);
 
                 }
@@ -627,9 +614,13 @@ void Grafo::getPAGMGGulosoRandomizado()
 
             j++;
         }
+        //Escolhe a aresta na posição random da lista.
         int random = rand()%canditatos->size();
         list<Aresta>::iterator it = canditatos->begin();
         advance(it, random);
+
+
+        //Inclui a aresta na solução
         vertice_aux2 = getVertice(it->id);
         vertices_arvore[i] = vertice_aux2->id;
         peso_arestas[i-1] = it->peso;
@@ -659,7 +650,7 @@ void Grafo::getPAGMGGulosoRandomizado()
 
 void Grafo::getPAGMGRandomizado()
 {
-
+    srand (time(NULL));
     vector<Vertice*> selected_nodes;
 
     bool covered_partitions[particoes.size()];

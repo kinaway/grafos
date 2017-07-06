@@ -150,7 +150,7 @@ int main()
  double tempo = (Ticks[1] - Ticks[0]) * 1000.0;
   for(int j=0;j<10;j++){
     Ticks[0] = clock();
-    getPAGMGGulosoRandomizado(&g);
+    getPAGMGGulosoReativo(&g);
     Ticks[1] = clock();
      tempo = (Ticks[1] - Ticks[0]) * 1000.0;
     cout << "Tempo: " << tempo << endl << endl;
