@@ -204,3 +204,46 @@
 	"Vertice.h"
 	"Grafo.h"
 
+1499258178 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\aresta.cpp
+	"Aresta.h"
+
+1499258178 c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\aresta.h
+
+1499384279 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\grafo.cpp
+	"Grafo.h"
+	<limits>
+	<time.h>
+	<fstream>
+	<queue>
+	<tr1/tuple>
+
+1499369262 c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\grafo.h
+	<iostream>
+	<list>
+	<algorithm>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	<tr1/tuple>
+
+1499258178 c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\vertice.h
+	<list>
+	"Aresta.h"
+
+1499258178 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\vertice.cpp
+	"Vertice.h"
+
+1499384288 source:c:\users\darkc_000\desktop\novo trbalho\grafos-master\relatório\main.cpp
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string>
+	<list>
+	<time.h>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	"Aresta.h"
+	"Vertice.h"
+	"Grafo.h"
+

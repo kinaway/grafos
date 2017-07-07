@@ -27,6 +27,7 @@ public:
     bool deletarVertice(int id);    // 3
     bool deletarAresta(int id,int id2,int peso);    // 4
     bool criarAresta(int vet1, int vet2,int peso);  // 5
+    bool criarAresta2(int vet1, int vet2,int peso);  // 5
     int getGrau(int id);        // 6
     int getGrauEntrada(int id); // 6
     int getGrauSaida(int id);   // 6
